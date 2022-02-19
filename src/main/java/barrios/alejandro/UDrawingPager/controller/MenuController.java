@@ -5,16 +5,9 @@ import java.util.Scanner;
 
 public class MenuController {
 
-    private static MenuController menuControllerSingleton = null;
-
-    public static MenuController getInstance() {
-        if (menuControllerSingleton == null)
-            menuControllerSingleton = new MenuController();
-        return menuControllerSingleton;
-    }
-
     public void showMenu() {
-        String menuOptions = "1. Parámetros Iniciales \n" +
+        String menuOptions = "Menú principal \n" +
+                "1. Parámetros Iniciales \n" +
                 "2. Ejecutar paso \n" +
                 "3. Estado en memoria de las estructuras \n" +
                 "4. Reportes \n" +
@@ -68,8 +61,12 @@ public class MenuController {
     private void optionSelected(int option) {
         switch (option) {
             case 1:
-                System.out.println(option);
-                showMenu();
+                try {
+                    initialSteps();
+                } catch (InputMismatchException e) {
+                    System.out.println("Ingresa un valor numérico");
+                    optionSelected(1);
+                }
                 break;
 
             case 2:
@@ -96,6 +93,35 @@ public class MenuController {
                 System.exit(0);
                 break;
         }
+    }
+
+    private void initialSteps() throws InputMismatchException {
+
+        String submenuOptions = "1. Carga masiva de clientes \n" +
+                "2. Cantidad de ventanillas";
+        System.out.println(submenuOptions);
+        System.out.print("> ");
+
+        Scanner sc = new Scanner(System.in);
+
+        int optionSelected = sc.nextInt();
+
+        switch (optionSelected) {
+            case 1:
+
+                break;
+
+            case 2:
+                new InitialStepsController().askWindows();
+                break;
+
+            default:
+                System.out.println("Ingresa una opción válida");
+                optionSelected(1);
+                break;
+        }
+
+        showMenu();
     }
 
 }
