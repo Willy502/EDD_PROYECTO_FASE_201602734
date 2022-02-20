@@ -74,7 +74,7 @@ public class MenuController {
                 break;
 
             case 3:
-                System.out.println(option);
+                new GraphController().graphMenu();
                 break;
 
             case 4:

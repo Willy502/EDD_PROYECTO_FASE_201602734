@@ -27,6 +27,10 @@ public class LinkedQueue<T> extends Linked<T> {
         return getHead();
     }
 
+    public T getPosition(int position) {
+        return getPos(position);
+    }
+
     public int size() {
         return size;
     }

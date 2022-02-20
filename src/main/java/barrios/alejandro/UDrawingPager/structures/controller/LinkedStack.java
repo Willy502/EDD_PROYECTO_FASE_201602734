@@ -33,6 +33,10 @@ public class LinkedStack<T> extends Linked<T> {
         size--;
     }
 
+    public T getPosition(int position) {
+        return getPos(position);
+    }
+
     public int size() {
         return size;
     }

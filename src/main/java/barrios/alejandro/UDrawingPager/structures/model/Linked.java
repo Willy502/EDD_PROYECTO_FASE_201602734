@@ -21,4 +21,10 @@ public abstract class Linked<T> {
         return head;
     }
 
+    public T getPos(int position) {
+        Node<T> current = this.head;
+        for (int i = 0; i < position; i++) current = current.next;
+        return current.data;
+    }
+
 }

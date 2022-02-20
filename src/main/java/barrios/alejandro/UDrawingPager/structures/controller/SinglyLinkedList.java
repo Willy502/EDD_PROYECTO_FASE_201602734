@@ -36,9 +36,7 @@ public class SinglyLinkedList<T> extends Linked<T> {
     }
 
     public T getPosition(int position) {
-        Node<T> current = this.head;
-        for (int i = 0; i < position; i++) current = current.next;
-        return current.data;
+        return getPos(position);
     }
 
     public int size() {
