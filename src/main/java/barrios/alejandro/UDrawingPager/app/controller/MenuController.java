@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class MenuController {
 
     OptionsController optionsController = new OptionsController();
+    InitialStepsController initialStepsController = new InitialStepsController();
 
     public void showMenu() {
         String menuOptions = """
@@ -42,23 +43,14 @@ public class MenuController {
     }
 
     private void clearScreen() {
-        try
-        {
+        try {
             final String os = System.getProperty("os.name");
-
-            if (os.contains("Windows"))
-            {
+            if (os.contains("Windows")) {
                 Runtime.getRuntime().exec("cls");
-            }
-            else
-            {
+            } else {
                 Runtime.getRuntime().exec("clear");
             }
-        }
-        catch (final Exception e)
-        {
-            //  Handle any exceptions.
-        }
+        } catch (final Exception e) {}
     }
 
     private void optionSelected(int option) {
@@ -97,8 +89,9 @@ public class MenuController {
 
     private void initialSteps() throws InputMismatchException {
 
-        String submenuOptions = "1. Carga masiva de clientes \n" +
-                "2. Cantidad de ventanillas";
+        String submenuOptions = """
+                1. Carga masiva de clientes
+                2. Cantidad de ventanillas""";
         System.out.println(submenuOptions);
         System.out.print("> ");
 
@@ -108,11 +101,11 @@ public class MenuController {
 
         switch (optionSelected) {
             case 1:
-
+                initialStepsController.loadInput();
                 break;
 
             case 2:
-                new InitialStepsController().askHatch();
+                initialStepsController.askHatch();
                 break;
 
             default:

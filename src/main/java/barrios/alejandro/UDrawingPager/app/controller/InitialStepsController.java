@@ -2,6 +2,8 @@ package barrios.alejandro.UDrawingPager.app.controller;
 
 import barrios.alejandro.UDrawingPager.app.model.SavedInformation;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -27,6 +29,16 @@ public class InitialStepsController {
 
         SavedInformation.getInstance().setWindowsQt(qty);
         System.out.println("Ventanillas almacenadas exitosamente");
+    }
+
+    public void loadInput() {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON files", "json");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("FILE: " + chooser.getSelectedFile().getAbsolutePath());
+        }
     }
 
 }
