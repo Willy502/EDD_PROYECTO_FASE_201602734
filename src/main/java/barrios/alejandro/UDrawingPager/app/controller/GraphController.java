@@ -93,13 +93,30 @@ public class GraphController {
 
     private void imagesStack() {
         Graph graph = mutGraph("Images stack per window").setDirected(true).use((gr, ctx) -> {
+            StringBuilder unique_id = new StringBuilder();
             for (int i = 0; i < savedInformation.getLinkedWindows().size(); i++) {
                 mutNode(Integer.toString(i)).add(Label.of(String.valueOf(savedInformation.getLinkedWindows().getPosition(i).getId())));
+
+                unique_id.append("0");
+                for (int j = 0; j < savedInformation.getLinkedWindows().getPosition(i).getImagesStack().size(); j++) {
+                    mutNode(unique_id.toString() + j).add(Label.of(savedInformation.getLinkedWindows().getPosition(i).getImagesStack().getPosition(j).getType().toString()));
+                }
             }
+
 
             for (int i = 0; i < savedInformation.getLinkedWindows().size() - 1; i++) {
                 mutNode(Integer.toString(i)).addLink(mutNode(Integer.toString(i+1)));
             }
+
+            unique_id = new StringBuilder();
+            for (int i = 0; i < savedInformation.getLinkedWindows().size(); i++) {
+                unique_id.append("0");
+                for (int j = 0; j < savedInformation.getLinkedWindows().getPosition(i).getImagesStack().size(); j++) {
+                    mutNode(j == 0 ? String.valueOf(i) : unique_id.toString() + (j-1)).addLink(mutNode(unique_id.toString() + j));
+                }
+            }
+
+
         }).toImmutable().graphAttr().with(Rank.dir(LEFT_TO_RIGHT));
 
         produceGraph(graph, "Images stack per window");
