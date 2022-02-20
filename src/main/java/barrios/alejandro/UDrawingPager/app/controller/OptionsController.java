@@ -45,11 +45,14 @@ public class OptionsController {
         // Black and white printer
         imageP = savedInformation.getBnwPrinter().getImagesQueue().getFirst();
         if (imageP != null) {
+            System.out.println("YA EMPECE 1");
             if (savedInformation.getBnwPrinter().getMissingTime() == 0) {
+                System.out.println("YA EMPECE 2");
                 savedInformation.getBnwPrinter().setMissingTime(savedInformation.getBnwPrinter().getStepsTiming());
                 for (Node<Client> clientNode = savedInformation.getWaitingList().getFirstNode(); clientNode != null; clientNode = clientNode.next) {
                     Client client = clientNode.data;
                     if (imageP.getClient() == client) {
+                        System.out.println("YA EMPECE 3");
                         client.getImages().append(imageP);
                         savedInformation.getBnwPrinter().getImagesQueue().remove();
                         System.out.println("-------------------");
@@ -61,6 +64,28 @@ public class OptionsController {
                 System.out.println("-------------------");
                 System.out.println("Imágen blanco y negro en proceso de impresión");
                 savedInformation.getBnwPrinter().setMissingTime(savedInformation.getBnwPrinter().getMissingTime() - 1);
+            }
+        }
+
+        // Moving from waiting list to attended clients list
+        for (int i = 0; i < savedInformation.getWaitingList().size(); i++) {
+            Client client = savedInformation.getWaitingList().getPosition(i);
+            boolean colorFound = false;
+            for (Node<Image> imageNode = savedInformation.getColorPrinter().getImagesQueue().getFirstNode(); imageNode != null; imageNode = imageNode.next) {
+                if (imageNode.data.getClient() == client) colorFound = true;
+            }
+
+            boolean bnwFound = false;
+            for (Node<Image> imageNode = savedInformation.getBnwPrinter().getImagesQueue().getFirstNode(); imageNode != null; imageNode = imageNode.next) {
+                if (imageNode.data.getClient() == client) bnwFound = true;
+            }
+
+            if (!colorFound && !bnwFound) {
+                savedInformation.getAttendedClients().append(client);
+                savedInformation.getWaitingList().remove(i);
+                System.out.println("-------------------");
+                System.out.println("El cliente " + client.getName() + " ya posee todas sus imágenes impresas y sale de la empresa" +
+                        " registrando el tiempo total de x pasos");
             }
         }
 
