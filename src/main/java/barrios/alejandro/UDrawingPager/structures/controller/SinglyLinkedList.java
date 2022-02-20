@@ -21,10 +21,14 @@ public class SinglyLinkedList<T> extends Linked<T> {
         if (previous != null) {
             previous.next = previous.next.next;
         } else {
-            this.head = null;
+            this.head = this.head.next;
         }
         size--;
 
+    }
+
+    public Node<T> getFirstNode() {
+        return getHead();
     }
 
     public T getPosition(int position) {

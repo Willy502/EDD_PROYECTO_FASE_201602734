@@ -1,9 +1,5 @@
 package barrios.alejandro.UDrawingPager.app.controller;
 
-import barrios.alejandro.UDrawingPager.app.model.PType;
-import barrios.alejandro.UDrawingPager.app.model.Printer;
-import barrios.alejandro.UDrawingPager.app.model.SavedInformation;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,14 +7,10 @@ public class MenuController {
 
     OptionsController optionsController;
     InitialStepsController initialStepsController;
-    SavedInformation savedInformation;
 
     public MenuController() {
         optionsController = new OptionsController();
         initialStepsController = new InitialStepsController();
-        savedInformation = SavedInformation.getInstance();
-        savedInformation.setBnwPrinter(new Printer(1, PType.BLACK_N_WHITE));
-        savedInformation.setColorPrinter(new Printer(2, PType.COLOR));
     }
 
     public void showMenu() {
@@ -63,7 +55,7 @@ public class MenuController {
             } else {
                 Runtime.getRuntime().exec("clear");
             }
-        } catch (final Exception e) {}
+        } catch (final Exception ignored) {}
     }
 
     private void optionSelected(int option) {
@@ -78,7 +70,7 @@ public class MenuController {
                 break;
 
             case 2:
-                System.out.println(option);
+                optionsController.runStep();
                 break;
 
             case 3:
@@ -113,18 +105,12 @@ public class MenuController {
         int optionSelected = sc.nextInt();
 
         switch (optionSelected) {
-            case 1:
-                initialStepsController.loadInput();
-                break;
-
-            case 2:
-                initialStepsController.askHatch();
-                break;
-
-            default:
+            case 1 -> initialStepsController.loadInput();
+            case 2 -> initialStepsController.askHatch();
+            default -> {
                 System.out.println("Ingresa una opción válida");
                 optionSelected(1);
-                break;
+            }
         }
 
         showMenu();

@@ -8,6 +8,8 @@ public class SavedInformation {
     private static SavedInformation savedInformation = null;
     private SinglyLinkedList<Window> linkedWindows;
     private LinkedQueue<Client> receptionQueue;
+    private SinglyLinkedList<Client> attendedClients;
+    private SinglyLinkedList<Client> waitingList;
     private Printer colorPrinter;
     private Printer bnwPrinter;
 
@@ -47,5 +49,21 @@ public class SavedInformation {
 
     public void setBnwPrinter(Printer bnwPrinter) {
         this.bnwPrinter = bnwPrinter;
+    }
+
+    public void setAttendedClients(SinglyLinkedList<Client> attendedClients) {
+        this.attendedClients = attendedClients;
+    }
+
+    public SinglyLinkedList<Client> getAttendedClients() {
+        return attendedClients;
+    }
+
+    public SinglyLinkedList<Client> getWaitingList() {
+        return waitingList;
+    }
+
+    public void setWaitingList(SinglyLinkedList<Client> waitingList) {
+        this.waitingList = waitingList;
     }
 }

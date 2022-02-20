@@ -11,6 +11,7 @@ public class LinkedStack<T> extends Linked<T> {
 
     public T getLast() {
         Node<T> current = this.head;
+        if (current == null) return null;
         while (current.next != null) current = current.next;
         return current.data;
     }

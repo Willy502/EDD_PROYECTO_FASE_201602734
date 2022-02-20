@@ -17,4 +17,8 @@ public abstract class Linked<T> {
         size++;
     }
 
+    protected Node<T> getHead() {
+        return head;
+    }
+
 }
