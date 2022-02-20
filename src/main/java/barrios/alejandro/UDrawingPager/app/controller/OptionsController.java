@@ -1,9 +1,6 @@
 package barrios.alejandro.UDrawingPager.app.controller;
 
-import barrios.alejandro.UDrawingPager.app.model.Image;
-import barrios.alejandro.UDrawingPager.app.model.PType;
-import barrios.alejandro.UDrawingPager.app.model.SavedInformation;
-import barrios.alejandro.UDrawingPager.app.model.Window;
+import barrios.alejandro.UDrawingPager.app.model.*;
 import barrios.alejandro.UDrawingPager.structures.model.Node;
 
 public class OptionsController {
@@ -21,6 +18,51 @@ public class OptionsController {
     }
 
     public void runStep() {
+
+        // Process printers
+        // Color printer
+        Image imageP = savedInformation.getColorPrinter().getImagesQueue().getFirst();
+        if (imageP != null) {
+            if (savedInformation.getColorPrinter().getMissingTime() == 0) {
+                savedInformation.getColorPrinter().setMissingTime(savedInformation.getColorPrinter().getStepsTiming());
+                for (Node<Client> clientNode = savedInformation.getWaitingList().getFirstNode(); clientNode != null; clientNode = clientNode.next) {
+                    Client client = clientNode.data;
+                    if (imageP.getClient() == client) {
+                        client.getImages().append(imageP);
+                        savedInformation.getColorPrinter().getImagesQueue().remove();
+                        System.out.println("-------------------");
+                        System.out.println("Se completa la impresión de una imagen a color y se le entrega al cliente que la solicitó");
+                        break;
+                    }
+                }
+            } else {
+                System.out.println("-------------------");
+                System.out.println("Imágen a color en proceso de impresión");
+                savedInformation.getColorPrinter().setMissingTime(savedInformation.getColorPrinter().getMissingTime() - 1);
+            }
+        }
+
+        // Black and white printer
+        imageP = savedInformation.getBnwPrinter().getImagesQueue().getFirst();
+        if (imageP != null) {
+            if (savedInformation.getBnwPrinter().getMissingTime() == 0) {
+                savedInformation.getBnwPrinter().setMissingTime(savedInformation.getBnwPrinter().getStepsTiming());
+                for (Node<Client> clientNode = savedInformation.getWaitingList().getFirstNode(); clientNode != null; clientNode = clientNode.next) {
+                    Client client = clientNode.data;
+                    if (imageP.getClient() == client) {
+                        client.getImages().append(imageP);
+                        savedInformation.getBnwPrinter().getImagesQueue().remove();
+                        System.out.println("-------------------");
+                        System.out.println("Se completa la impresión de una imagen a blanco y negro y se le entrega al cliente que la solicitó");
+                        break;
+                    }
+                }
+            } else {
+                System.out.println("-------------------");
+                System.out.println("Imágen blanco y negro en proceso de impresión");
+                savedInformation.getBnwPrinter().setMissingTime(savedInformation.getBnwPrinter().getMissingTime() - 1);
+            }
+        }
 
         // Add to window queue and remove from reception queue
         for (Node<Window> windowNode = savedInformation.getLinkedWindows().getFirstNode(); windowNode != null; windowNode = windowNode.next) {

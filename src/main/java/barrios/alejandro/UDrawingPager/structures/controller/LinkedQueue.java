@@ -20,7 +20,7 @@ public class LinkedQueue<T> extends Linked<T> {
     }
 
     public T getFirst() {
-        return head.data;
+        return head != null ?head.data : null;
     }
 
     public Node<T> getFirstNode() {

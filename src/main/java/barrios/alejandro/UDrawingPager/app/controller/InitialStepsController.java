@@ -69,12 +69,12 @@ public class InitialStepsController {
             );
             // Save color images
             for (int i = 0; i < Integer.parseInt(value.get("img_color").getAsString()); i++) {
-                client.getImages().append(new Image(PType.COLOR));
+                client.getImages().append(new Image(PType.COLOR, client));
             }
 
             // Save black and white images
             for (int i = 0; i < Integer.parseInt(value.get("img_bw").getAsString()); i++) {
-                client.getImages().append(new Image(PType.BLACK_N_WHITE));
+                client.getImages().append(new Image(PType.BLACK_N_WHITE, client));
             }
 
             savedInformation.getReceptionQueue().add(client);
