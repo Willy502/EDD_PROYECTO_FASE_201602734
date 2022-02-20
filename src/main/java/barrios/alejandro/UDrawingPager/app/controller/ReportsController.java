@@ -84,6 +84,78 @@ public class ReportsController {
             }
         }
 
+        printTop(clients);
+
+    }
+
+    private void top5Bnw() {
+        SinglyLinkedList<Client> clients = savedInformation.getAttendedClients();
+        if (clients.size() > 1) {
+            for (Node<Client> clientNode = clients.getFirstNode(); clientNode != null; clientNode = clientNode.next) {
+                Node<Client> previous = null;
+                Node<Client> current = clients.getFirstNode();
+                for (Node<Client> next = current.next; next != null; next = current.next) {
+                    int noOfBnwCurrent = 0;
+                    int noOfBnwNext = 0;
+                    for (Node<Image> imageNode = current.data.getImages().getFirstNode(); imageNode != null; imageNode = imageNode.next) {
+                        if (imageNode.data.getType() == PType.BLACK_N_WHITE) noOfBnwCurrent++;
+                    }
+                    for (Node<Image> imageNode = next.data.getImages().getFirstNode(); imageNode != null; imageNode = imageNode.next) {
+                        if (imageNode.data.getType() == PType.BLACK_N_WHITE) noOfBnwNext++;
+                    }
+                    if (noOfBnwCurrent > noOfBnwNext) {
+                        if (previous != null) {
+                            previous.next = next;
+                        } else {
+                            clients.setFirstNode(next);
+                        }
+                        current.next = next.next;
+                        next.next = current;
+                        previous = next;
+                    } else {
+                        previous = current;
+                        current = next;
+                    }
+                }
+            }
+        }
+
+        printTop(clients);
+
+    }
+
+    private void moreSteps() {
+        SinglyLinkedList<Client> clients = savedInformation.getAttendedClients();
+        if (clients.size() > 1) {
+            for (Node<Client> clientNode = clients.getFirstNode(); clientNode != null; clientNode = clientNode.next) {
+                Node<Client> previous = null;
+                Node<Client> current = clients.getFirstNode();
+                for (Node<Client> next = current.next; next != null; next = current.next) {
+                    if (current.data.getSteps() > next.data.getSteps()) {
+                        if (previous != null) {
+                            previous.next = next;
+                        } else {
+                            clients.setFirstNode(next);
+                        }
+                        current.next = next.next;
+                        next.next = current;
+                        previous = next;
+                    } else {
+                        previous = current;
+                        current = next;
+                    }
+                }
+            }
+        }
+
+        System.out.println(clients.getPosition(clients.size() - 1).getName() + clients.getPosition(clients.size() - 1).getSteps());
+    }
+
+    private void selectClient() {
+
+    }
+
+    private void printTop(SinglyLinkedList<Client> clients) {
         int i = 1;
         for (Node<Client> clientNode = clients.getFirstNode(); clientNode != null; clientNode = clientNode.next) {
             Client client = clientNode.data;
@@ -91,19 +163,6 @@ public class ReportsController {
             if (i > 5) break;
             i++;
         }
-
-    }
-
-    private void top5Bnw() {
-
-    }
-
-    private void moreSteps() {
-
-    }
-
-    private void selectClient() {
-
     }
 
 }
