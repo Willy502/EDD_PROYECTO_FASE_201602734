@@ -1,15 +1,19 @@
 package barrios.alejandro.UDrawingPager.app.controller;
 
-import barrios.alejandro.UDrawingPager.app.model.SavedInformation;
-import barrios.alejandro.UDrawingPager.app.model.Window;
+import barrios.alejandro.UDrawingPager.app.model.*;
 import barrios.alejandro.UDrawingPager.structures.controller.SinglyLinkedList;
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.*;
 
 public class InitialStepsController {
+
+    SavedInformation savedInformation = SavedInformation.getInstance();
 
     public void askHatch() {
         String options = "¿Cuantas ventanillas desea agregar?";
@@ -26,7 +30,7 @@ public class InitialStepsController {
     }
 
     private void saveHatch() throws InputMismatchException {
-        SavedInformation savedInformation = SavedInformation.getInstance();
+
         Scanner sc = new Scanner(System.in);
         int qty = sc.nextInt();
 
@@ -43,8 +47,39 @@ public class InitialStepsController {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("FILE: " + chooser.getSelectedFile().getAbsolutePath());
+            try {
+                saveFileInformation(chooser.getSelectedFile().getAbsolutePath());
+            } catch (FileNotFoundException e) {
+                System.out.println("No se ha encontrado el archivo");
+            }
+
+        } else {
+            System.out.println("No has seleccionado ningún archivo");
         }
+    }
+
+    private void saveFileInformation(String path) throws FileNotFoundException {
+        JsonReader reader = new JsonReader(new FileReader(path));
+        JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+        jsonObject.keySet().forEach(key -> {
+            JsonObject value = jsonObject.getAsJsonObject(key);
+            Client client = new Client(
+                    Integer.parseInt(value.get("id_cliente").getAsString()),
+                    value.get("nombre_cliente").getAsString()
+            );
+            // Save color images
+            for (int i = 0; i < Integer.parseInt(value.get("img_color").getAsString()); i++) {
+                client.getImages().append(new Image(PType.COLOR));
+            }
+
+            // Save black and white images
+            for (int i = 0; i < Integer.parseInt(value.get("img_bw").getAsString()); i++) {
+                client.getImages().append(new Image(PType.BLACK_N_WHITE));
+            }
+
+            savedInformation.getReceptionQueue().add(client);
+        });
+        System.out.println("Carga masiva finalizada exitósamente");
     }
 
 }
