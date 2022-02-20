@@ -148,11 +148,41 @@ public class ReportsController {
             }
         }
 
-        System.out.println(clients.getPosition(clients.size() - 1).getName() + clients.getPosition(clients.size() - 1).getSteps());
+        System.out.println("Nombre: " + clients.getPosition(clients.size() - 1).getName());
+        System.out.println("ID: " + clients.getPosition(clients.size() - 1).getId());
+        System.out.println("Pasos: " + clients.getPosition(clients.size() - 1).getSteps());
     }
 
     private void selectClient() {
+        SinglyLinkedList<Client> clients = savedInformation.getAttendedClients();
+        int i = 1;
+        for (Node<Client> clientNode = clients.getFirstNode(); clientNode != null; clientNode = clientNode.next) {
+            Client client = clientNode.data;
+            System.out.println(i + ". " + client.getName());
+            i++;
+        }
+        System.out.println("Selecciona el cliente para visualizar su información");
+        System.out.print("> ");
+        Scanner sc = new Scanner(System.in);
 
+        try {
+            int optionSelected = sc.nextInt();
+            if (optionSelected >= 1 && optionSelected <= clients.size()) {
+                Client client = clients.getPosition(optionSelected - 1);
+                System.out.println("Nombre: " + client.getName());
+                System.out.println("ID: " + client.getId());
+                System.out.println("Pasos: " + client.getSteps());
+                int j = 1;
+                for (Node<Image> imageNode = client.getImages().getFirstNode(); imageNode != null; imageNode = imageNode.next) {
+                    Image image = imageNode.data;
+                    System.out.println(j + ". " + (image.getType() == PType.COLOR ? "Imágen a color" : "Imágen blanco y negro"));
+                    j++;
+                }
+            }
+        } catch (InputMismatchException ignored) {
+            System.out.println("Ingresa un valor numérico");
+            selectClient();
+        }
     }
 
     private void printTop(SinglyLinkedList<Client> clients) {
