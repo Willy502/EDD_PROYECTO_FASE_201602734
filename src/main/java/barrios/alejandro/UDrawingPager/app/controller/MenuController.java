@@ -1,5 +1,7 @@
 package barrios.alejandro.UDrawingPager.app.controller;
 
+import barrios.alejandro.UDrawingPager.app.model.SavedInformation;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -7,6 +9,7 @@ public class MenuController {
 
     RunController runController;
     InitialStepsController initialStepsController;
+    SavedInformation savedInformation = SavedInformation.getInstance();
 
     public MenuController() {
         runController = new RunController();
@@ -59,6 +62,11 @@ public class MenuController {
     }
 
     private void optionSelected(int option) {
+        if (option > 1 && savedInformation.getLinkedWindows() == null) {
+            System.out.println("No haz indicado una cantidad de ventanillas");
+            showMenu();
+            return;
+        }
         switch (option) {
             case 1:
                 try {

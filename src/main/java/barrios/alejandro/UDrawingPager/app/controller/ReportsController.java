@@ -148,9 +148,12 @@ public class ReportsController {
             }
         }
 
-        System.out.println("Nombre: " + clients.getPosition(clients.size() - 1).getName());
-        System.out.println("ID: " + clients.getPosition(clients.size() - 1).getId());
-        System.out.println("Pasos: " + clients.getPosition(clients.size() - 1).getSteps());
+        if (clients.size() > 0) {
+            System.out.println("Nombre: " + clients.getPosition(clients.size() - 1).getName());
+            System.out.println("ID: " + clients.getPosition(clients.size() - 1).getId());
+            System.out.println("Pasos: " + clients.getPosition(clients.size() - 1).getSteps());
+        } else System.out.println("Ningun cliente ha completado el proceso");
+
     }
 
     private void selectClient() {
