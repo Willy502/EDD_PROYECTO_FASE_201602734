@@ -7,21 +7,21 @@ import java.util.Scanner;
 
 public class InitialStepsController {
 
-    public void askWindows() {
+    public void askHatch() {
         String options = "¿Cuantas ventanillas desea agregar?";
         System.out.println(options);
         System.out.print("> ");
 
         try {
-            saveWindows();
+            saveHatch();
         } catch (InputMismatchException e) {
             System.out.println("Ingresa un valor numérico");
-            askWindows();
+            askHatch();
         }
 
     }
 
-    private void saveWindows() throws InputMismatchException {
+    private void saveHatch() throws InputMismatchException {
         Scanner sc = new Scanner(System.in);
         int qty = sc.nextInt();
 

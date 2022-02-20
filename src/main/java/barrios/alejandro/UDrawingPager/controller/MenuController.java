@@ -6,13 +6,14 @@ import java.util.Scanner;
 public class MenuController {
 
     public void showMenu() {
-        String menuOptions = "Menú principal \n" +
-                "1. Parámetros Iniciales \n" +
-                "2. Ejecutar paso \n" +
-                "3. Estado en memoria de las estructuras \n" +
-                "4. Reportes \n" +
-                "5. Acerca de \n" +
-                "6. Salir";
+        String menuOptions = """
+                Menú principal
+                1. Parámetros Iniciales
+                2. Ejecutar paso
+                3. Estado en memoria de las estructuras
+                4. Reportes
+                5. Acerca de
+                6. Salir""";
         System.out.println(menuOptions);
 
         try {
@@ -112,7 +113,7 @@ public class MenuController {
                 break;
 
             case 2:
-                new InitialStepsController().askWindows();
+                new InitialStepsController().askHatch();
                 break;
 
             default:

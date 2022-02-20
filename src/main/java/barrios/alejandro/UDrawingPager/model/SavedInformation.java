@@ -3,7 +3,7 @@ package barrios.alejandro.UDrawingPager.model;
 public class SavedInformation {
 
     private static SavedInformation savedInformation = null;
-    private int windowsQt = 0;
+    private int hatchQt = 0;
 
     public static SavedInformation getInstance() {
         if (savedInformation == null)
@@ -11,11 +11,11 @@ public class SavedInformation {
         return savedInformation;
     }
 
-    public int getWindowsQt() {
-        return windowsQt;
+    public int getHatchQt() {
+        return hatchQt;
     }
 
-    public void setWindowsQt(int windowsQt) {
-        this.windowsQt = windowsQt;
+    public void setWindowsQt(int hatchQt) {
+        this.hatchQt = hatchQt;
     }
 }
