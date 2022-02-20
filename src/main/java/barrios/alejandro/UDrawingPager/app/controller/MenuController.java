@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 public class MenuController {
 
-    OptionsController optionsController;
+    RunController runController;
     InitialStepsController initialStepsController;
 
     public MenuController() {
-        optionsController = new OptionsController();
+        runController = new RunController();
         initialStepsController = new InitialStepsController();
     }
 
@@ -70,7 +70,7 @@ public class MenuController {
                 break;
 
             case 2:
-                optionsController.runStep();
+                runController.runStep();
                 break;
 
             case 3:
@@ -78,11 +78,11 @@ public class MenuController {
                 break;
 
             case 4:
-                System.out.println(option);
+                new ReportsController().reportMenu();
                 break;
 
             case 5:
-                optionsController.about();
+                runController.about();
                 break;
 
             case 6:

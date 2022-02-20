@@ -3,7 +3,7 @@ package barrios.alejandro.UDrawingPager.app.controller;
 import barrios.alejandro.UDrawingPager.app.model.*;
 import barrios.alejandro.UDrawingPager.structures.model.Node;
 
-public class OptionsController {
+public class RunController {
 
     SavedInformation savedInformation = SavedInformation.getInstance();
 

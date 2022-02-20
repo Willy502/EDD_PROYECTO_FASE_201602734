@@ -31,6 +31,10 @@ public class SinglyLinkedList<T> extends Linked<T> {
         return getHead();
     }
 
+    public void setFirstNode(Node<T> head) {
+        this.head = head;
+    }
+
     public T getPosition(int position) {
         Node<T> current = this.head;
         for (int i = 0; i < position; i++) current = current.next;
