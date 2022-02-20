@@ -1,6 +1,8 @@
 package barrios.alejandro.UDrawingPager.app.controller;
 
 import barrios.alejandro.UDrawingPager.app.model.SavedInformation;
+import barrios.alejandro.UDrawingPager.app.model.Window;
+import barrios.alejandro.UDrawingPager.structures.controller.SinglyLinkedList;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -24,10 +26,14 @@ public class InitialStepsController {
     }
 
     private void saveHatch() throws InputMismatchException {
+        SavedInformation savedInformation = SavedInformation.getInstance();
         Scanner sc = new Scanner(System.in);
         int qty = sc.nextInt();
 
-        SavedInformation.getInstance().setWindowsQt(qty);
+        savedInformation.setLinkedWindows(new SinglyLinkedList<>());
+        for (int i = 1; i <= qty; i++) {
+            savedInformation.getLinkedWindows().append(new Window(i));
+        }
         System.out.println("Ventanillas almacenadas exitosamente");
     }
 

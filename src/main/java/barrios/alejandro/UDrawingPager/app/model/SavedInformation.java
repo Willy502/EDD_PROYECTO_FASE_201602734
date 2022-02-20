@@ -1,14 +1,15 @@
 package barrios.alejandro.UDrawingPager.app.model;
 
 import barrios.alejandro.UDrawingPager.structures.controller.LinkedQueue;
+import barrios.alejandro.UDrawingPager.structures.controller.SinglyLinkedList;
 
 public class SavedInformation {
 
     private static SavedInformation savedInformation = null;
-    private int hatchQt = 0;
-    private LinkedQueue<Client> receptionQueue = new LinkedQueue<>();
-    private Printer colorPrinter = new Printer(1, PType.COLOR);
-    private Printer bnwPrinter = new Printer(2, PType.BLACK_N_WHITE);
+    private SinglyLinkedList<Window> linkedWindows;
+    private LinkedQueue<Client> receptionQueue;
+    private Printer colorPrinter;
+    private Printer bnwPrinter;
 
     public static SavedInformation getInstance() {
         if (savedInformation == null)
@@ -16,15 +17,35 @@ public class SavedInformation {
         return savedInformation;
     }
 
-    public int getHatchQt() {
-        return hatchQt;
+    public SinglyLinkedList<Window> getLinkedWindows() {
+        return linkedWindows;
+    }
+
+    public void setLinkedWindows(SinglyLinkedList<Window> linkedWindows) {
+        this.linkedWindows = linkedWindows;
     }
 
     public LinkedQueue<Client> getReceptionQueue() {
         return receptionQueue;
     }
 
-    public void setWindowsQt(int hatchQt) {
-        this.hatchQt = hatchQt;
+    public void setReceptionQueue(LinkedQueue<Client> receptionQueue) {
+        this.receptionQueue = receptionQueue;
+    }
+
+    public Printer getColorPrinter() {
+        return colorPrinter;
+    }
+
+    public void setColorPrinter(Printer colorPrinter) {
+        this.colorPrinter = colorPrinter;
+    }
+
+    public Printer getBnwPrinter() {
+        return bnwPrinter;
+    }
+
+    public void setBnwPrinter(Printer bnwPrinter) {
+        this.bnwPrinter = bnwPrinter;
     }
 }

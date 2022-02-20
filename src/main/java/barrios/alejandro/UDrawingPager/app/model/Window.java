@@ -3,13 +3,13 @@ package barrios.alejandro.UDrawingPager.app.model;
 import barrios.alejandro.UDrawingPager.structures.controller.LinkedQueue;
 import barrios.alejandro.UDrawingPager.structures.controller.LinkedStack;
 
-public class Hatch {
+public class Window {
 
     private int id;
     private LinkedStack<Image> images;
     private LinkedQueue<Client> clients;
 
-    public Hatch(int id) {
+    public Window(int id) {
         this.id = id;
         images = new LinkedStack<>();
         clients = new LinkedQueue<>();

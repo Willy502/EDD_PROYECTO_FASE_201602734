@@ -1,12 +1,25 @@
 package barrios.alejandro.UDrawingPager.app.controller;
 
+import barrios.alejandro.UDrawingPager.app.model.PType;
+import barrios.alejandro.UDrawingPager.app.model.Printer;
+import barrios.alejandro.UDrawingPager.app.model.SavedInformation;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuController {
 
-    OptionsController optionsController = new OptionsController();
-    InitialStepsController initialStepsController = new InitialStepsController();
+    OptionsController optionsController;
+    InitialStepsController initialStepsController;
+    SavedInformation savedInformation;
+
+    public MenuController() {
+        optionsController = new OptionsController();
+        initialStepsController = new InitialStepsController();
+        savedInformation = SavedInformation.getInstance();
+        savedInformation.setBnwPrinter(new Printer(1, PType.BLACK_N_WHITE));
+        savedInformation.setColorPrinter(new Printer(2, PType.COLOR));
+    }
 
     public void showMenu() {
         String menuOptions = """
