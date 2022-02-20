@@ -19,6 +19,9 @@ public class RunController {
 
     public void runStep() {
 
+        savedInformation.setStepsRunning(savedInformation.getStepsRunning() + 1);
+        System.out.println("---------- Paso: " + savedInformation.getStepsRunning() + " ----------");
+
         // Process printers
         // Color printer
         Image imageP = savedInformation.getColorPrinter().getImagesQueue().getFirst();
@@ -149,8 +152,7 @@ public class RunController {
                 }
             }
         }
-
-        savedInformation.setStepsRunning(savedInformation.getStepsRunning() + 1);
+        System.out.println("--------------------");
     }
 
 }
