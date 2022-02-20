@@ -13,8 +13,8 @@ public class InitApp {
 
     public InitApp() {
         savedInformation = SavedInformation.getInstance();
-        savedInformation.setBnwPrinter(new Printer(1, PType.BLACK_N_WHITE));
-        savedInformation.setColorPrinter(new Printer(2, PType.COLOR));
+        savedInformation.setBnwPrinter(new Printer(PType.BLACK_N_WHITE));
+        savedInformation.setColorPrinter(new Printer(PType.COLOR));
         savedInformation.setReceptionQueue(new LinkedQueue<>());
         savedInformation.setAttendedClients(new SinglyLinkedList<>());
         savedInformation.setWaitingList(new SinglyLinkedList<>());
