@@ -4,9 +4,10 @@ import barrios.alejandro.UDrawingPager.structures.controller.SinglyLinkedList;
 
 public class Client {
 
-    private int id;
-    private String name;
-    private SinglyLinkedList<Image> images;
+    private final int id;
+    private final String name;
+    private final SinglyLinkedList<Image> images;
+    private int steps;
 
     public Client(int id, String name) {
         this.id = id;
@@ -18,19 +19,19 @@ public class Client {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public SinglyLinkedList<Image> getImages() {
         return images;
+    }
+
+    public int getSteps() {
+        return steps;
+    }
+
+    public void setSteps(int steps) {
+        this.steps = steps;
     }
 }

@@ -12,6 +12,7 @@ public class SavedInformation {
     private SinglyLinkedList<Client> waitingList;
     private Printer colorPrinter;
     private Printer bnwPrinter;
+    private int stepsRunning;
 
     public static SavedInformation getInstance() {
         if (savedInformation == null)
@@ -65,5 +66,13 @@ public class SavedInformation {
 
     public void setWaitingList(SinglyLinkedList<Client> waitingList) {
         this.waitingList = waitingList;
+    }
+
+    public int getStepsRunning() {
+        return stepsRunning;
+    }
+
+    public void setStepsRunning(int stepsRunning) {
+        this.stepsRunning = stepsRunning;
     }
 }

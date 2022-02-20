@@ -5,9 +5,9 @@ import barrios.alejandro.UDrawingPager.structures.controller.LinkedStack;
 
 public class Window {
 
-    private int id;
-    private LinkedStack<Image> images;
-    private LinkedQueue<Client> clients;
+    private final int id;
+    private final LinkedStack<Image> images;
+    private final LinkedQueue<Client> clients;
 
     public Window(int id) {
         this.id = id;
@@ -17,10 +17,6 @@ public class Window {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public LinkedStack<Image> getImagesStack() {

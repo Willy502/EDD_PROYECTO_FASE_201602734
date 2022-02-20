@@ -45,14 +45,11 @@ public class OptionsController {
         // Black and white printer
         imageP = savedInformation.getBnwPrinter().getImagesQueue().getFirst();
         if (imageP != null) {
-            System.out.println("YA EMPECE 1");
             if (savedInformation.getBnwPrinter().getMissingTime() == 0) {
-                System.out.println("YA EMPECE 2");
                 savedInformation.getBnwPrinter().setMissingTime(savedInformation.getBnwPrinter().getStepsTiming());
                 for (Node<Client> clientNode = savedInformation.getWaitingList().getFirstNode(); clientNode != null; clientNode = clientNode.next) {
                     Client client = clientNode.data;
                     if (imageP.getClient() == client) {
-                        System.out.println("YA EMPECE 3");
                         client.getImages().append(imageP);
                         savedInformation.getBnwPrinter().getImagesQueue().remove();
                         System.out.println("-------------------");
@@ -72,20 +69,27 @@ public class OptionsController {
             Client client = savedInformation.getWaitingList().getPosition(i);
             boolean colorFound = false;
             for (Node<Image> imageNode = savedInformation.getColorPrinter().getImagesQueue().getFirstNode(); imageNode != null; imageNode = imageNode.next) {
-                if (imageNode.data.getClient() == client) colorFound = true;
+                if (imageNode.data.getClient() == client) {
+                    colorFound = true;
+                    break;
+                }
             }
 
             boolean bnwFound = false;
             for (Node<Image> imageNode = savedInformation.getBnwPrinter().getImagesQueue().getFirstNode(); imageNode != null; imageNode = imageNode.next) {
-                if (imageNode.data.getClient() == client) bnwFound = true;
+                if (imageNode.data.getClient() == client) {
+                    bnwFound = true;
+                    break;
+                }
             }
 
             if (!colorFound && !bnwFound) {
                 savedInformation.getAttendedClients().append(client);
                 savedInformation.getWaitingList().remove(i);
                 System.out.println("-------------------");
+                client.setSteps(savedInformation.getStepsRunning() - client.getSteps());
                 System.out.println("El cliente " + client.getName() + " ya posee todas sus imágenes impresas y sale de la empresa" +
-                        " registrando el tiempo total de x pasos");
+                        " registrando el tiempo total de " + client.getSteps() + " pasos");
             }
         }
 
@@ -100,6 +104,7 @@ public class OptionsController {
                     System.out.println("--------------------");
                     System.out.println("El cliente " + savedInformation.getReceptionQueue().getFirst().getName() +
                             " Ingresa a la ventanilla " + window.getId());
+                    savedInformation.getReceptionQueue().getFirst().setSteps(savedInformation.getStepsRunning());
                     savedInformation.getReceptionQueue().remove();
                 }
             } else {
@@ -144,6 +149,8 @@ public class OptionsController {
                 }
             }
         }
+
+        savedInformation.setStepsRunning(savedInformation.getStepsRunning() + 1);
     }
 
 }

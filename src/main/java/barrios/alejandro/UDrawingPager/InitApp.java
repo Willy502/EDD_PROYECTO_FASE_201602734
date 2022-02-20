@@ -18,6 +18,7 @@ public class InitApp {
         savedInformation.setReceptionQueue(new LinkedQueue<>());
         savedInformation.setAttendedClients(new SinglyLinkedList<>());
         savedInformation.setWaitingList(new SinglyLinkedList<>());
+        savedInformation.setStepsRunning(0);
 
         new MenuController().showMenu();
     }

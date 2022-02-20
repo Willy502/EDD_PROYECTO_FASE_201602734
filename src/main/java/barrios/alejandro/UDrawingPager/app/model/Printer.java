@@ -4,16 +4,14 @@ import barrios.alejandro.UDrawingPager.structures.controller.LinkedQueue;
 
 public class Printer {
 
-    private int id;
-    private PType type;
-    private int stepsTiming;
+    private final int id;
+    private final int stepsTiming;
     private int missingTime;
-    private LinkedQueue<Image> imagesQueue;
+    private final LinkedQueue<Image> imagesQueue;
 
     public Printer(int id, PType type) {
         this.id = id;
-        this.type = type;
-        if (this.type == PType.COLOR) stepsTiming = 2;
+        if (type == PType.COLOR) stepsTiming = 2;
         else stepsTiming = 1;
         missingTime = stepsTiming;
         imagesQueue = new LinkedQueue<>();
@@ -21,10 +19,6 @@ public class Printer {
 
     public int getId() {
         return id;
-    }
-
-    public PType getType() {
-        return type;
     }
 
     public LinkedQueue<Image> getImagesQueue() {
