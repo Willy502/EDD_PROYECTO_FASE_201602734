@@ -1,6 +1,6 @@
-package barrios.alejandro.UDrawingPager.controller;
+package barrios.alejandro.UDrawingPager.app.controller;
 
-import barrios.alejandro.UDrawingPager.model.SavedInformation;
+import barrios.alejandro.UDrawingPager.app.model.SavedInformation;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,9 +1,11 @@
-package barrios.alejandro.UDrawingPager.controller;
+package barrios.alejandro.UDrawingPager.app.controller;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuController {
+
+    OptionsController optionsController = new OptionsController();
 
     public void showMenu() {
         String menuOptions = """
@@ -72,28 +74,25 @@ public class MenuController {
 
             case 2:
                 System.out.println(option);
-                showMenu();
                 break;
 
             case 3:
                 System.out.println(option);
-                showMenu();
                 break;
 
             case 4:
                 System.out.println(option);
-                showMenu();
                 break;
 
             case 5:
-                System.out.println(option);
-                showMenu();
+                optionsController.about();
                 break;
 
             case 6:
                 System.exit(0);
                 break;
         }
+        showMenu();
     }
 
     private void initialSteps() throws InputMismatchException {

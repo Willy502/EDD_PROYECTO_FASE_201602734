@@ -1,4 +1,4 @@
-package barrios.alejandro.UDrawingPager.model;
+package barrios.alejandro.UDrawingPager.app.model;
 
 public class SavedInformation {
 

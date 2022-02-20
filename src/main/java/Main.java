@@ -1,4 +1,4 @@
-import barrios.alejandro.UDrawingPager.controller.MenuController;
+import barrios.alejandro.UDrawingPager.app.controller.MenuController;
 
 public class Main {
 
