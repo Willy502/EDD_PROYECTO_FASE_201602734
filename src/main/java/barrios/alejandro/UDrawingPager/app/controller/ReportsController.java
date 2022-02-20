@@ -84,7 +84,7 @@ public class ReportsController {
             }
         }
 
-        printTop(clients);
+        printTop(clients, PType.COLOR);
 
     }
 
@@ -120,7 +120,7 @@ public class ReportsController {
             }
         }
 
-        printTop(clients);
+        printTop(clients, PType.BLACK_N_WHITE);
 
     }
 
@@ -185,12 +185,19 @@ public class ReportsController {
         }
     }
 
-    private void printTop(SinglyLinkedList<Client> clients) {
+    private void printTop(SinglyLinkedList<Client> clients, PType type) {
         int i = 1;
         for (Node<Client> clientNode = clients.getFirstNode(); clientNode != null; clientNode = clientNode.next) {
             Client client = clientNode.data;
-            System.out.println(i + ". " + client.getName());
-            if (i > 5) break;
+            int totalPrinted = 0;
+            for (Node<Image> imageNode = client.getImages().getFirstNode(); imageNode != null; imageNode = imageNode.next) {
+                Image image = imageNode.data;
+                if (image.getType() == type) {
+                    totalPrinted++;
+                }
+            }
+            System.out.println(i + ". " + client.getName() + " | Impresas: " + totalPrinted);
+            if (i >= 5) break;
             i++;
         }
     }

@@ -1,7 +1,10 @@
 package barrios.alejandro.UDrawingPager.app.controller;
 
 import barrios.alejandro.UDrawingPager.app.model.*;
+import barrios.alejandro.UDrawingPager.structures.controller.SinglyLinkedList;
 import barrios.alejandro.UDrawingPager.structures.model.Node;
+
+import java.util.Random;
 
 public class RunController {
 
@@ -17,8 +20,49 @@ public class RunController {
         System.out.println(information);
     }
 
+    private void randomUsers() {
+        SinglyLinkedList<String> names = new SinglyLinkedList<>();
+        names.append("Mirai");
+        names.append("Carlos");
+        names.append("Risa");
+        names.append("Nao");
+        names.append("Akihito");
+
+        SinglyLinkedList<String> lastNames = new SinglyLinkedList<>();
+        lastNames.append("Kuriyama");
+        lastNames.append("López");
+        lastNames.append("Koizumi");
+        lastNames.append("Tomori");
+        lastNames.append("Kanbara");
+
+        SinglyLinkedList<String> fullName = new SinglyLinkedList<>();
+        int randomBoundary = new Random().nextInt(3);
+        for (int i = 0; i < randomBoundary; i++) {
+
+            fullName.append(
+                    names.getPosition(new Random().nextInt(5))
+                            + " " + lastNames.getPosition(new Random().nextInt(5))
+            );
+        }
+
+        for (int i = 0; i < fullName.size(); i++) {
+            Client client = new Client(savedInformation.getReceptionQueue().size(), fullName.getPosition(i));
+            randomBoundary = new Random().nextInt(4);
+            for (int j = 0; j < randomBoundary; j++) {
+                if ((new Random().nextInt(5) + 1) % 2 == 0) {
+                    client.getImages().append(new Image(PType.COLOR, client));
+                } else {
+                    client.getImages().append(new Image(PType.BLACK_N_WHITE, client));
+                }
+            }
+
+            savedInformation.getReceptionQueue().add(client);
+        }
+    }
+
     public void runStep() {
 
+        randomUsers(); // Append 3 random users
         savedInformation.setStepsRunning(savedInformation.getStepsRunning() + 1);
         System.out.println("---------- Paso: " + savedInformation.getStepsRunning() + " ----------");
 
