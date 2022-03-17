@@ -10,5 +10,6 @@ module barrios.alejandro.udrawingpage {
     requires eu.hansolo.tilesfx;
 
     opens barrios.alejandro.udrawingpage to javafx.fxml;
+    opens barrios.alejandro.udrawingpage.users.controller to javafx.fxml;
     exports barrios.alejandro.udrawingpage;
 }
