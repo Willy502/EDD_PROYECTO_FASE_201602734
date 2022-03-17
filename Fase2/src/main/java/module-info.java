@@ -1,4 +1,4 @@
-module barrios.alejandro.udrawingpage {
+module barrios.alejandro.udrawingpage  {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
