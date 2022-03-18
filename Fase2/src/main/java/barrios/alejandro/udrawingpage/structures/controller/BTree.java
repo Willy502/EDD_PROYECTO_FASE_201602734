@@ -1,4 +1,4 @@
-package barrios.alejandro.udrawingpage.structures;
+package barrios.alejandro.udrawingpage.structures.controller;
 
 import barrios.alejandro.udrawingpage.users.model.User;
 

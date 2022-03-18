@@ -1,5 +1,6 @@
 package barrios.alejandro.udrawingpage.users.controller;
 
+import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.users.model.User;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
@@ -40,6 +41,12 @@ public class LoginController  {
             goToDashboard(event);
         } else {
             new CustomAlert("Registro", "Credenciales inválidas");
+            SparceMatrix sparceMatrix = new SparceMatrix(1, 5, 5);
+            sparceMatrix.saveCell(5, 5, "#000");
+            sparceMatrix.saveCell(1, 1, "#000");
+            sparceMatrix.saveCell(3, 4, "#000");
+            sparceMatrix.saveCell(4, 2, "#000");
+            sparceMatrix.saveCell(2, 3, "#000");
         }
     }
 

@@ -1,6 +1,6 @@
 package barrios.alejandro.udrawingpage.utils;
 
-import barrios.alejandro.udrawingpage.structures.BTree;
+import barrios.alejandro.udrawingpage.structures.controller.BTree;
 import barrios.alejandro.udrawingpage.users.model.User;
 
 public class TemporalInformation {
