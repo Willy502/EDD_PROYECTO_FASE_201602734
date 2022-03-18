@@ -23,22 +23,37 @@ public class LoginController  {
 
     @FXML
     protected void goToRegister(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("register-view.fxml"));
+        String pack = "/barrios/alejandro/udrawingpage/users/";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(pack + "register-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
     }
 
     @FXML
-    protected void loginUser() {
+    protected void loginUser(ActionEvent event) {
         TemporalInformation temporalInformation = TemporalInformation.getInstance();
         User user = temporalInformation.getUsersTree().searchUserByDpiAndPassword(Integer.parseInt(txtDpi.getText()), txtPassword.getText());
         if (user != null) {
             clearFields();
-            System.out.println(user.getName());
+            temporalInformation.setLoguedUser(user);
+            goToDashboard(event);
         } else {
             new CustomAlert("Registro", "Credenciales inválidas");
         }
+    }
+
+    private void goToDashboard(ActionEvent event) {
+        String pack = "/barrios/alejandro/udrawingpage/dashboard/";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(pack + "dashboard-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void clearFields() {

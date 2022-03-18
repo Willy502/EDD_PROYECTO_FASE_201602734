@@ -93,9 +93,7 @@ public class BTree {
     public User searchUserByDpiAndPassword(long dpi, String password) {
         Node temp = search(root, dpi, password);
 
-        if (temp == null) {
-            System.out.println("Vacio");
-        } else {
+        if (temp != null) {
             User user = searchUserInNode(temp, dpi);
            if (user != null && user.getPassword().equals(password)) {
                return user;

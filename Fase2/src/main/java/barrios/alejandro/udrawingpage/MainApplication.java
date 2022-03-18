@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class MainApplication extends Application {
 
-    String pack = "/barrios/alejandro/udrawingpage/users/controller/";
+    String pack = "/barrios/alejandro/udrawingpage/users/";
 
     @Override
     public void start(Stage stage) throws IOException {
