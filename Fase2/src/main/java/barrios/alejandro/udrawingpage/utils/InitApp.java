@@ -8,7 +8,6 @@ public class InitApp {
 
     public InitApp() {
         temporalInformation = TemporalInformation.getInstance();
-        temporalInformation.startRegisteredUsers();
         temporalInformation.setUsersTree(new BTree(4));
     }
 

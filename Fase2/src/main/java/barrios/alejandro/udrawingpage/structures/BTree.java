@@ -32,7 +32,7 @@ public class BTree {
 
         if (node.leaf) { // Si es una hoja
             int i = node.noKeys; // Cuantos valores tiene el nodo
-            while(i >= 1 && key.id < node.key[i - 1].id) {
+            while(i >= 1 && key.dpi < node.key[i - 1].dpi) {
                 node.key[i] = node.key[i - 1]; // Desplazamos los valores mayores al que va a ingresar
                 i--;
             }
@@ -44,12 +44,12 @@ public class BTree {
         } else {
             int j = 0;
 
-            while (j < node.noKeys && key.id > node.key[j].id) j++; // Buscamos la posicion del nodo hijo
+            while (j < node.noKeys && key.dpi > node.key[j].dpi) j++; // Buscamos la posicion del nodo hijo
 
             if (node.child[j].noKeys == ((2 * t) - 1)) { // Si el nodo hijo esta lleno lo separamos
                 split(node, j, node.child[j]);
 
-                if (key.id > node.key[j].id) j++;
+                if (key.dpi > node.key[j].dpi) j++;
             }
 
             insertInNonFullNode(node.child[j], key);
@@ -90,6 +90,50 @@ public class BTree {
         node1.noKeys++;
     }
 
+    public User searchUserByDpiAndPassword(long dpi, String password) {
+        Node temp = search(root, dpi, password);
+
+        if (temp == null) {
+            System.out.println("Vacio");
+        } else {
+            User user = searchUserInNode(temp, dpi);
+           if (user != null && user.getPassword().equals(password)) {
+               return user;
+           }
+        }
+        return null;
+    }
+
+    private User searchUserInNode(Node n, long dpi) {
+        User user = n.searchUser(dpi);
+        if (user != null) return user;
+
+        //Si no es hoja
+        if (!n.leaf) {
+            //recorre los nodos para saber si tiene hijos
+            for (int j = 0; j <= n.noKeys; j++) {
+                if (n.child[j] != null) {
+                    searchUserInNode(n.child[j], dpi);
+                }
+            }
+        }
+        return null;
+    }
+
+    private Node search(Node current, long dpi, String password) {
+        int i = 0;
+
+        while (i < current.noKeys && dpi > current.key[i].dpi) i++;
+
+        if (i < current.noKeys && dpi == current.key[i].dpi) return current;
+
+        if (current.leaf) {
+            return null;
+        } else {
+            return search(current.child[i], dpi, password);
+        }
+    }
+
     static class Node {
         int noKeys; // Claves almacenadas en el nodo
         boolean leaf; // El nodo es hoja?
@@ -101,6 +145,13 @@ public class BTree {
             leaf = true;
             key = new User[(2 * t) - 1];
             child = new Node[2 * t];
+        }
+
+        public User searchUser(long dpi) {
+            for (int i = 0; i < noKeys; i++) {
+                if (key[i].dpi == dpi) return key[i];
+            }
+            return null;
         }
 
     }

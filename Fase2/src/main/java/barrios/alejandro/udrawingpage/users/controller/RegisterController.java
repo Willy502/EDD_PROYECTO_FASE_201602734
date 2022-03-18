@@ -35,10 +35,8 @@ public class RegisterController {
 
     @FXML
     protected void registerUser() {
-        int id = TemporalInformation.getInstance().getRegisteredUsers();
         if (txtPassword.getText().equals(txtConfirmPassword.getText())) {
-            User user = new User(id + 1, txtName.getText(), txtDpi.getText(), txtPassword.getText());
-            TemporalInformation.getInstance().setRegisteredUsers();
+            User user = new User(Integer.parseInt(txtDpi.getText()), txtName.getText(), txtPassword.getText());
             TemporalInformation.getInstance().getUsersTree().insert(user);
             clearFields();
             new CustomAlert("Registro", "Usuario creado exitosamente");
