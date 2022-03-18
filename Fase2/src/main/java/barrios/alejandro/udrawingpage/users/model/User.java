@@ -7,4 +7,11 @@ public class User {
     private String dpi;
     private String password;
 
+    public User(int id, String name, String dpi, String password) {
+        this.id = id;
+        this.name = name;
+        this.dpi = dpi;
+        this.password = password;
+    }
+
 }

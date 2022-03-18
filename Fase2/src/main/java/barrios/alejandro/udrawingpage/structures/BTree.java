@@ -39,6 +39,8 @@ public class BTree {
 
             node.key[i] = key; // Insertamos
             node.noKeys++; // Aumenta la cantidad de elementos en el nodo
+            System.out.println("Insercion realizada correctamente en el arbol B");
+
         } else {
             int j = 0;
 

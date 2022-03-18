@@ -7,12 +7,7 @@
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="barrios.alejandro.udrawingpage.users.controller.RegisterController">
    <children>
       <Label text="Registro" />
-      <TextField fx:id="txtUsername" promptText="Nombre de usuario">
-         <VBox.margin>
-            <Insets left="50.0" right="50.0" top="10.0" />
-         </VBox.margin>
-      </TextField>
-      <TextField fx:id="txtNombre" promptText="Nombre">
+      <TextField fx:id="txtName" promptText="Nombre">
          <VBox.margin>
             <Insets left="50.0" right="50.0" top="10.0" />
          </VBox.margin>
@@ -32,7 +27,7 @@
             <Insets left="50.0" right="50.0" top="10.0" />
          </VBox.margin>
       </PasswordField>
-      <Button mnemonicParsing="false" text="Registrar" textAlignment="CENTER">
+      <Button mnemonicParsing="false" onAction="#registerUser" text="Registrar" textAlignment="CENTER">
          <VBox.margin>
             <Insets left="100.0" right="100.0" top="10.0" />
          </VBox.margin>
