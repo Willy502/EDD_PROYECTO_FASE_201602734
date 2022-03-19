@@ -1,6 +1,6 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
-public class DoubleCircularList {
+public class DoublyCircularLinkedList {
 
     private Node head;
     private int size = 0;
