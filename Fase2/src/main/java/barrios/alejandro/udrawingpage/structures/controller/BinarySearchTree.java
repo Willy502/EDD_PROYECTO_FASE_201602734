@@ -2,7 +2,12 @@ package barrios.alejandro.udrawingpage.structures.controller;
 
 public class BinarySearchTree {
 
-    Node root;
+    public int id;
+    private Node root;
+
+    public BinarySearchTree(int id) {
+        this.id = id;
+    }
 
     public void insert(SparceMatrix capa) {
         if (root == null) {
