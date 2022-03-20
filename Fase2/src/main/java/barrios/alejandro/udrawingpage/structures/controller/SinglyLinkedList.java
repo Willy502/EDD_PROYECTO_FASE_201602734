@@ -1,33 +1,33 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
-public class SinglyLinkedList {
+public class SinglyLinkedList<T> {
 
-    private Node head;
+    private Node<T> head;
     private int size = 0;
 
-    public void addToList(BinarySearchTree image) {
+    public void addToList(T data) {
         if (head == null) {
-            this.head = new Node(image);
+            this.head = new Node<T>(data);
             size++;
             return;
         }
-        Node current = this.head;
+        Node<T> current = this.head;
         while (current.next != null) current = current.next;
-        current.next = new Node(image);
+        current.next = new Node<T>(data);
         size++;
     }
 
-    public Node getHead() {
+    public Node<T> getHead() {
         return head;
     }
 
-    public BinarySearchTree getPos(int position) {
-        Node current = this.head;
+    public T getPos(int position) {
+        Node<T> current = this.head;
         for (int i = 0; i < position; i++) current = current.next;
-        return current.image;
+        return current.data;
     }
 
-    public void setFirstNode(Node head) {
+    public void setFirstNode(Node<T> head) {
         this.head = head;
     }
 
@@ -35,12 +35,12 @@ public class SinglyLinkedList {
         return size;
     }
 
-    static class Node {
-        Node next;
-        BinarySearchTree image;
+    static class Node<T> {
+        Node<T> next;
+        T data; // BinarySearchTree for images, capa for capas
 
-        public Node(BinarySearchTree image) {
-            this.image = image;
+        public Node(T data) {
+            this.data = data;
         }
     }
 

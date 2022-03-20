@@ -1,6 +1,6 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
-public class AvlTree {
+public class AvlTree { // Images tree
     // Delete missing
 
     private Node root;

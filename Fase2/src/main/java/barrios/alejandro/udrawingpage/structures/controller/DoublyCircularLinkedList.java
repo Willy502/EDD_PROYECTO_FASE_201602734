@@ -25,7 +25,7 @@ public class DoublyCircularLinkedList {
         size++;
     }
 
-    public SinglyLinkedList getPos(int position) {
+    public SinglyLinkedList<BinarySearchTree> getPos(int position) {
         Node current = head;
         for (int i = 0; i < position; i++) current = current.next;
         return current.images;
@@ -39,11 +39,11 @@ public class DoublyCircularLinkedList {
         boolean imHead;
         Node next;
         Node prev;
-        SinglyLinkedList images;
+        SinglyLinkedList<BinarySearchTree> images;
         int id;
         public Node(int id) {
             this.id = id;
-            images = new SinglyLinkedList();
+            images = new SinglyLinkedList<>();
         }
 
     }

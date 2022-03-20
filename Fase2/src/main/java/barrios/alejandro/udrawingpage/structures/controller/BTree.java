@@ -2,7 +2,7 @@ package barrios.alejandro.udrawingpage.structures.controller;
 
 import barrios.alejandro.udrawingpage.users.model.User;
 
-public class BTree {
+public class BTree { // Users
     // Delete missing
 
     int t;

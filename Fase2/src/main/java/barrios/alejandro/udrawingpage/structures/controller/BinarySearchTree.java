@@ -1,7 +1,7 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
-public class BinarySearchTree {
-    // Delte missing
+public class BinarySearchTree { // Image
+    // Delete missing
 
     public int id;
     private Node root;

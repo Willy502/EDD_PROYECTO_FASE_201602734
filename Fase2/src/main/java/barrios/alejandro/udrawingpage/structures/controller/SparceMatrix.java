@@ -1,6 +1,6 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
-public class SparceMatrix {
+public class SparceMatrix { // Users
 
     public int id;
     private int maxX;
