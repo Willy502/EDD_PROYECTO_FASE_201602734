@@ -2,19 +2,23 @@ package barrios.alejandro.udrawingpage.users.model;
 
 import barrios.alejandro.udrawingpage.structures.controller.*;
 
+import java.math.BigInteger;
+
 public class User {
 
     public long dpi;
     private String name;
     private String password;
+    private Rol rol;
     private DoublyCircularLinkedList albumes;
     private SinglyLinkedList<SparceMatrix> capas;
     private AvlTree images;
 
-    public User(long dpi, String name, String password) {
+    public User(long dpi, String name, String password, Rol rol) {
         this.name = name;
         this.dpi = dpi;
         this.password = password;
+        this.rol = rol;
     }
 
     public String getName() {
@@ -55,5 +59,9 @@ public class User {
 
     public void setImages() {
         images = new AvlTree();
+    }
+
+    public Rol getRol() {
+        return rol;
     }
 }

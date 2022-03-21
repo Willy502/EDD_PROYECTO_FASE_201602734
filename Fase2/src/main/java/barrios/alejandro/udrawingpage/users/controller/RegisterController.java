@@ -1,5 +1,6 @@
 package barrios.alejandro.udrawingpage.users.controller;
 
+import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import barrios.alejandro.udrawingpage.users.model.User;
@@ -37,7 +38,7 @@ public class RegisterController {
     @FXML
     protected void registerUser() {
         if (txtPassword.getText().equals(txtConfirmPassword.getText())) {
-            User user = new User(Integer.parseInt(txtDpi.getText()), txtName.getText(), txtPassword.getText());
+            User user = new User(Long.parseLong(txtDpi.getText()), txtName.getText(), txtPassword.getText(), Rol.CLIENT);
             TemporalInformation.getInstance().getUsersTree().insert(user);
             clearFields();
             new CustomAlert("Registro", "Usuario creado exitosamente");
