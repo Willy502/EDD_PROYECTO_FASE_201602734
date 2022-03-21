@@ -29,6 +29,9 @@ public class DashboardController {
     @FXML
     protected Label lblName;
 
+    @FXML
+    protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums;
+
     private TemporalInformation temporalInformation;
 
     public DashboardController() {
@@ -38,6 +41,14 @@ public class DashboardController {
     @FXML
     public void initialize() {
         lblName.setText(temporalInformation.getLoguedUser().getName());
+
+        if (temporalInformation.getLoguedUser().getRol() == Rol.ADMIN) {
+            btnLoadCapas.setVisible(false);
+            btnLoadImages.setVisible(false);
+            btnLoadAlbums.setVisible(false);
+        } else {
+            btnLoadClients.setVisible(false);
+        }
     }
 
     @FXML
