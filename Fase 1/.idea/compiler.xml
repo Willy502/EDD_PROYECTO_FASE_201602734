@@ -6,8 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="UDrawing Pager" />
-        <module name="EDD_PROYECTO_FASE_201602734" />
+        <module name="UDrawing_Pager" />
       </profile>
     </annotationProcessing>
   </component>
