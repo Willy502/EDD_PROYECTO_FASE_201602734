@@ -97,6 +97,33 @@ public class AvlTree { // Images tree
         return newRoot;
     }
 
+    public BinarySearchTree search(int idImage) {
+        return binarySearch(root, idImage);
+    }
+
+    private BinarySearchTree binarySearch(Node current, int idImage) {
+        if (idImage > current.image.id) {
+            // right
+            if (current.rightBranch != null) {
+                current = current.rightBranch;
+                binarySearch(current, idImage);
+            } else {
+                return null;
+            }
+        } else if (idImage < current.image.id) {
+            // left
+            if (current.leftBranch != null) {
+                current = current.leftBranch;
+                binarySearch(current, idImage);
+            } else {
+                return null;
+            }
+        } else {
+            return current.image;
+        }
+        return null;
+    }
+
     static class Node {
         int height;
         BinarySearchTree image;
