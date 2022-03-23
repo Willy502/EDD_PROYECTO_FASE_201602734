@@ -3,8 +3,9 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="barrios.alejandro.udrawingpage.dashboard.controller.DashboardController">
+<VBox prefHeight="547.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="barrios.alejandro.udrawingpage.dashboard.controller.DashboardController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
@@ -62,7 +63,7 @@
                   </HBox>
                   <HBox prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #FFF;">
                      <children>
-                        <ComboBox fx:id="comboImages" prefWidth="150.0" />
+                        <ComboBox fx:id="comboImages" prefWidth="150.0" promptText="Número de Imágen" />
                         <Button fx:id="btnImageAndLayers" mnemonicParsing="false" onAction="#structuresState" text="Imágen y Árbol de Capas">
                            <HBox.margin>
                               <Insets left="10.0" />
@@ -73,7 +74,50 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button fx:id="btnClientsTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Clientes" />
+                  <Button fx:id="btnClientsTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Clientes">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></Button>
+                  <Line endX="250.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Line>
+                  <Label text="Graficar Imagen">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ComboBox fx:id="comboGraphFullImage" prefWidth="150.0" promptText="Número de Imágen">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <Button fx:id="btnPreorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Preorder">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnInorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Inorder">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnPostorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Postorder">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtCapas" promptText="Ej: 1,2,3" />
+                        <Button fx:id="btnCapas" mnemonicParsing="false" text="Capas">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <StackPane fx:id="mainPane" style="-fx-background-color: #FFF;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />

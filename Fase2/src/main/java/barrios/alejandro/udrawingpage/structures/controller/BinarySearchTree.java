@@ -8,6 +8,7 @@ public class BinarySearchTree { // Image
     public int id;
     private Node root;
     private String result;
+    private SinglyLinkedList<SparceMatrix> layers;
 
     public BinarySearchTree(int id) {
         this.id = id;
@@ -94,6 +95,42 @@ public class BinarySearchTree { // Image
 
         result += "}\n";
         Graph.GenerarImagen("BINARY_LAYER", result);
+    }
+
+    public void orderLayers(String order) {
+        layers = new SinglyLinkedList<>();
+        switch (order) {
+            case "PREORDER" -> preorder(root);
+            case "INORDER" -> inorder(root);
+            case "POSTORDER" -> postorder(root);
+        }
+
+    }
+
+    private void preorder(Node nodo) {
+        if (nodo == null) return;
+        layers.addToList(nodo.capa);
+
+        preorder(nodo.leftBranch);
+        preorder(nodo.rightBranch);
+    }
+
+    private void inorder(Node nodo) {
+        if (nodo == null) return;
+        inorder(nodo.leftBranch);
+        layers.addToList(nodo.capa);
+        inorder(nodo.rightBranch);
+    }
+
+    private void postorder(Node nodo) {
+        if (nodo == null) return;
+        postorder(nodo.leftBranch);
+        postorder(nodo.rightBranch);
+        layers.addToList(nodo.capa);
+    }
+
+    public SinglyLinkedList<SparceMatrix> getOrderedLayers() {
+        return layers;
     }
 
     @Override

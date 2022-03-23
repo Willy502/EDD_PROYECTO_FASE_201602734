@@ -32,17 +32,18 @@ public class DashboardController {
 
     @FXML
     protected Label lblName;
-
     @FXML
     protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums;
     @FXML
     protected StackPane mainPane;
     @FXML
-    protected TextField txtNoLayer;
+    protected TextField txtNoLayer, txtCapas;
     @FXML
-    protected ComboBox<BinarySearchTree> comboImages;
+    protected ComboBox<BinarySearchTree> comboImages, comboGraphFullImage;
+    @FXML
+    protected Button btnPreorder, btnInorder, btnPostorder;
 
-    private TemporalInformation temporalInformation;
+    private final TemporalInformation temporalInformation;
 
     public DashboardController() {
         temporalInformation = TemporalInformation.getInstance();
@@ -101,12 +102,14 @@ public class DashboardController {
     private void fillChoicer() {
         if (temporalInformation.getLoguedUser().getImages() != null) {
             temporalInformation.getLoguedUser().getImages().fillImages();
+            comboGraphFullImage.getItems().clear();
             comboImages.getItems().clear();
             AvlTree images = temporalInformation.getLoguedUser().getImages();
 
             SinglyLinkedList<BinarySearchTree> imagesList = images.getImages();
             for (SinglyLinkedList.Node<BinarySearchTree> image = imagesList.getHead(); image != null; image = image.next) {
                 comboImages.getItems().add(image.data);
+                comboGraphFullImage.getItems().add(image.data);
             }
         }
 
@@ -242,6 +245,17 @@ public class DashboardController {
                 break;
         }
 
+    }
+
+    @FXML
+    protected void buildImageOrder(ActionEvent event) throws InterruptedException {
+        String id = ((Button) event.getSource()).getId();
+
+        switch (id) {
+            case "btnPreorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "PREORDER");
+            case "btnInorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "INORDER");
+            case "btnPostorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "POSTORDER");
+        }
     }
 
 }
