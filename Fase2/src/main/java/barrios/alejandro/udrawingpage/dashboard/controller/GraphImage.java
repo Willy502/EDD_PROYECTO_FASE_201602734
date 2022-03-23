@@ -26,6 +26,26 @@ public class GraphImage {
 
         image.orderLayers(order);
         SinglyLinkedList<SparceMatrix> layers = image.getOrderedLayers();
+        graphImage(pane, layers);
+
+    }
+
+    public void buildImage(StackPane pane, String layers) throws InterruptedException {
+        if (pane.getChildren().size() > 0) {
+            pane.getChildren().clear();
+        }
+
+        String[] dividedLayers = layers.split(",");
+        SinglyLinkedList<SparceMatrix> sLayers = new SinglyLinkedList<>();
+        for (int i = 0; i < dividedLayers.length; i++) {
+            SparceMatrix matrix = temporalInformation.getLoguedUser().getCapas().searchLayer(Integer.parseInt(dividedLayers[i]));
+            sLayers.addToList(matrix);
+        }
+        graphImage(pane, sLayers);
+
+    }
+
+    private void graphImage(StackPane pane, SinglyLinkedList<SparceMatrix> layers) throws InterruptedException {
         for (SinglyLinkedList.Node<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
             layer.data.graphMatrix();
             TimeUnit.SECONDS.sleep(2);
@@ -44,6 +64,5 @@ public class GraphImage {
             }
 
         }
-
     }
 }
