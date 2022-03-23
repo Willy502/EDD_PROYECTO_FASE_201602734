@@ -11,7 +11,7 @@ public class User {
     private String password;
     private Rol rol;
     private DoublyCircularLinkedList albumes;
-    private SinglyLinkedList<SparceMatrix> capas;
+    private BinarySearchTree capas;
     private AvlTree images;
 
     public User(long dpi, String name, String password, Rol rol) {
@@ -45,12 +45,12 @@ public class User {
         albumes = new DoublyCircularLinkedList();
     }
 
-    public SinglyLinkedList<SparceMatrix> getCapas() {
+    public BinarySearchTree getCapas() {
         return capas;
     }
 
     public void setCapas() {
-        capas = new SinglyLinkedList<>();
+        capas = new BinarySearchTree();
     }
 
     public AvlTree getImages() {

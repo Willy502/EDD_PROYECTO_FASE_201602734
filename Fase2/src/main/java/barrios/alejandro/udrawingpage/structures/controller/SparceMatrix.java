@@ -5,8 +5,8 @@ import barrios.alejandro.udrawingpage.graph.Graph;
 public class SparceMatrix { // layer
 
     public int id;
-    private int maxX;
-    private int maxY;
+    public int maxX;
+    public int maxY;
     private Node head;
 
     public SparceMatrix(int id, int maxX, int maxY) {
@@ -19,13 +19,13 @@ public class SparceMatrix { // layer
     private void buildMatrix() {
         int x = 1;
         int y = 1;
-        head = new Node(1, 1, "#FFFFFF");
+        head = new Node(1, 1, "transparent");
         Node current = head;
         Node prevY = null;
         while (y <= maxY) {
             while (x < maxX) {
                 x++;
-                Node newNode = new Node(x, y, "#FFFFFF");
+                Node newNode = new Node(x, y, "transparent");
                 newNode.left = current;
                 current.right = newNode;
                 current = current.right;
@@ -40,7 +40,7 @@ public class SparceMatrix { // layer
             y++;
             current = head;
             while (current.bottom != null) current = current.bottom;
-            Node newNode = new Node(x, y, "#FFFFFF");
+            Node newNode = new Node(x, y, "transparent");
             newNode.top = current;
             current.bottom = newNode;
             prevY = current;
@@ -80,7 +80,7 @@ public class SparceMatrix { // layer
         // Columna
         for (int currentX = 1; currentX <= maxX; currentX++) {
             Node currentCell = searchCell(currentX, columna);
-            result += "F" + currentX + "_C" + columna + "[label=\"\", width=1, group=" + fila + ", style=filled, color=\"" + currentCell.color + "\"];\n";
+            result += "F" + currentX + "_C" + columna + "[label=\"\", width=.3 height=.3, group=" + fila + ", style=filled, color=\"" + currentCell.color + "\"];\n";
         }
 
         // Relaciones
@@ -93,7 +93,7 @@ public class SparceMatrix { // layer
             // Fila
             for (int currentY = 2; currentY <= maxY; currentY++) {
                 Node currentCell = searchCell(fila, currentY);
-                result += "F" + fila + "_C" + currentY + "[label=\"\", width=1, group=" + currentY + ", style=filled, color=\"" + currentCell.color + "\"];\n";
+                result += "F" + fila + "_C" + currentY + "[label=\"\", width=.3 height=.3, group=" + currentY + ", style=filled, color=\"" + currentCell.color + "\"];\n";
             }
 
             // Relaciones

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -20,5 +21,55 @@
             <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#logout" text="Cerrar sesión" />
          </items>
       </ToolBar>
+      <HBox HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox style="-fx-background-color: #FFF;" VBox.vgrow="ALWAYS">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <Label text="Estado de las estructuras" />
+                  <Button fx:id="btnImagesTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Imágenes">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnLayersTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Capas">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnAlbumsList" mnemonicParsing="false" onAction="#structuresState" text="Listado de álbumes">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <HBox style="-fx-background-color: #FFFFFF;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <TextField fx:id="txtNoLayer" promptText="Número de capa">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="btnLayer" mnemonicParsing="false" onAction="#structuresState" text="Capa" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Button fx:id="btnImageAndLayers" mnemonicParsing="false" onAction="#structuresState" text="Imágen y Árbol de Capas">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnClientsTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Clientes" />
+               </children>
+            </VBox>
+            <StackPane fx:id="mainPane" style="-fx-background-color: #FFF;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+         </children>
+      </HBox>
    </children>
 </VBox>

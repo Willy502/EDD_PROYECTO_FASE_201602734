@@ -1,7 +1,6 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
-import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.users.model.User;
@@ -17,8 +16,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -34,6 +37,10 @@ public class DashboardController {
 
     @FXML
     protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums;
+    @FXML
+    protected StackPane mainPane;
+    @FXML
+    protected TextField txtNoLayer;
 
     private TemporalInformation temporalInformation;
 
@@ -111,21 +118,26 @@ public class DashboardController {
             }
             case "btnLoadCapas" -> {
                 temporalInformation.getLoguedUser().setCapas();
-                jsonArray.forEach(capa -> {
-                    JsonObject item = (JsonObject) capa;
-                    int idCapa = item.get("id_capa").getAsInt();
-                    JsonArray pexels = item.get("pixeles").getAsJsonArray();
+                int maxX = 0;
+                int maxY = 0;
 
-                    int maxX = 0;
-                    int maxY = 0;
+                for (JsonElement capa : jsonArray) {
+                    JsonObject item = (JsonObject) capa;
+                    JsonArray pexels = item.get("pixeles").getAsJsonArray();
 
                     for (JsonElement pexelsInfo : pexels) {
                         JsonObject info = (JsonObject) pexelsInfo;
                         int fila = info.get("fila").getAsInt();
                         if (fila > maxX) maxX = fila;
                         int columna = info.get("columna").getAsInt();
-                        if (columna > maxY) maxY = fila;
+                        if (columna > maxY) maxY = columna;
                     }
+                }
+
+                for (JsonElement capa : jsonArray) {
+                    JsonObject item = (JsonObject) capa;
+                    int idCapa = item.get("id_capa").getAsInt();
+                    JsonArray pexels = item.get("pixeles").getAsJsonArray();
 
                     SparceMatrix newCapa = new SparceMatrix(idCapa, maxX, maxY);
                     pexels.forEach(pexelsInfo -> {
@@ -135,11 +147,11 @@ public class DashboardController {
                         String color = info.get("color").getAsString();
                         newCapa.saveCell(fila, columna, color);
                     });
-                    temporalInformation.getLoguedUser().getCapas().addToList(newCapa);
-                });
+                    temporalInformation.getLoguedUser().getCapas().insert(newCapa);
+                }
+
+
                 new CustomAlert("Carga finalizada", "Carga masiva de capas finalizada exitosamente");
-                SparceMatrix newCapa = new SparceMatrix(10, 9, 9);
-                newCapa.graphMatrix();
             }
             case "btnLoadImages" -> {
                 temporalInformation.getLoguedUser().setImages();
@@ -147,19 +159,14 @@ public class DashboardController {
                     JsonObject imageInfo = (JsonObject) image;
                     int imageId = imageInfo.get("id").getAsInt();
                     BinarySearchTree bstImage = new BinarySearchTree(imageId);
-                    SinglyLinkedList<SparceMatrix> layers = temporalInformation.getLoguedUser().getCapas();
+                    BinarySearchTree layers = temporalInformation.getLoguedUser().getCapas();
 
                     JsonArray layersArray = imageInfo.get("capas").getAsJsonArray();
                     int i = 0;
                     while (i < layersArray.size()) {
                         int idCapa = layersArray.get(i).getAsInt();
-                        for (int j = 0; j < layers.size(); j++) {
-                            SparceMatrix layer = layers.getPos(j);
-                            if (layer.id == idCapa) {
-                                bstImage.insert(layer);
-                                break;
-                            }
-                        }
+                        SparceMatrix searchLay = layers.searchLayer(idCapa);
+                        if (searchLay != null) bstImage.insert(searchLay);
                         i++;
                     }
 
@@ -191,6 +198,26 @@ public class DashboardController {
                 new CustomAlert("Carga finalizada", "Carga masiva de albumes finalizada exitosamente");
             }
         }
+    }
+
+    @FXML
+    protected void structuresState(ActionEvent event) {
+        String id = ((Button) event.getSource()).getId();
+
+        switch (id) {
+            case "btnLayer":
+                new StructuresReport().buildLayer(mainPane, Integer.parseInt(txtNoLayer.getText()));
+                break;
+
+            case "btnImagesTree":
+                new StructuresReport().buildAvlImages(mainPane, temporalInformation.getLoguedUser().getImages());
+                break;
+
+            case "btnLayersTree":
+                new StructuresReport().buildBinaryLayers(mainPane, temporalInformation.getLoguedUser().getCapas());
+                break;
+        }
+
     }
 
 }

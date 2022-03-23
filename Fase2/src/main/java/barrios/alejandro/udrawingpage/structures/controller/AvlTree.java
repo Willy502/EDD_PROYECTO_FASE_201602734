@@ -1,9 +1,12 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
+import barrios.alejandro.udrawingpage.graph.Graph;
+
 public class AvlTree { // Images tree
     // Delete missing
 
     private Node root;
+    private String result;
 
     public void insert(BinarySearchTree image) {
         if (root == null) {
@@ -102,26 +105,49 @@ public class AvlTree { // Images tree
     }
 
     private BinarySearchTree binarySearch(Node current, int idImage) {
+
+        if (idImage == current.image.id) return current.image;
+
         if (idImage > current.image.id) {
             // right
             if (current.rightBranch != null) {
                 current = current.rightBranch;
-                binarySearch(current, idImage);
-            } else {
-                return null;
-            }
-        } else if (idImage < current.image.id) {
-            // left
-            if (current.leftBranch != null) {
-                current = current.leftBranch;
-                binarySearch(current, idImage);
+                return binarySearch(current, idImage);
             } else {
                 return null;
             }
         } else {
-            return current.image;
+            // left
+            if (current.leftBranch != null) {
+                current = current.leftBranch;
+                return binarySearch(current, idImage);
+            } else {
+                return null;
+            }
         }
-        return null;
+    }
+
+    private void recursiveGraph(Node nodo, Node parent) {
+        if (nodo == null) return;
+
+        result += nodo.image.id + "[width=.5 height=.5, style=filled, color=green];\n";
+        if (parent != null) {
+            result += parent.image.id + " -> " + nodo.image.id + ";\n";
+        }
+        recursiveGraph(nodo.leftBranch, nodo);
+
+        recursiveGraph(nodo.rightBranch, nodo);
+    }
+
+    public void graphAvl() {
+
+        result = "digraph G {\n";
+        result += "node[shape=circle];\n";
+
+        recursiveGraph(root, null);
+
+        result += "}\n";
+        Graph.GenerarImagen("AVL_IMAGENES", result);
     }
 
     static class Node {
