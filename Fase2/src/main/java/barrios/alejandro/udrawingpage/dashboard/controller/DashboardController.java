@@ -216,6 +216,10 @@ public class DashboardController {
             case "btnLayersTree":
                 new StructuresReport().buildBinaryLayers(mainPane, temporalInformation.getLoguedUser().getCapas());
                 break;
+
+            case "btnAlbumsList":
+                new StructuresReport().buildCircularAlbums(mainPane, temporalInformation.getLoguedUser().getAlbumes());
+                break;
         }
 
     }

@@ -1,5 +1,6 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
+import barrios.alejandro.udrawingpage.graph.Graph;
 import barrios.alejandro.udrawingpage.users.model.Album;
 
 public class DoublyCircularLinkedList {
@@ -41,6 +42,62 @@ public class DoublyCircularLinkedList {
 
     public int size() {
         return size;
+    }
+
+    public void graphCircular() {
+        String result = "digraph G {\n";
+        result += "node[shape=box];\n";
+
+        Node current = head;
+        do {
+            result += current.album.name.replaceAll("\\s","") + "[group=1];\n";
+            current = current.next;
+        } while(!current.imHead);
+
+        current = head;
+        do {
+            result += current.album.name.replaceAll("\\s","") + " -> " + current.next.album.name.replaceAll("\\s","") + ";\n";
+            result += current.album.name.replaceAll("\\s","") + " -> " + current.prev.album.name.replaceAll("\\s","") + ";\n";
+            current = current.next;
+        } while (!current.imHead);
+
+        result += " { rank=same;\n";
+        current = head;
+        do {
+            result += current.album.name.replaceAll("\\s","") + ";\n";
+            current = current.next;
+        } while (!current.imHead);
+        result += "}\n";
+
+        current = head;
+        do {
+            int altura = 2;
+            SinglyLinkedList.Node<BinarySearchTree> image = current.album.images.getHead();
+            while (image != null) {
+                result += current.album.name.replaceAll("\\s","") + "_" + image.data.id + "[group= " + altura + "];\n";
+
+                result += " { rank=same;\n";
+                result += current.album.name.replaceAll("\\s","") + "_" + image.data.id + ";\n";
+                result += "};\n";
+
+                image = image.next;
+                altura++;
+            }
+
+            image = current.album.images.getHead();
+            if (image != null)
+                result += current.album.name.replaceAll("\\s","") + " -> " + current.album.name.replaceAll("\\s","") + "_" + image.data.id + ";\n";
+            while (image != null) {
+                if (image.next != null)
+                    result += current.album.name.replaceAll("\\s","") + "_" + image.data.id + " -> " + current.album.name.replaceAll("\\s","") + "_" + image.next.data.id + ";\n";
+                image = image.next;
+            }
+
+            current = current.next;
+        } while (!current.imHead);
+
+        result += "}\n";
+        Graph.GenerarImagen("CIRCULAR_ALBUMS", result);
     }
 
     static class Node {
