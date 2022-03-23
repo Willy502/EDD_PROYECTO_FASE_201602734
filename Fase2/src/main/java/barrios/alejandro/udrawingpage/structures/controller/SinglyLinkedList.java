@@ -36,8 +36,8 @@ public class SinglyLinkedList<T> {
     }
 
     public static class Node<T> {
-        Node<T> next;
-        T data; // BinarySearchTree for images, capa for capas
+        public Node<T> next;
+        public T data; // BinarySearchTree for images, capa for capas
 
         public Node(T data) {
             this.data = data;

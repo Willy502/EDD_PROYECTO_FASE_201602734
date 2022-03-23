@@ -96,6 +96,10 @@ public class BinarySearchTree { // Image
         Graph.GenerarImagen("BINARY_LAYER", result);
     }
 
+    @Override
+    public String toString() {
+        return Integer.toString(id);
+    }
 
     static class Node {
         SparceMatrix capa;

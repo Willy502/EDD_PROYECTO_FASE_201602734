@@ -60,11 +60,19 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button fx:id="btnImageAndLayers" mnemonicParsing="false" onAction="#structuresState" text="Imágen y Árbol de Capas">
+                  <HBox prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #FFF;">
+                     <children>
+                        <ComboBox fx:id="comboImages" prefWidth="150.0" />
+                        <Button fx:id="btnImageAndLayers" mnemonicParsing="false" onAction="#structuresState" text="Imágen y Árbol de Capas">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
-                  </Button>
+                  </HBox>
                   <Button fx:id="btnClientsTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Clientes" />
                </children>
             </VBox>

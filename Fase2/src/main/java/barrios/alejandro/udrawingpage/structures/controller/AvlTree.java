@@ -7,6 +7,7 @@ public class AvlTree { // Images tree
 
     private Node root;
     private String result;
+    private SinglyLinkedList<BinarySearchTree> images;
 
     public void insert(BinarySearchTree image) {
         if (root == null) {
@@ -68,6 +69,19 @@ public class AvlTree { // Images tree
     private int height(Node current) {
         if (current == null) return 0;
         return current.height;
+    }
+
+    public void fillImages() {
+        images = new SinglyLinkedList<>();
+        fillImages(root);
+
+    }
+    private void fillImages(Node nodo) {
+        if (nodo == null) return;
+        images.addToList(nodo.image);
+
+        fillImages(nodo.leftBranch);
+        fillImages(nodo.rightBranch);
     }
 
     private int maxHeight(int a, int b) {
@@ -148,6 +162,10 @@ public class AvlTree { // Images tree
 
         result += "}\n";
         Graph.GenerarImagen("AVL_IMAGENES", result);
+    }
+
+    public SinglyLinkedList<BinarySearchTree> getImages() {
+        return images;
     }
 
     static class Node {

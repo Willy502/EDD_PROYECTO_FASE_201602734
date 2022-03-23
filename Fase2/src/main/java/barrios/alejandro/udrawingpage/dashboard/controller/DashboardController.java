@@ -1,6 +1,8 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
+import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.users.model.User;
@@ -16,11 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,6 +39,8 @@ public class DashboardController {
     protected StackPane mainPane;
     @FXML
     protected TextField txtNoLayer;
+    @FXML
+    protected ComboBox<BinarySearchTree> comboImages;
 
     private TemporalInformation temporalInformation;
 
@@ -51,6 +51,7 @@ public class DashboardController {
     @FXML
     public void initialize() {
         lblName.setText(temporalInformation.getLoguedUser().getName());
+        fillChoicer();
 
         if (temporalInformation.getLoguedUser().getRol() == Rol.ADMIN) {
             btnLoadCapas.setVisible(false);
@@ -93,6 +94,20 @@ public class DashboardController {
                 new CustomAlert("Archivo no encontrado", "El archivo seleccionado ha sido eliminado o se encuentra corrupto");
             }
 
+        }
+
+    }
+
+    private void fillChoicer() {
+        if (temporalInformation.getLoguedUser().getImages() != null) {
+            temporalInformation.getLoguedUser().getImages().fillImages();
+            comboImages.getItems().clear();
+            AvlTree images = temporalInformation.getLoguedUser().getImages();
+
+            SinglyLinkedList<BinarySearchTree> imagesList = images.getImages();
+            for (SinglyLinkedList.Node<BinarySearchTree> image = imagesList.getHead(); image != null; image = image.next) {
+                comboImages.getItems().add(image.data);
+            }
         }
 
     }
@@ -174,6 +189,7 @@ public class DashboardController {
                     temporalInformation.getLoguedUser().getImages().insert(bstImage);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de imagenes finalizada exitosamente");
+                fillChoicer();
             }
             case "btnLoadAlbums" -> {
                 temporalInformation.getLoguedUser().setAlbumes();
@@ -219,6 +235,10 @@ public class DashboardController {
 
             case "btnAlbumsList":
                 new StructuresReport().buildCircularAlbums(mainPane, temporalInformation.getLoguedUser().getAlbumes());
+                break;
+
+            case "btnImageAndLayers":
+                new StructuresReport().buildImageAndLayers(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboImages.getValue().toString())));
                 break;
         }
 

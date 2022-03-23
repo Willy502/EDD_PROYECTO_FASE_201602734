@@ -5,16 +5,11 @@ import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
 import barrios.alejandro.udrawingpage.structures.controller.DoublyCircularLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class StructuresReport {
 
@@ -74,6 +69,18 @@ public class StructuresReport {
         // Build image and imageview
         ImageView imageView = pane.getChildren().size() > 0 ? (ImageView) pane.getChildren().get(0) : new ImageView();
         Image image = new Image("file:out/CIRCULAR_ALBUMS.png");
+
+        imageView.setImage(image);
+        imageView.setFitHeight(500);
+        imageView.setPreserveRatio(true);
+        if (pane.getChildren().size() == 0) pane.getChildren().add(imageView);
+    }
+
+    public void buildImageAndLayers(StackPane pane, BinarySearchTree layers) {
+        layers.graphBinary();
+        // Build image and imageview
+        ImageView imageView = pane.getChildren().size() > 0 ? (ImageView) pane.getChildren().get(0) : new ImageView();
+        Image image = new Image("file:out/BINARY_LAYER.png");
 
         imageView.setImage(image);
         imageView.setFitHeight(500);
