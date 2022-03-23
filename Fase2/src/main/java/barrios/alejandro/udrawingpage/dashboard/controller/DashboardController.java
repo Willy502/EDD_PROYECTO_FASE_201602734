@@ -95,7 +95,7 @@ public class DashboardController {
         JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
 
         switch (id) {
-            case "btnLoadClients":
+            case "btnLoadClients" -> {
                 jsonArray.forEach(user -> {
                     JsonObject item = (JsonObject) user;
                     User insideUser = new User(
@@ -106,8 +106,10 @@ public class DashboardController {
                     );
                     temporalInformation.getUsersTree().insert(insideUser);
                 });
-                break;
-            case "btnLoadCapas":
+                new CustomAlert("Carga finalizada", "Carga masiva de clientes finalizada exitosamente");
+                temporalInformation.getUsersTree().showBTree();
+            }
+            case "btnLoadCapas" -> {
                 temporalInformation.getLoguedUser().setCapas();
                 jsonArray.forEach(capa -> {
                     JsonObject item = (JsonObject) capa;
@@ -135,9 +137,11 @@ public class DashboardController {
                     });
                     temporalInformation.getLoguedUser().getCapas().addToList(newCapa);
                 });
-                break;
-
-            case "btnLoadImages":
+                new CustomAlert("Carga finalizada", "Carga masiva de capas finalizada exitosamente");
+                SparceMatrix newCapa = new SparceMatrix(10, 9, 9);
+                newCapa.graphMatrix();
+            }
+            case "btnLoadImages" -> {
                 temporalInformation.getLoguedUser().setImages();
                 jsonArray.forEach(image -> {
                     JsonObject imageInfo = (JsonObject) image;
@@ -162,9 +166,9 @@ public class DashboardController {
 
                     temporalInformation.getLoguedUser().getImages().insert(bstImage);
                 });
-                break;
-
-            case "btnLoadAlbums":
+                new CustomAlert("Carga finalizada", "Carga masiva de imagenes finalizada exitosamente");
+            }
+            case "btnLoadAlbums" -> {
                 temporalInformation.getLoguedUser().setAlbumes();
                 jsonArray.forEach(album -> {
 
@@ -184,9 +188,8 @@ public class DashboardController {
                     }
 
                 });
-
-
-                break;
+                new CustomAlert("Carga finalizada", "Carga masiva de albumes finalizada exitosamente");
+            }
         }
     }
 

@@ -133,6 +133,34 @@ public class BTree { // Users
         }
     }
 
+    public void showBTree() {
+        print(root);
+    }
+
+    public SinglyLinkedList<User> getUsers() {
+        SinglyLinkedList<User> users = new SinglyLinkedList<>();
+
+        Node current = root;
+
+        return users;
+    }
+
+    //Print en preorder
+    private void print(Node n) {
+        n.imprimir();
+
+        //Si no es hoja
+        if (!n.leaf) {
+            //recorre los nodos para saber si tiene hijos
+            for (int j = 0; j <= n.noKeys; j++) {
+                if (n.child[j] != null) {
+                    System.out.println();
+                    print(n.child[j]);
+                }
+            }
+        }
+    }
+
     static class Node {
         int noKeys; // Claves almacenadas en el nodo
         boolean leaf; // El nodo es hoja?
@@ -151,6 +179,18 @@ public class BTree { // Users
                 if (key[i].dpi == dpi) return key[i];
             }
             return null;
+        }
+
+        public void imprimir() {
+            System.out.print("[");
+            for (int i = 0; i < noKeys; i++) {
+                if (i < noKeys - 1) {
+                    System.out.print(key[i].getName() + " | ");
+                } else {
+                    System.out.print(key[i].getName());
+                }
+            }
+            System.out.print("]");
         }
 
     }
