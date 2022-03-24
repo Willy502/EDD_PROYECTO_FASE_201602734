@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="main" prefHeight="547.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="barrios.alejandro.udrawingpage.dashboard.controller.ReportsController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button mnemonicParsing="false" onAction="#backToDashboard" text="Regresar" />
+        </items>
+      </ToolBar>
+      <VBox fx:id="vboxClient" prefHeight="200.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Button mnemonicParsing="false" text="5 Imágenes con más número de capas" />
+            <Button mnemonicParsing="false" text="Capas que son hojas">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Profundidad del árbol de capas">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Listar las capas">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vboxAdmin" prefHeight="200.0" HBox.hgrow="ALWAYS">
+         <children>
+            <TextField promptText="Ingrese el DPI del usuario" />
+            <Button mnemonicParsing="false" text="Buscar por DPI">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Listar clientes con recorrido por niveles">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding></VBox>
+   </children>
+</VBox>

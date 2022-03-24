@@ -18,6 +18,7 @@
                   <MenuItem fx:id="btnLoadAlbums" mnemonicParsing="false" onAction="#loadFile" text="Cargar álbumes..." />
               </items>
             </MenuButton>
+            <Button mnemonicParsing="false" onAction="#goToReports" text="Reportes" />
             <Pane HBox.hgrow="ALWAYS" />
             <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#logout" text="Cerrar sesión" />
          </items>

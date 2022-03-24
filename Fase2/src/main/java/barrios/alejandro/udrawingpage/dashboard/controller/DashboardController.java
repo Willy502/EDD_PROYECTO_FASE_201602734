@@ -252,25 +252,11 @@ public class DashboardController {
         String id = ((Button) event.getSource()).getId();
 
         switch (id) {
-            case "btnLayer":
-                new StructuresReport().buildLayer(mainPane, Integer.parseInt(txtNoLayer.getText()));
-                break;
-
-            case "btnImagesTree":
-                new StructuresReport().buildAvlImages(mainPane, temporalInformation.getLoguedUser().getImages());
-                break;
-
-            case "btnLayersTree":
-                new StructuresReport().buildBinaryLayers(mainPane, temporalInformation.getLoguedUser().getCapas());
-                break;
-
-            case "btnAlbumsList":
-                new StructuresReport().buildCircularAlbums(mainPane, temporalInformation.getLoguedUser().getAlbumes());
-                break;
-
-            case "btnImageAndLayers":
-                new StructuresReport().buildImageAndLayers(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboImages.getValue().toString())));
-                break;
+            case "btnLayer" -> new StructuresReport().buildLayer(mainPane, Integer.parseInt(txtNoLayer.getText()));
+            case "btnImagesTree" -> new StructuresReport().buildAvlImages(mainPane, temporalInformation.getLoguedUser().getImages());
+            case "btnLayersTree" -> new StructuresReport().buildBinaryLayers(mainPane, temporalInformation.getLoguedUser().getCapas());
+            case "btnAlbumsList" -> new StructuresReport().buildCircularAlbums(mainPane, temporalInformation.getLoguedUser().getAlbumes());
+            case "btnImageAndLayers" -> new StructuresReport().buildImageAndLayers(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboImages.getValue().toString())));
         }
 
     }
@@ -284,6 +270,19 @@ public class DashboardController {
             case "btnInorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "INORDER");
             case "btnPostorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "POSTORDER");
             case "btnCapas" -> new GraphImage().buildImage(mainPane, txtCapas.getText());
+        }
+    }
+
+    @FXML
+    protected void goToReports(ActionEvent event) {
+        String pack = "/barrios/alejandro/udrawingpage/dashboard/";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(pack + "reports-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        try {
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
