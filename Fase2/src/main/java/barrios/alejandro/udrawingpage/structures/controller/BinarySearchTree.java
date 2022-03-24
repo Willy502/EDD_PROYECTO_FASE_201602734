@@ -9,6 +9,7 @@ public class BinarySearchTree { // Image
     private Node root;
     private String result;
     private SinglyLinkedList<SparceMatrix> layers;
+    private SinglyLinkedList<SparceMatrix> leafLayers;
 
     public BinarySearchTree(int id) {
         this.id = id;
@@ -21,6 +22,7 @@ public class BinarySearchTree { // Image
     public void insert(SparceMatrix capa) {
         if (root == null) {
             root = new Node(capa);
+            root.leaf = false;
             return;
         }
         binaryInsert(root, capa);
@@ -31,6 +33,7 @@ public class BinarySearchTree { // Image
             // right
             if (current.rightBranch == null) {
                 current.rightBranch = new Node(capa);
+                current.leaf = false;
             } else {
                 current = current.rightBranch;
                 binaryInsert(current, capa);
@@ -39,11 +42,13 @@ public class BinarySearchTree { // Image
             // left
             if (current.leftBranch == null) {
                 current.leftBranch = new Node(capa);
+                current.leaf = false;
             } else {
                 current = current.leftBranch;
                 binaryInsert(current, capa);
             }
         }
+        current.height = 1 + maxHeight(height(current.leftBranch), height(current.rightBranch));
     }
 
     public SparceMatrix searchLayer(int idCapa) {
@@ -99,6 +104,7 @@ public class BinarySearchTree { // Image
 
     public void orderLayers(String order) {
         layers = new SinglyLinkedList<>();
+        leafLayers = new SinglyLinkedList<>();
         switch (order) {
             case "PREORDER" -> preorder(root);
             case "INORDER" -> inorder(root);
@@ -107,8 +113,13 @@ public class BinarySearchTree { // Image
 
     }
 
+    public SinglyLinkedList<SparceMatrix> getLeafLayers() {
+        return leafLayers;
+    }
+
     private void preorder(Node nodo) {
         if (nodo == null) return;
+        if(nodo.leaf) leafLayers.addToList(nodo.capa);
         layers.addToList(nodo.capa);
 
         preorder(nodo.leftBranch);
@@ -133,6 +144,15 @@ public class BinarySearchTree { // Image
         return layers;
     }
 
+    private int maxHeight(int a, int b) {
+        return Math.max(a, b);
+    }
+
+    private int height(Node current) {
+        if (current == null) return 0;
+        return current.height;
+    }
+
     @Override
     public String toString() {
         return Integer.toString(id);
@@ -140,10 +160,14 @@ public class BinarySearchTree { // Image
 
     static class Node {
         SparceMatrix capa;
+        boolean leaf;
+        int height;
         Node rightBranch, leftBranch;
 
         public Node(SparceMatrix capa) {
             this.capa = capa;
+            leaf = true;
+            height = 1;
         }
     }
 
