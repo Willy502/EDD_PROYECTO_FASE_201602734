@@ -19,7 +19,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -31,7 +33,7 @@ import java.io.IOException;
 public class DashboardController {
 
     @FXML
-    protected Label lblName;
+    protected Label lblName, lblGraph;
     @FXML
     protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums;
     @FXML
@@ -41,7 +43,11 @@ public class DashboardController {
     @FXML
     protected ComboBox<BinarySearchTree> comboImages, comboGraphFullImage;
     @FXML
-    protected Button btnPreorder, btnInorder, btnPostorder;
+    protected Button btnPreorder, btnInorder, btnPostorder, btnImagesTree, btnLayersTree, btnAlbumsList, btnClientsTree;
+    @FXML
+    protected HBox hboxLayer, hboxImageLayer, hboxLayersS;
+    @FXML
+    protected Line line;
 
     private final TemporalInformation temporalInformation;
 
@@ -55,12 +61,34 @@ public class DashboardController {
         fillChoicer();
 
         if (temporalInformation.getLoguedUser().getRol() == Rol.ADMIN) {
-            btnLoadCapas.setVisible(false);
-            btnLoadImages.setVisible(false);
-            btnLoadAlbums.setVisible(false);
+            hideAdmin();
         } else {
-            btnLoadClients.setVisible(false);
+            hideClient();
         }
+    }
+
+    private void hideAdmin() {
+        btnLoadCapas.setVisible(false);
+        btnLoadImages.setVisible(false);
+        btnLoadAlbums.setVisible(false);
+
+        btnImagesTree.setVisible(false);
+        btnLayersTree.setVisible(false);
+        btnAlbumsList.setVisible(false);
+        hboxLayer.setVisible(false);
+        hboxImageLayer.setVisible(false);
+        line.setVisible(false);
+        lblGraph.setVisible(false);
+        comboGraphFullImage.setVisible(false);
+        btnPreorder.setVisible(false);
+        btnInorder.setVisible(false);
+        btnPostorder.setVisible(false);
+        hboxLayersS.setVisible(false);
+    }
+
+    private void hideClient() {
+        btnLoadClients.setVisible(false);
+        btnClientsTree.setVisible(false);
     }
 
     @FXML
