@@ -262,7 +262,7 @@ public class DashboardController {
     }
 
     @FXML
-    protected void buildImageOrder(ActionEvent event) throws InterruptedException {
+    protected void buildImageOrder(ActionEvent event) {
         String id = ((Button) event.getSource()).getId();
 
         switch (id) {

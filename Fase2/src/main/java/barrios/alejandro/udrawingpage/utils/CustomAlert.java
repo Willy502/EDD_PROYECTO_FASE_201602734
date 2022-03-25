@@ -8,7 +8,7 @@ import org.controlsfx.dialog.ProgressDialog;
 public class CustomAlert {
 
     public CustomAlert(String message){
-        Task copyWorker = createWorker(message);
+        Task<?> copyWorker = createWorker(message);
         ProgressDialog dialog = new ProgressDialog(copyWorker);
         dialog.initStyle(StageStyle.TRANSPARENT);
 
@@ -29,8 +29,8 @@ public class CustomAlert {
         alert.showAndWait();
     }
 
-    public Task createWorker(String message) {
-        return new Task() {
+    public Task<?> createWorker(String message) {
+        return new Task<>() {
             @Override
             protected Object call() throws Exception {
                 for (int i = 0; i < 10; i++) {

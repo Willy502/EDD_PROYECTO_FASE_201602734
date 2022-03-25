@@ -19,6 +19,10 @@ public class BinarySearchTree { // Image
 
     }
 
+    public Node getRoot() {
+        return root;
+    }
+
     public void insert(SparceMatrix capa) {
         if (root == null) {
             root = new Node(capa);
@@ -52,8 +56,7 @@ public class BinarySearchTree { // Image
     }
 
     public SparceMatrix searchLayer(int idCapa) {
-        SparceMatrix value = binarySearch(root, idCapa);
-        return value;
+        return binarySearch(root, idCapa);
     }
 
     private SparceMatrix binarySearch(Node current, int idCapa) {
@@ -158,10 +161,10 @@ public class BinarySearchTree { // Image
         return Integer.toString(id);
     }
 
-    static class Node {
+    public static class Node {
         SparceMatrix capa;
         boolean leaf;
-        int height;
+        public int height;
         Node rightBranch, leftBranch;
 
         public Node(SparceMatrix capa) {

@@ -74,7 +74,9 @@ public class SparceMatrix { // layer
         int columna = 1;
 
         String result = "digraph G {\n";
+        result += "graph[nodesep=0, ranksep=\"0\", pad=\"0.5\"];\n";
         result += "node[shape=box];\n";
+        result += "edge[style=invis];\n";
         result+= "bgcolor=\"transparent\";\n";
 
         // Columna

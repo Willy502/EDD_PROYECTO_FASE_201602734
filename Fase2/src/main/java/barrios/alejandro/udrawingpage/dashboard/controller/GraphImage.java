@@ -5,15 +5,11 @@ import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
-import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.stage.StageStyle;
-import org.controlsfx.dialog.ProgressDialog;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 public class GraphImage {
 
@@ -41,8 +37,8 @@ public class GraphImage {
 
         String[] dividedLayers = layers.split(",");
         SinglyLinkedList<SparceMatrix> sLayers = new SinglyLinkedList<>();
-        for (int i = 0; i < dividedLayers.length; i++) {
-            SparceMatrix matrix = temporalInformation.getLoguedUser().getCapas().searchLayer(Integer.parseInt(dividedLayers[i]));
+        for (String dividedLayer : dividedLayers) {
+            SparceMatrix matrix = temporalInformation.getLoguedUser().getCapas().searchLayer(Integer.parseInt(dividedLayer));
             sLayers.addToList(matrix);
         }
         graphImage(pane, sLayers);
