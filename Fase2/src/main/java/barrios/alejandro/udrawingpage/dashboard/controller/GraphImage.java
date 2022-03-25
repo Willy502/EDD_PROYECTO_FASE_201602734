@@ -3,10 +3,14 @@ package barrios.alejandro.udrawingpage.dashboard.controller;
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
 import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
+import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
+import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.StageStyle;
+import org.controlsfx.dialog.ProgressDialog;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +23,7 @@ public class GraphImage {
         temporalInformation = TemporalInformation.getInstance();
     }
 
-    public void buildImage(StackPane pane, BinarySearchTree image, String order) throws InterruptedException {
+    public void buildImage(StackPane pane, BinarySearchTree image, String order) {
         if (pane.getChildren().size() > 0) {
             pane.getChildren().clear();
         }
@@ -30,7 +34,7 @@ public class GraphImage {
 
     }
 
-    public void buildImage(StackPane pane, String layers) throws InterruptedException {
+    public void buildImage(StackPane pane, String layers) {
         if (pane.getChildren().size() > 0) {
             pane.getChildren().clear();
         }
@@ -45,15 +49,15 @@ public class GraphImage {
 
     }
 
-    private void graphImage(StackPane pane, SinglyLinkedList<SparceMatrix> layers) throws InterruptedException {
+    private void graphImage(StackPane pane, SinglyLinkedList<SparceMatrix> layers) {
         for (SinglyLinkedList.Node<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
             layer.data.graphMatrix();
-            TimeUnit.SECONDS.sleep(2);
+            new CustomAlert("Construyendo capa...");
 
             File file = new File("out/capa_" + layer.data.id + ".png");
             if (file.exists()) {
                 // Build image and imageview
-                ImageView imageView = pane.getChildren().size() > 0 ? (ImageView) pane.getChildren().get(0) : new ImageView();
+                ImageView imageView = new ImageView();
                 Image img = new Image("file:out/capa_" + layer.data.id + ".png");
 
                 imageView.setImage(img);

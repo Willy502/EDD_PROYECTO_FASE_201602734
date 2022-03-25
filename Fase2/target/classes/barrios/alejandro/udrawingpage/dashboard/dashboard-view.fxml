@@ -112,7 +112,7 @@
                   <HBox fx:id="hboxLayersS" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="txtCapas" promptText="Ej: 1,2,3" />
-                        <Button fx:id="btnCapas" mnemonicParsing="false" text="Capas">
+                        <Button fx:id="btnCapas" mnemonicParsing="false" onAction="#buildImageOrder" text="Capas">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

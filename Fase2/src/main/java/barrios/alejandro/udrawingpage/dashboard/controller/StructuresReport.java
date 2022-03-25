@@ -4,6 +4,7 @@ import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
 import barrios.alejandro.udrawingpage.structures.controller.DoublyCircularLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
+import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,72 +21,92 @@ public class StructuresReport {
     }
 
     public void buildLayer(StackPane pane, int noLayer) {
+        if (pane.getChildren().size() > 0) {
+            pane.getChildren().clear();
+        }
         // Build Matrix
         SparceMatrix matrixToBuild = temporalInformation.getLoguedUser().getCapas().searchLayer(noLayer);
         matrixToBuild.graphMatrix();
 
+        new CustomAlert("Construyendo capa...");
         // Get matrix path
         File file = new File("out/capa_" + noLayer + ".png");
         if (file.exists()) {
             // Build image and imageview
-            ImageView imageView = pane.getChildren().size() > 0 ? (ImageView) pane.getChildren().get(0) : new ImageView();
+            ImageView imageView = new ImageView();
             Image image = new Image("file:out/capa_" + noLayer + ".png");
 
             imageView.setImage(image);
             imageView.setFitHeight(500);
             imageView.setPreserveRatio(true);
-            if (pane.getChildren().size() == 0) pane.getChildren().add(imageView);
+            pane.getChildren().add(imageView);
 
         }
 
     }
 
     public void buildAvlImages(StackPane pane, AvlTree images) {
+        if (pane.getChildren().size() > 0) {
+            pane.getChildren().clear();
+        }
         images.graphAvl();
         // Build image and imageview
-        ImageView imageView = pane.getChildren().size() > 0 ? (ImageView) pane.getChildren().get(0) : new ImageView();
+        new CustomAlert("Construyendo árbol avl de imágenes...");
+        ImageView imageView = new ImageView();
         Image image = new Image("file:out/AVL_IMAGENES.png");
 
         imageView.setImage(image);
         imageView.setFitHeight(500);
         imageView.setPreserveRatio(true);
-        if (pane.getChildren().size() == 0) pane.getChildren().add(imageView);
+        pane.getChildren().add(imageView);
     }
 
     public void buildBinaryLayers(StackPane pane, BinarySearchTree layers) {
+        if (pane.getChildren().size() > 0) {
+            pane.getChildren().clear();
+        }
         layers.graphBinary();
         // Build image and imageview
-        ImageView imageView = pane.getChildren().size() > 0 ? (ImageView) pane.getChildren().get(0) : new ImageView();
+        new CustomAlert("Construyendo árbol binario de capas...");
+        ImageView imageView = new ImageView();
         Image image = new Image("file:out/BINARY_LAYER.png");
 
         imageView.setImage(image);
         imageView.setFitHeight(500);
         imageView.setPreserveRatio(true);
-        if (pane.getChildren().size() == 0) pane.getChildren().add(imageView);
+        pane.getChildren().add(imageView);
     }
 
     public void buildCircularAlbums(StackPane pane, DoublyCircularLinkedList albums) {
+        if (pane.getChildren().size() > 0) {
+            pane.getChildren().clear();
+        }
         albums.graphCircular();
         // Build image and imageview
-        ImageView imageView = pane.getChildren().size() > 0 ? (ImageView) pane.getChildren().get(0) : new ImageView();
+        new CustomAlert("Construyendo lista doble circular de álbums...");
+        ImageView imageView = new ImageView();
         Image image = new Image("file:out/CIRCULAR_ALBUMS.png");
 
         imageView.setImage(image);
         imageView.setFitHeight(500);
         imageView.setPreserveRatio(true);
-        if (pane.getChildren().size() == 0) pane.getChildren().add(imageView);
+        pane.getChildren().add(imageView);
     }
 
     public void buildImageAndLayers(StackPane pane, BinarySearchTree layers) {
+        if (pane.getChildren().size() > 0) {
+            pane.getChildren().clear();
+        }
         layers.graphBinary();
         // Build image and imageview
-        ImageView imageView = pane.getChildren().size() > 0 ? (ImageView) pane.getChildren().get(0) : new ImageView();
+        new CustomAlert("Construyendo árbol binario de imágenes y capa...");
+        ImageView imageView = new ImageView();
         Image image = new Image("file:out/BINARY_LAYER.png");
 
         imageView.setImage(image);
         imageView.setFitHeight(500);
         imageView.setPreserveRatio(true);
-        if (pane.getChildren().size() == 0) pane.getChildren().add(imageView);
+        pane.getChildren().add(imageView);
     }
 
 }
