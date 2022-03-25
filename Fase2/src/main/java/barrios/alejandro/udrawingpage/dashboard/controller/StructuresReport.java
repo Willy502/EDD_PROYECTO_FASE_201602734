@@ -97,7 +97,7 @@ public class StructuresReport {
         if (pane.getChildren().size() > 0) {
             pane.getChildren().clear();
         }
-        layers.graphBinary();
+        layers.graphBinaryWithImage(Integer.toString(layers.id));
         // Build image and imageview
         new CustomAlert("Construyendo árbol binario de imágenes y capa...");
         ImageView imageView = new ImageView();

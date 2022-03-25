@@ -1,6 +1,7 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
 import barrios.alejandro.udrawingpage.graph.Graph;
+import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 
 public class BinarySearchTree { // Image
     // Delete missing
@@ -82,16 +83,16 @@ public class BinarySearchTree { // Image
         return null;
     }
 
-    private void recursiveGraph(Node nodo, Node parent) {
+    private void recursiveGraph(Node nodo, Node parent, String color) {
         if (nodo == null) return;
 
-        result += nodo.capa.id + "[width=.5 height=.5, style=filled, color=green];\n";
+        result += "sub_" + nodo.capa.id + "[label=\"" + nodo.capa.id + "\" width=.5 height=.5, style=filled, color=" + color +"];\n";
         if (parent != null) {
-            result += parent.capa.id + " -> " + nodo.capa.id + ";\n";
+            result += "sub_" + parent.capa.id + " -> sub_" + nodo.capa.id + ";\n";
         }
-        recursiveGraph(nodo.leftBranch, nodo);
+        recursiveGraph(nodo.leftBranch, nodo, color);
 
-        recursiveGraph(nodo.rightBranch, nodo);
+        recursiveGraph(nodo.rightBranch, nodo, color);
     }
 
     public void graphBinary() {
@@ -99,8 +100,23 @@ public class BinarySearchTree { // Image
         result = "digraph G {\n";
         result += "node[shape=circle];\n";
 
-        recursiveGraph(root, null);
+        recursiveGraph(root, null, "green");
 
+        result += "}\n";
+        Graph.GenerarImagen("BINARY_LAYER", result);
+    }
+
+    public void graphBinaryWithImage(String imageId) {
+        result = "digraph G {\n";
+        result += "node[shape=circle];\n";
+
+        TemporalInformation temporalInformation = TemporalInformation.getInstance();
+        String treeGraph = temporalInformation.getLoguedUser().getImages().graphAvlIntern();
+        result += treeGraph;
+
+        recursiveGraph(root, null,"yellow");
+
+        result += imageId + " -> sub_" + root.capa.id;
         result += "}\n";
         Graph.GenerarImagen("BINARY_LAYER", result);
     }

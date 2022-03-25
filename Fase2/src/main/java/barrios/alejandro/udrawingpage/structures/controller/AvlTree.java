@@ -153,6 +153,12 @@ public class AvlTree { // Images tree
         recursiveGraph(nodo.rightBranch, nodo);
     }
 
+    public String graphAvlIntern () {
+        result = "";
+        recursiveGraph(root, null);
+        return result;
+    }
+
     public void graphAvl() {
 
         result = "digraph G {\n";
