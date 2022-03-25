@@ -91,8 +91,18 @@ public class BTree { // Users
         node1.noKeys++;
     }
 
-    public User searchUserByDpiAndPassword(long dpi, String password) {
-        Node temp = search(root, dpi, password);
+    public User searchUserByDpi(long dpi) {
+        Node temp = search(root, dpi);
+
+        if (temp != null) {
+            User user = searchUserInNode(temp, dpi);
+            if (user != null) return user;
+        }
+        return null;
+    }
+
+    public User loginByDpiAndPassword(long dpi, String password) {
+        Node temp = search(root, dpi);
 
         if (temp != null) {
             User user = searchUserInNode(temp, dpi);
@@ -119,7 +129,7 @@ public class BTree { // Users
         return null;
     }
 
-    private Node search(Node current, long dpi, String password) {
+    private Node search(Node current, long dpi) {
         int i = 0;
 
         while (i < current.noKeys && dpi > current.key[i].dpi) i++;
@@ -129,7 +139,7 @@ public class BTree { // Users
         if (current.leaf) {
             return null;
         } else {
-            return search(current.child[i], dpi, password);
+            return search(current.child[i], dpi);
         }
     }
 

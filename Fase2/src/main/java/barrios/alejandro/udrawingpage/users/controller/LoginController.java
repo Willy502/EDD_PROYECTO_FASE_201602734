@@ -34,7 +34,7 @@ public class LoginController  {
     @FXML
     protected void loginUser(ActionEvent event) {
         TemporalInformation temporalInformation = TemporalInformation.getInstance();
-        User user = temporalInformation.getUsersTree().searchUserByDpiAndPassword(Long.parseLong(txtDpi.getText()), txtPassword.getText());
+        User user = temporalInformation.getUsersTree().loginByDpiAndPassword(Long.parseLong(txtDpi.getText()), txtPassword.getText());
         if (user != null) {
             clearFields();
             temporalInformation.setLoguedUser(user);

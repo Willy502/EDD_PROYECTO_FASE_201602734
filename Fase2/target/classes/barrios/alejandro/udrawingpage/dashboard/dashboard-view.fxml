@@ -25,7 +25,7 @@
       </ToolBar>
       <HBox HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
          <children>
-            <VBox style="-fx-background-color: #FFF;" VBox.vgrow="ALWAYS">
+            <VBox fx:id="mainBox" style="-fx-background-color: #FFF;" VBox.vgrow="ALWAYS">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
@@ -33,92 +33,128 @@
                   <Label text="Estado de las estructuras" />
                   <Button fx:id="btnClientsTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Clientes">
                      <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
+                        <Insets top="10.0" />
                      </VBox.margin></Button>
-                  <Button fx:id="btnImagesTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Imágenes">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="btnLayersTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Capas">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="btnAlbumsList" mnemonicParsing="false" onAction="#structuresState" text="Listado de álbumes">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <HBox fx:id="hboxLayer" style="-fx-background-color: #FFFFFF;" HBox.hgrow="ALWAYS">
+                  <VBox fx:id="vboxClient" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFF;">
                      <children>
-                        <TextField fx:id="txtNoLayer" promptText="Número de capa">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <Button fx:id="btnLayer" mnemonicParsing="false" onAction="#structuresState" text="Capa" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox fx:id="hboxImageLayer" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #FFF;">
-                     <children>
-                        <ComboBox fx:id="comboImages" prefWidth="150.0" promptText="Número de Imágen" />
-                        <Button fx:id="btnImageAndLayers" mnemonicParsing="false" onAction="#structuresState" text="Imágen y Árbol de Capas">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
+                        <Button fx:id="btnImagesTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Imágenes">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
                         </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Line fx:id="line" endX="250.0">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Line>
-                  <Label fx:id="lblGraph" text="Graficar Imagen">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <ComboBox fx:id="comboGraphFullImage" prefWidth="150.0" promptText="Número de Imágen">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <Button fx:id="btnPreorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Preorder">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="btnInorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Inorder">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="btnPostorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Postorder">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <HBox fx:id="hboxLayersS" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="txtCapas" promptText="Ej: 1,2,3" />
-                        <Button fx:id="btnCapas" mnemonicParsing="false" onAction="#buildImageOrder" text="Capas">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
+                        <Button fx:id="btnLayersTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Capas">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
                         </Button>
+                        <Button fx:id="btnAlbumsList" mnemonicParsing="false" onAction="#structuresState" text="Listado de álbumes">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <HBox fx:id="hboxLayer" style="-fx-background-color: #FFFFFF;">
+                           <children>
+                              <TextField fx:id="txtNoLayer" promptText="Número de capa">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button fx:id="btnLayer" mnemonicParsing="false" onAction="#structuresState" text="Capa" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox fx:id="hboxImageLayer" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #FFF;">
+                           <children>
+                              <ComboBox fx:id="comboImages" prefWidth="150.0" promptText="Número de Imágen" />
+                              <Button fx:id="btnImageAndLayers" mnemonicParsing="false" onAction="#structuresState" text="Imágen y Árbol de Capas">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Line fx:id="line" endX="250.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Line>
+                        <Label fx:id="lblGraph" text="Graficar Imagen">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ComboBox fx:id="comboGraphFullImage" prefWidth="150.0" promptText="Número de Imágen">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <Button fx:id="btnPreorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Preorder">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnInorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Inorder">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnPostorder" mnemonicParsing="false" onAction="#buildImageOrder" text="Postorder">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <HBox fx:id="hboxLayersS" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="txtCapas" promptText="Ej: 1,2,3" />
+                              <Button fx:id="btnCapas" mnemonicParsing="false" onAction="#buildImageOrder" text="Capas">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
+                  <VBox fx:id="registerBox" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFF;">
+                     <Line endX="250.0">
+                        <VBox.margin>
+                           <Insets bottom="10.0" top="10.0" />
+                        </VBox.margin>
+                     </Line>
+                     <Label text="Registrar cliente">
+                        <padding>
+                           <Insets bottom="10.0" />
+                        </padding>
+                     </Label>
+                     <TextField fx:id="txtName" promptText="Nombre">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </TextField>
+                     <TextField fx:id="txtDpi" promptText="DPI">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </TextField>
+                     <PasswordField fx:id="txtPassword" promptText="Contraseña">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </PasswordField>
+                     <Button mnemonicParsing="false" onAction="#createUser" text="Crear cliente">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </Button>
+                  </VBox>
                </children>
             </VBox>
             <StackPane fx:id="mainPane" style="-fx-background-color: #FFF;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />

@@ -4,6 +4,7 @@ import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
 import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
+import barrios.alejandro.udrawingpage.users.controller.UserController;
 import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.users.model.User;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
@@ -19,9 +20,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Line;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -33,21 +33,21 @@ import java.io.IOException;
 public class DashboardController {
 
     @FXML
-    protected Label lblName, lblGraph;
+    protected Label lblName;
     @FXML
     protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums;
     @FXML
     protected StackPane mainPane;
     @FXML
-    protected TextField txtNoLayer, txtCapas;
-    @FXML
     protected ComboBox<BinarySearchTree> comboImages, comboGraphFullImage;
     @FXML
-    protected Button btnPreorder, btnInorder, btnPostorder, btnImagesTree, btnLayersTree, btnAlbumsList, btnClientsTree;
+    protected VBox vboxClient, mainBox, registerBox;
     @FXML
-    protected HBox hboxLayer, hboxImageLayer, hboxLayersS;
+    protected TextField txtCapas, txtNoLayer, txtName, txtDpi;
     @FXML
-    protected Line line;
+    protected Button btnClientsTree;
+    @FXML
+    protected PasswordField txtPassword;
 
     private final TemporalInformation temporalInformation;
 
@@ -71,24 +71,13 @@ public class DashboardController {
         btnLoadCapas.setVisible(false);
         btnLoadImages.setVisible(false);
         btnLoadAlbums.setVisible(false);
-
-        btnImagesTree.setVisible(false);
-        btnLayersTree.setVisible(false);
-        btnAlbumsList.setVisible(false);
-        hboxLayer.setVisible(false);
-        hboxImageLayer.setVisible(false);
-        line.setVisible(false);
-        lblGraph.setVisible(false);
-        comboGraphFullImage.setVisible(false);
-        btnPreorder.setVisible(false);
-        btnInorder.setVisible(false);
-        btnPostorder.setVisible(false);
-        hboxLayersS.setVisible(false);
+        mainBox.getChildren().remove(vboxClient);
     }
 
     private void hideClient() {
         btnLoadClients.setVisible(false);
-        btnClientsTree.setVisible(false);
+        mainBox.getChildren().remove(btnClientsTree);
+        mainBox.getChildren().remove(registerBox);
     }
 
     @FXML
@@ -284,6 +273,20 @@ public class DashboardController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    protected void createUser() {
+        User user = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+        if (user == null) new UserController().createClient(txtName.getText(), Long.parseLong(txtDpi.getText()), txtPassword.getText());
+        else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
+        clearFields();
+    }
+
+    private void clearFields() {
+        txtPassword.clear();
+        txtName.clear();
+        txtDpi.clear();
     }
 
 }
