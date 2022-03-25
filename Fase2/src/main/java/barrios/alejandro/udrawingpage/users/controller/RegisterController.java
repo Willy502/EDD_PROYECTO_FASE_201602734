@@ -1,6 +1,5 @@
 package barrios.alejandro.udrawingpage.users.controller;
 
-import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import barrios.alejandro.udrawingpage.users.model.User;

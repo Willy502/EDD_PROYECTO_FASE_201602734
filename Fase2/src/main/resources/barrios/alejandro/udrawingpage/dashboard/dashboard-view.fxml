@@ -16,6 +16,7 @@
                 <MenuItem fx:id="btnLoadCapas" mnemonicParsing="false" onAction="#loadFile" text="Cargar capas..." />
                   <MenuItem fx:id="btnLoadImages" mnemonicParsing="false" onAction="#loadFile" text="Cargar Imágenes..." />
                   <MenuItem fx:id="btnLoadAlbums" mnemonicParsing="false" onAction="#loadFile" text="Cargar álbumes..." />
+                  <MenuItem fx:id="btnLoadImage" mnemonicParsing="false" onAction="#loadFile" text="Registrar Imágen" />
               </items>
             </MenuButton>
             <Button mnemonicParsing="false" onAction="#goToReports" text="Reportes" />

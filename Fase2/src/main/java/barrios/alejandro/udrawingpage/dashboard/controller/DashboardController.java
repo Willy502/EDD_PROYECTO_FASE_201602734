@@ -29,13 +29,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 
 public class DashboardController {
 
     @FXML
     protected Label lblName;
     @FXML
-    protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums;
+    protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums, btnLoadImage;
     @FXML
     protected StackPane mainPane;
     @FXML
@@ -71,6 +72,7 @@ public class DashboardController {
         btnLoadCapas.setVisible(false);
         btnLoadImages.setVisible(false);
         btnLoadAlbums.setVisible(false);
+        btnLoadImage.setVisible(false);
         mainBox.getChildren().remove(vboxClient);
     }
 
@@ -108,7 +110,7 @@ public class DashboardController {
         if (selectedFile != null) {
             try {
                 massiveCharge(id, selectedFile.getAbsolutePath());
-            } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException | NullPointerException e) {
                 new CustomAlert("Archivo no encontrado", "El archivo seleccionado ha sido eliminado o se encuentra corrupto");
             }
 
@@ -132,12 +134,15 @@ public class DashboardController {
 
     }
 
-    private void massiveCharge(String id, String path) throws FileNotFoundException {
+    private void massiveCharge(String id, String path) throws FileNotFoundException, NullPointerException {
         JsonReader reader = new JsonReader(new FileReader(path));
-        JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
+        JsonArray jsonArray = null;
+        if (!Objects.equals(id, "btnLoadImage"))
+            jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
 
         switch (id) {
             case "btnLoadClients" -> {
+                assert jsonArray != null;
                 jsonArray.forEach(user -> {
                     JsonObject item = (JsonObject) user;
                     User insideUser = new User(
@@ -156,6 +161,7 @@ public class DashboardController {
                 int maxX = 0;
                 int maxY = 0;
 
+                assert jsonArray != null;
                 for (JsonElement capa : jsonArray) {
                     JsonObject item = (JsonObject) capa;
                     JsonArray pexels = item.get("pixeles").getAsJsonArray();
@@ -189,30 +195,19 @@ public class DashboardController {
                 new CustomAlert("Carga finalizada", "Carga masiva de capas finalizada exitosamente");
             }
             case "btnLoadImages" -> {
-                temporalInformation.getLoguedUser().setImages();
+                if (temporalInformation.getLoguedUser().getImages() == null)
+                    temporalInformation.getLoguedUser().setImages();
+                assert jsonArray != null;
                 jsonArray.forEach(image -> {
                     JsonObject imageInfo = (JsonObject) image;
-                    int imageId = imageInfo.get("id").getAsInt();
-                    BinarySearchTree bstImage = new BinarySearchTree(imageId);
-                    BinarySearchTree layers = temporalInformation.getLoguedUser().getCapas();
-
-                    JsonArray layersArray = imageInfo.get("capas").getAsJsonArray();
-                    int i = 0;
-                    while (i < layersArray.size()) {
-                        int idCapa = layersArray.get(i).getAsInt();
-                        SparceMatrix searchLay = layers.searchLayer(idCapa);
-                        if (searchLay != null) bstImage.insert(searchLay);
-                        i++;
-                    }
-
-
-                    temporalInformation.getLoguedUser().getImages().insert(bstImage);
+                    createImage(imageInfo);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de imagenes finalizada exitosamente");
                 fillChoicer();
             }
             case "btnLoadAlbums" -> {
                 temporalInformation.getLoguedUser().setAlbumes();
+                assert jsonArray != null;
                 jsonArray.forEach(album -> {
 
                     JsonObject albumInfo = (JsonObject) album;
@@ -233,7 +228,32 @@ public class DashboardController {
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de albumes finalizada exitosamente");
             }
+            case "btnLoadImage" -> {
+                if (temporalInformation.getLoguedUser().getImages() == null)
+                    temporalInformation.getLoguedUser().setImages();
+                JsonObject imageInfo = JsonParser.parseReader(reader).getAsJsonObject();
+                createImage(imageInfo);
+                new CustomAlert("Carga finalizada", "Imagen cargada exitosamente");
+                fillChoicer();
+            }
         }
+    }
+
+    private void createImage(JsonObject imageInfo) {
+        int imageId = imageInfo.get("id").getAsInt();
+        BinarySearchTree bstImage = new BinarySearchTree(imageId);
+        BinarySearchTree layers = temporalInformation.getLoguedUser().getCapas();
+
+        JsonArray layersArray = imageInfo.get("capas").getAsJsonArray();
+        int i = 0;
+        while (i < layersArray.size()) {
+            int idCapa = layersArray.get(i).getAsInt();
+            SparceMatrix searchLay = layers.searchLayer(idCapa);
+            if (searchLay != null) bstImage.insert(searchLay);
+            i++;
+        }
+
+        temporalInformation.getLoguedUser().getImages().insert(bstImage);
     }
 
     @FXML
