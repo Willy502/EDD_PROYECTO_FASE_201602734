@@ -14,6 +14,10 @@ public class User {
     private BinarySearchTree capas;
     private AvlTree images;
 
+    public User() {
+
+    }
+
     public User(long dpi, String name, String password, Rol rol) {
         this.name = name;
         this.dpi = dpi;
