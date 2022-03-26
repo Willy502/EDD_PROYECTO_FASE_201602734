@@ -70,8 +70,11 @@ public class ReportsController {
         new CustomAlert("Procesando...");
         StringBuilder content = new StringBuilder();
 
+        int j = 0;
         for (SinglyLinkedList.Node<HashMap<String, Integer>> i = ordered.getHead(); i != null; i = i.next) {
             content.append("Image No. ").append(i.data.get("id")).append(" -> ").append(i.data.get("layers")).append(" capas\n");
+            j++;
+            if (j == 5) break;
         }
         new CustomAlert("Imágenes con más capas", content.toString());
     }
@@ -79,14 +82,16 @@ public class ReportsController {
     private SinglyLinkedList<HashMap<String, Integer>> sortImages(SinglyLinkedList<HashMap<String, Integer>> toOrdered) {
 
         if (toOrdered.size() > 1) {
-            for (SinglyLinkedList.Node<HashMap<String, Integer>> i = toOrdered.getHead(); i != null; i = i.next) {
-                System.out.println("TRY");
+            boolean swapped = true;
+            while (swapped) {
+
                 SinglyLinkedList.Node<HashMap<String, Integer>> previous = null;
                 SinglyLinkedList.Node<HashMap<String, Integer>> current = toOrdered.getHead();
+                swapped = false;
 
                 for (SinglyLinkedList.Node<HashMap<String, Integer>> next = current.next; next != null; next = current.next) {
-                    System.out.println(current.data.get("layers") + " > " + next.data.get("layers"));
-                    if (current.data.get("layers") > next.data.get("layers")) {
+
+                    if (current.data.get("layers") < next.data.get("layers")) {
                         if (previous != null) {
                             previous.next = next;
                         } else {
@@ -95,6 +100,7 @@ public class ReportsController {
                         current.next = next.next;
                         next.next = current;
                         previous = next;
+                        swapped = true;
                     } else {
                         previous = current;
                         current = next;
