@@ -1,5 +1,6 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
 import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
@@ -15,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ReportsController {
 
@@ -51,7 +53,56 @@ public class ReportsController {
 
     @FXML
     protected void top5ImgsLayers() {
+        SinglyLinkedList<BinarySearchTree> images = temporalInformation.getLoguedUser().getImages().getImages();
+        SinglyLinkedList<HashMap<String, Integer>> toBeOrdered = new SinglyLinkedList<>();
 
+        for (SinglyLinkedList.Node<BinarySearchTree> image = images.getHead(); image != null; image = image.next) {
+            SinglyLinkedList.Node<BinarySearchTree> finalImage = image;
+            image.data.orderLayers("PREORDER");
+            SinglyLinkedList<SparceMatrix> layer = finalImage.data.getOrderedLayers();
+            HashMap<String, Integer> info = new HashMap<>(){{
+                put("id", finalImage.data.id);
+                put("layers", layer.size());
+            }};
+            toBeOrdered.addToList(info);
+        }
+        SinglyLinkedList<HashMap<String, Integer>> ordered = sortImages(toBeOrdered);
+        new CustomAlert("Procesando...");
+        StringBuilder content = new StringBuilder();
+
+        for (SinglyLinkedList.Node<HashMap<String, Integer>> i = ordered.getHead(); i != null; i = i.next) {
+            content.append("Image No. ").append(i.data.get("id")).append(" -> ").append(i.data.get("layers")).append(" capas\n");
+        }
+        new CustomAlert("Imágenes con más capas", content.toString());
+    }
+
+    private SinglyLinkedList<HashMap<String, Integer>> sortImages(SinglyLinkedList<HashMap<String, Integer>> toOrdered) {
+
+        if (toOrdered.size() > 1) {
+            for (SinglyLinkedList.Node<HashMap<String, Integer>> i = toOrdered.getHead(); i != null; i = i.next) {
+                System.out.println("TRY");
+                SinglyLinkedList.Node<HashMap<String, Integer>> previous = null;
+                SinglyLinkedList.Node<HashMap<String, Integer>> current = toOrdered.getHead();
+
+                for (SinglyLinkedList.Node<HashMap<String, Integer>> next = current.next; next != null; next = current.next) {
+                    System.out.println(current.data.get("layers") + " > " + next.data.get("layers"));
+                    if (current.data.get("layers") > next.data.get("layers")) {
+                        if (previous != null) {
+                            previous.next = next;
+                        } else {
+                            toOrdered.setFirstNode(next);
+                        }
+                        current.next = next.next;
+                        next.next = current;
+                        previous = next;
+                    } else {
+                        previous = current;
+                        current = next;
+                    }
+                }
+            }
+        }
+        return toOrdered;
     }
 
     @FXML
