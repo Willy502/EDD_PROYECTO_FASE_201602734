@@ -17,7 +17,12 @@ public class BTreeV2 {
             root = new BBranch();
             root.insert(node);
         } else {
-
+            Node obj = insertInBranch(node, root);
+            if (obj != null) {
+                root = new BBranch();
+                root.insert(obj);
+                root.leaf = false;
+            }
         }
     }
 
@@ -56,6 +61,45 @@ public class BTreeV2 {
                 temp = (Node) temp.next;
             } while (temp != null);
         }
+        return null;
+    }
+
+    public User loginByDpiAndPassword(long dpi, String password) {
+        Node find = searchInNode(root.first, dpi);
+
+        if (find != null) {
+            if (find.user != null && find.user.getPassword().equals(password)) {
+                return find.user;
+            }
+        }
+        return null;
+    }
+
+    public User searchUserByDpi(long dpi) {
+        Node find = searchInNode(root.first, dpi);
+
+        if (find != null) {
+            if (find.user != null) {
+                return find.user;
+            }
+        }
+        return null;
+    }
+
+    private Node searchInNode(Node current, long dpi) {
+
+        if (current.user.dpi == dpi)
+            return current;
+
+        if (current.left != null)
+            return searchInNode(current.left.first, dpi);
+
+        if (current.right != null)
+            return searchInNode(current.right.first, dpi);
+
+        if (current.next != null)
+            return searchInNode(current.next, dpi);
+
         return null;
     }
 

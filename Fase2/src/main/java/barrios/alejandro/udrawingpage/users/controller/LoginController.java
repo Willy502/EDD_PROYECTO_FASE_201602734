@@ -41,8 +41,6 @@ public class LoginController  {
             goToDashboard(event);
         } else {
             new CustomAlert("Registro", "Credenciales inválidas");
-            SparceMatrix sparceMatrix1 = new SparceMatrix(1, 5, 5);
-
         }
     }
 

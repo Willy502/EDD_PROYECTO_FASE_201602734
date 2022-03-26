@@ -1,12 +1,13 @@
 package barrios.alejandro.udrawingpage.utils;
 
 import barrios.alejandro.udrawingpage.structures.controller.BTree;
+import barrios.alejandro.udrawingpage.structures.controller.BTreeV2;
 import barrios.alejandro.udrawingpage.users.model.User;
 
 public class TemporalInformation {
 
     private static TemporalInformation temporalInformation = null;
-    private BTree usersTree;
+    private BTreeV2 usersTree;
     private User loguedUser;
 
     public static TemporalInformation getInstance() {
@@ -15,11 +16,11 @@ public class TemporalInformation {
         return temporalInformation;
     }
 
-    public BTree getUsersTree() {
+    public BTreeV2 getUsersTree() {
         return usersTree;
     }
 
-    public void setUsersTree(BTree usersTree) {
+    public void setUsersTree(BTreeV2 usersTree) {
         this.usersTree = usersTree;
     }
 

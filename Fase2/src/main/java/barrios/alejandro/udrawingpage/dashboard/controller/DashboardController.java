@@ -154,7 +154,7 @@ public class DashboardController {
                     temporalInformation.getUsersTree().insert(insideUser);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de clientes finalizada exitosamente");
-                temporalInformation.getUsersTree().showBTree();
+                //temporalInformation.getUsersTree().showBTree();
             }
             case "btnLoadCapas" -> {
                 temporalInformation.getLoguedUser().setCapas();
