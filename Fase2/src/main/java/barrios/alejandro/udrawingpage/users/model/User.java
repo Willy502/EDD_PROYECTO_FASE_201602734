@@ -68,4 +68,9 @@ public class User {
     public Rol getRol() {
         return rol;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

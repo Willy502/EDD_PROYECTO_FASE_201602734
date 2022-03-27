@@ -14,12 +14,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -49,6 +53,8 @@ public class DashboardController {
     protected Button btnClientsTree;
     @FXML
     protected PasswordField txtPassword;
+    @FXML
+    protected ListView<User> listViewClients;
 
     private final TemporalInformation temporalInformation;
 
@@ -60,6 +66,7 @@ public class DashboardController {
     public void initialize() {
         lblName.setText(temporalInformation.getLoguedUser().getName());
         fillChoicer();
+        populateListView();
 
         if (temporalInformation.getLoguedUser().getRol() == Rol.ADMIN) {
             hideAdmin();
@@ -118,6 +125,22 @@ public class DashboardController {
 
     }
 
+    private void populateListView() {
+        ObservableList<User> usersList = FXCollections.observableArrayList();
+        SinglyLinkedList<User> users = temporalInformation.getUsersTree().searchByLevels();
+
+        for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next)
+            usersList.add(user.data);
+        listViewClients.setItems(usersList);
+
+        listViewClients.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                User userSelected = listViewClients.getSelectionModel().getSelectedItem();
+                System.out.println("Uste va a editar " + userSelected.getName());
+            }
+        });
+    }
+
     private void fillChoicer() {
         if (temporalInformation.getLoguedUser().getImages() != null) {
             temporalInformation.getLoguedUser().getImages().fillImages();
@@ -154,7 +177,7 @@ public class DashboardController {
                     temporalInformation.getUsersTree().insert(insideUser);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de clientes finalizada exitosamente");
-                //temporalInformation.getUsersTree().showBTree();
+                populateListView();
             }
             case "btnLoadCapas" -> {
                 temporalInformation.getLoguedUser().setCapas();
