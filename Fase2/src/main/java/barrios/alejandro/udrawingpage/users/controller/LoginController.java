@@ -1,6 +1,5 @@
 package barrios.alejandro.udrawingpage.users.controller;
 
-import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.users.model.User;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;

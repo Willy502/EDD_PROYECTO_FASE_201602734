@@ -2,8 +2,6 @@ package barrios.alejandro.udrawingpage.users.model;
 
 import barrios.alejandro.udrawingpage.structures.controller.*;
 
-import java.math.BigInteger;
-
 public class User {
 
     public long dpi;

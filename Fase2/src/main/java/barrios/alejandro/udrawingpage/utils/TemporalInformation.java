@@ -1,6 +1,5 @@
 package barrios.alejandro.udrawingpage.utils;
 
-import barrios.alejandro.udrawingpage.structures.controller.BTree;
 import barrios.alejandro.udrawingpage.structures.controller.BTreeV2;
 import barrios.alejandro.udrawingpage.users.model.User;
 
