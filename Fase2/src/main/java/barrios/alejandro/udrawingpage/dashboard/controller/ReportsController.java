@@ -1,10 +1,8 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
-import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
-import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
-import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
-import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
+import barrios.alejandro.udrawingpage.structures.controller.*;
 import barrios.alejandro.udrawingpage.users.model.Rol;
+import barrios.alejandro.udrawingpage.users.model.User;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import javafx.event.ActionEvent;
@@ -12,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -22,6 +21,8 @@ public class ReportsController {
 
     @FXML
     protected VBox vboxAdmin, vboxClient, main;
+    @FXML
+    protected TextField txtDpi;
 
     private final TemporalInformation temporalInformation;
 
@@ -159,5 +160,48 @@ public class ReportsController {
         }
 
         new CustomAlert("Capas listadas", content.toString());
+    }
+
+    @FXML
+    protected void searchUser() {
+        String dpi = txtDpi.getText();
+        long dpiToSearch = Long.parseLong(dpi);
+        User user = temporalInformation.getUsersTree().searchUserByDpi(dpiToSearch);
+        if (user != null) {
+            StringBuilder content = new StringBuilder("Nombre: " + user.getName() + "\n" +
+                    "DPI: " + user.dpi + "\n" +
+                    "Contraseña: " + user.getPassword() + "\n");
+
+            content.append("Cantidad de albumes: ").append(user.getAlbumes().size()).append("\n");
+            DoublyCircularLinkedList.Node node = user.getAlbumes().getHead();
+
+            do {
+                if (node == null) break;
+                content.append(node.album.name).append(": ").append(node.album.images.size()).append(" imágenes \n");
+                node = node.next;
+            } while (!node.imHead);
+
+            content.append("Cantidad de imágenes totales: ").append(user.getImages().getImages().size()).append("\n");
+            BinarySearchTree capas = user.getCapas();
+            capas.orderLayers("PREORDER");
+
+            content.append("Cantidad de capas totales: ").append(capas.getOrderedLayers().size()).append("\n");
+
+            new CustomAlert("Reporte de usuario", content.toString());
+
+        } else {
+            new CustomAlert("Usuario no encontrado", "El usuario ingresado no ha podido ser encontrado");
+        }
+    }
+
+    @FXML
+    protected void searchByLevels() {
+        SinglyLinkedList<User> users = temporalInformation.getUsersTree().searchByLevels();
+        StringBuilder content = new StringBuilder();
+        for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next) {
+            content.append(user.data.dpi).append(" - ").append(user.data.getName()).append("\n");
+        }
+
+        new CustomAlert("Usuario recorriendo por niveles", content.toString());
     }
 }

@@ -34,6 +34,10 @@ public class DoublyCircularLinkedList {
         return current.album.images;
     }
 
+    public Node getHead() {
+        return head;
+    }
+
     public SinglyLinkedList<BinarySearchTree> getLastAlbum() {
         Node current = head;
         while (!current.next.imHead) current = current.next;
@@ -100,11 +104,11 @@ public class DoublyCircularLinkedList {
         Graph.GenerarImagen("CIRCULAR_ALBUMS", result);
     }
 
-    static class Node {
-        boolean imHead;
-        Node next;
+    public static class Node {
+        public boolean imHead;
+        public Node next;
         Node prev;
-        Album album;
+        public Album album;
         public Node(int id, String name) {
             album = new Album(id, name);
             album.images = new SinglyLinkedList<>();

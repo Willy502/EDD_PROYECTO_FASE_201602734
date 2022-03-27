@@ -154,7 +154,7 @@ public class DashboardController {
                     temporalInformation.getUsersTree().insert(insideUser);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de clientes finalizada exitosamente");
-                temporalInformation.getUsersTree().showBTree();
+                //temporalInformation.getUsersTree().showBTree();
             }
             case "btnLoadCapas" -> {
                 temporalInformation.getLoguedUser().setCapas();
@@ -261,6 +261,7 @@ public class DashboardController {
         String id = ((Button) event.getSource()).getId();
 
         switch (id) {
+            case "btnClientsTree" -> new StructuresReport().buildBTree(mainPane, temporalInformation.getUsersTree());
             case "btnLayer" -> new StructuresReport().buildLayer(mainPane, Integer.parseInt(txtNoLayer.getText()));
             case "btnImagesTree" -> new StructuresReport().buildAvlImages(mainPane, temporalInformation.getLoguedUser().getImages());
             case "btnLayersTree" -> new StructuresReport().buildBinaryLayers(mainPane, temporalInformation.getLoguedUser().getCapas());

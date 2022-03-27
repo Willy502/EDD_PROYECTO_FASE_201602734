@@ -36,13 +36,13 @@
       </VBox>
       <VBox fx:id="vboxAdmin" prefHeight="200.0" HBox.hgrow="ALWAYS">
          <children>
-            <TextField promptText="Ingrese el DPI del usuario" />
-            <Button mnemonicParsing="false" text="Buscar por DPI">
+            <TextField fx:id="txtDpi" promptText="Ingrese el DPI del usuario" />
+            <Button mnemonicParsing="false" onAction="#searchUser" text="Buscar por DPI">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Listar clientes con recorrido por niveles">
+            <Button mnemonicParsing="false" onAction="#searchByLevels" text="Listar clientes con recorrido por niveles">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

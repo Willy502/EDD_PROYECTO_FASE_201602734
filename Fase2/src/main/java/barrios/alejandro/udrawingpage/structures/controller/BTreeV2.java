@@ -1,11 +1,13 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
+import barrios.alejandro.udrawingpage.graph.Graph;
 import barrios.alejandro.udrawingpage.users.model.User;
 
 public class BTreeV2 {
 
     int orden = 5;
     BBranch root;
+    private String result;
 
     public BTreeV2() {
         root = null;
@@ -17,7 +19,12 @@ public class BTreeV2 {
             root = new BBranch();
             root.insert(node);
         } else {
-
+            Node obj = insertInBranch(node, root);
+            if (obj != null) {
+                root = new BBranch();
+                root.insert(obj);
+                root.leaf = false;
+            }
         }
     }
 
@@ -57,6 +64,112 @@ public class BTreeV2 {
             } while (temp != null);
         }
         return null;
+    }
+
+    public User loginByDpiAndPassword(long dpi, String password) {
+        Node find = searchInNode(root.first, dpi);
+
+        if (find != null) {
+            if (find.user != null && find.user.getPassword().equals(password)) {
+                return find.user;
+            }
+        }
+        return null;
+    }
+
+    public User searchUserByDpi(long dpi) {
+        Node find = searchInNode(root.first, dpi);
+
+        if (find != null) {
+            if (find.user != null) {
+                return find.user;
+            }
+        }
+        return null;
+    }
+
+    private Node searchInNode(Node current, long dpi) {
+
+        if (current.user.dpi == dpi)
+            return current;
+
+        if (current.left != null)
+            return searchInNode(current.left.first, dpi);
+
+        if (current.right != null)
+            return searchInNode(current.right.first, dpi);
+
+        if (current.next != null)
+            return searchInNode(current.next, dpi);
+
+        return null;
+    }
+
+    public SinglyLinkedList<User> searchByLevels() {
+        SinglyLinkedList<User> users = new SinglyLinkedList<>();
+        searchInNodeByLevels(root.first, users);
+        return users;
+    }
+
+    private void searchInNodeByLevels(Node current, SinglyLinkedList<User> users) {
+
+        if (current == null) return;
+        boolean add = true;
+        for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next) {
+            if (user.data.dpi == current.user.dpi) add = false;
+        }
+        if (add) users.addToList(current.user);
+        searchInNodeByLevels(current.next, users);
+
+        if (current.left != null)
+            searchInNodeByLevels(current.left.first, users);
+
+        if (current.left != null)
+            searchInNodeByLevels(current.right.first, users);
+
+    }
+
+    private void recursiveGraph(Node current, int group) {
+            if (current == null) return;
+            result += current.user.dpi + "[width=.5 height=.5, group="+group+"];\n";
+            recursiveGraph(current.next, group);
+
+            if (current.left != null)
+                recursiveGraph(current.left.first, group+1);
+
+            if (current.left != null)
+                recursiveGraph(current.right.first, group+1);
+    }
+    private void recursiveAssociate(Node current) {
+        if (current == null) return;
+
+        if (current.next != null) {
+            result += current.user.dpi + " -> " + current.next.user.dpi +";\n";
+        }
+        recursiveAssociate(current.next);
+
+        if (current.left != null) {
+            result += current.user.dpi + " -> " + current.left.first.user.dpi +";\n";
+            recursiveAssociate(current.left.first);
+        }
+
+        if (current.right != null) {
+            result += current.user.dpi + " -> " + current.right.first.user.dpi +";\n";
+            recursiveAssociate(current.right.first);
+        }
+
+    }
+
+    public void graphBTree() {
+
+        result = "digraph G {\n";
+        result += "node[shape=square];\n";
+
+        recursiveGraph(root.first, 1);
+        recursiveAssociate(root.first);
+
+        result += "}\n";
+        Graph.GenerarImagen("BTree", result);
     }
 
     private Node split(BBranch branch) {
