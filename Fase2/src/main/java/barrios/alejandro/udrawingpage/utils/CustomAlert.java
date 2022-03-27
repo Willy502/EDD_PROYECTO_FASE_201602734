@@ -29,6 +29,15 @@ public class CustomAlert {
         alert.showAndWait();
     }
 
+    public CustomAlert(String title, String message, Runnable runnable) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText("");
+        alert.setContentText(message);
+        alert.showAndWait();
+        alert.setOnCloseRequest(event -> runnable.run());
+    }
+
     public Task<?> createWorker(String message) {
         return new Task<>() {
             @Override

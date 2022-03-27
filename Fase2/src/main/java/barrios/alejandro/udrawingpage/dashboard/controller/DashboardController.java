@@ -17,13 +17,11 @@ import com.google.gson.stream.JsonReader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -38,7 +36,7 @@ import java.util.Objects;
 public class DashboardController {
 
     @FXML
-    protected Label lblName;
+    protected Label lblName, clientFormTitle;
     @FXML
     protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums, btnLoadImage;
     @FXML
@@ -50,7 +48,7 @@ public class DashboardController {
     @FXML
     protected TextField txtCapas, txtNoLayer, txtName, txtDpi;
     @FXML
-    protected Button btnClientsTree;
+    protected Button btnClientsTree, btnEdit;
     @FXML
     protected PasswordField txtPassword;
     @FXML
@@ -67,6 +65,7 @@ public class DashboardController {
         lblName.setText(temporalInformation.getLoguedUser().getName());
         fillChoicer();
         populateListView();
+        btnEdit.setOnMouseClicked(event -> createUser());
 
         if (temporalInformation.getLoguedUser().getRol() == Rol.ADMIN) {
             hideAdmin();
@@ -136,9 +135,29 @@ public class DashboardController {
         listViewClients.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getClickCount() == 2) {
                 User userSelected = listViewClients.getSelectionModel().getSelectedItem();
-                System.out.println("Uste va a editar " + userSelected.getName());
+                editClient(userSelected);
             }
         });
+    }
+
+    private void editClient(User user) {
+        clientFormTitle.setText("Editar " + user.dpi);
+        txtDpi.setText(Long.toString(user.dpi));
+        txtName.setText(user.getName());
+        txtPassword.setText(user.getPassword());
+        btnEdit.setText("Finalizar edición");
+        btnEdit.setOnMouseClicked(mouseEvent -> {
+            user.setName(txtName.getText());
+            user.setPassword(txtPassword.getText());
+            user.dpi = Long.parseLong(txtDpi.getText());
+            new CustomAlert("Usuario editado exitosamente", "Se ha editado un usuario exitosamente");
+            clientFormTitle.setText("Registrar cliente");
+            btnEdit.setText("Registrar");
+            populateListView();
+            clearFields();
+            btnEdit.setOnMouseClicked(event -> createUser());
+        });
+
     }
 
     private void fillChoicer() {
@@ -325,6 +344,7 @@ public class DashboardController {
         if (user == null) new UserController().createClient(txtName.getText(), Long.parseLong(txtDpi.getText()), txtPassword.getText());
         else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
         clearFields();
+        populateListView();
     }
 
     private void clearFields() {

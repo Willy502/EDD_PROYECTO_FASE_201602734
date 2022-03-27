@@ -130,7 +130,7 @@
                            <Insets bottom="10.0" top="10.0" />
                         </VBox.margin>
                      </Line>
-                     <Label text="Registrar cliente">
+                     <Label fx:id="clientFormTitle" text="Registrar cliente">
                         <padding>
                            <Insets bottom="10.0" />
                         </padding>
@@ -150,7 +150,7 @@
                            <Insets bottom="10.0" />
                         </VBox.margin>
                      </PasswordField>
-                     <Button mnemonicParsing="false" onAction="#createUser" text="Crear cliente">
+                     <Button fx:id="btnEdit" mnemonicParsing="false" text="Crear cliente">
                         <VBox.margin>
                            <Insets bottom="10.0" />
                         </VBox.margin>
