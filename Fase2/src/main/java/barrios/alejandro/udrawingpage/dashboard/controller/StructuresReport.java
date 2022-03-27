@@ -1,9 +1,6 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
-import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
-import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
-import barrios.alejandro.udrawingpage.structures.controller.DoublyCircularLinkedList;
-import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
+import barrios.alejandro.udrawingpage.structures.controller.*;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import javafx.scene.image.Image;
@@ -102,6 +99,22 @@ public class StructuresReport {
         new CustomAlert("Construyendo árbol binario de imágenes y capa...");
         ImageView imageView = new ImageView();
         Image image = new Image("file:out/BINARY_LAYER.png");
+
+        imageView.setImage(image);
+        imageView.setFitHeight(500);
+        imageView.setPreserveRatio(true);
+        pane.getChildren().add(imageView);
+    }
+
+    public void buildBTree(StackPane pane, BTreeV2 clients) {
+        if (pane.getChildren().size() > 0) {
+            pane.getChildren().clear();
+        }
+        clients.graphBTree();
+        // Build image and imageview
+        new CustomAlert("Construyendo arbol B de clientes...");
+        ImageView imageView = new ImageView();
+        Image image = new Image("file:out/BTree.png");
 
         imageView.setImage(image);
         imageView.setFitHeight(500);

@@ -1,11 +1,13 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
+import barrios.alejandro.udrawingpage.graph.Graph;
 import barrios.alejandro.udrawingpage.users.model.User;
 
 public class BTreeV2 {
 
     int orden = 5;
     BBranch root;
+    private String result;
 
     public BTreeV2() {
         root = null;
@@ -101,6 +103,73 @@ public class BTreeV2 {
             return searchInNode(current.next, dpi);
 
         return null;
+    }
+
+    public SinglyLinkedList<User> searchByLevels() {
+        SinglyLinkedList<User> users = new SinglyLinkedList<>();
+        searchInNodeByLevels(root.first, users);
+        return users;
+    }
+
+    private void searchInNodeByLevels(Node current, SinglyLinkedList<User> users) {
+
+        if (current == null) return;
+        boolean add = true;
+        for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next) {
+            if (user.data.dpi == current.user.dpi) add = false;
+        }
+        if (add) users.addToList(current.user);
+        searchInNodeByLevels(current.next, users);
+
+        if (current.left != null)
+            searchInNodeByLevels(current.left.first, users);
+
+        if (current.left != null)
+            searchInNodeByLevels(current.right.first, users);
+
+    }
+
+    private void recursiveGraph(Node current, int group) {
+            if (current == null) return;
+            result += current.user.dpi + "[width=.5 height=.5, group="+group+"];\n";
+            recursiveGraph(current.next, group);
+
+            if (current.left != null)
+                recursiveGraph(current.left.first, group+1);
+
+            if (current.left != null)
+                recursiveGraph(current.right.first, group+1);
+    }
+    private void recursiveAssociate(Node current) {
+        if (current == null) return;
+
+        if (current.next != null) {
+            result += current.user.dpi + " -> " + current.next.user.dpi +";\n";
+        }
+        recursiveAssociate(current.next);
+
+        if (current.left != null) {
+            result += current.user.dpi + " -> " + current.left.first.user.dpi +";\n";
+            recursiveAssociate(current.left.first);
+        }
+
+        if (current.right != null) {
+            result += current.user.dpi + " -> " + current.right.first.user.dpi +";\n";
+            recursiveAssociate(current.right.first);
+        }
+
+    }
+
+    public void graphBTree() {
+
+        result = "digraph G {\n";
+        result += "node[shape=square];\n";
+
+        recursiveGraph(root.first, 1);
+        recursiveAssociate(root.first);
+
+        result += "}\n";
+        Graph.GenerarImagen("BTree", result);
     }
 
     private Node split(BBranch branch) {
