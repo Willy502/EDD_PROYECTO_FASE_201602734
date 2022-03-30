@@ -112,6 +112,11 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
+                        <Button fx:id="btnAmplitud" mnemonicParsing="false" onAction="#buildImageOrder" text="Amplitud">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Button>
                         <HBox fx:id="hboxLayersS" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <TextField fx:id="txtCapas" promptText="Ej: 1,2,3" />

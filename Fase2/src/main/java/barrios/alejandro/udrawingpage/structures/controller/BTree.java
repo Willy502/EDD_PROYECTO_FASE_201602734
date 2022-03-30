@@ -147,14 +147,6 @@ public class BTree { // Users
         print(root);
     }
 
-    public SinglyLinkedList<User> getUsers() {
-        SinglyLinkedList<User> users = new SinglyLinkedList<>();
-
-        Node current = root;
-
-        return users;
-    }
-
     //Print en preorder
     private void print(Node n) {
         n.imprimir();

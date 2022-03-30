@@ -128,6 +128,7 @@ public class BinarySearchTree { // Image
             case "PREORDER" -> preorder(root);
             case "INORDER" -> inorder(root);
             case "POSTORDER" -> postorder(root);
+            case "AMPLITUD" -> amplitud(root);
         }
 
     }
@@ -157,6 +158,28 @@ public class BinarySearchTree { // Image
         postorder(nodo.leftBranch);
         postorder(nodo.rightBranch);
         layers.addToList(nodo.capa);
+    }
+
+    private void amplitud(Node node) {
+        Queue<Node> queue = new Queue<>();
+        Node aux = null;
+
+        if (node != null) {
+            queue.queue(node);
+
+            while(!queue.isEmpty()) {
+                aux = queue.getFirst();
+                queue.pop();
+                layers.addToList(aux.capa);
+                if (aux.leftBranch != null)
+                    queue.queue(aux.leftBranch);
+                if (aux.rightBranch != null)
+                    queue.queue(aux.rightBranch);
+            }
+        }
+
+        System.out.println();
+
     }
 
     public SinglyLinkedList<SparceMatrix> getOrderedLayers() {
