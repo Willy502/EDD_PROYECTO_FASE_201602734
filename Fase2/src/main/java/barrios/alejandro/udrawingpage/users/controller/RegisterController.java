@@ -43,10 +43,24 @@ public class RegisterController {
     @FXML
     protected void registerUser() {
         if (txtPassword.getText().equals(txtConfirmPassword.getText())) {
-            User user = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+            User user;
+
+            try {
+                user = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+
+                if (txtName.getText() == "" || txtPassword.getText() == "" || txtConfirmPassword.getText() == "")
+                    throw new NullPointerException();
+
+            } catch (Exception e) {
+                new CustomAlert("Error", "Faltan campos");
+                return;
+            }
+
             if (user == null) new UserController().createClient(txtName.getText(), Long.parseLong(txtDpi.getText()), txtPassword.getText());
             else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
             clearFields();
+        } else {
+            new CustomAlert("Error", "Las contraseñas no son iguales");
         }
     }
 

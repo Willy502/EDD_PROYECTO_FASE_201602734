@@ -147,15 +147,33 @@ public class DashboardController {
         txtPassword.setText(user.getPassword());
         btnEdit.setText("Finalizar edición");
         btnEdit.setOnMouseClicked(mouseEvent -> {
-            user.setName(txtName.getText());
-            user.setPassword(txtPassword.getText());
-            user.dpi = Long.parseLong(txtDpi.getText());
-            new CustomAlert("Usuario editado exitosamente", "Se ha editado un usuario exitosamente");
-            clientFormTitle.setText("Registrar cliente");
-            btnEdit.setText("Registrar");
-            populateListView();
-            clearFields();
-            btnEdit.setOnMouseClicked(event -> createUser());
+
+            final User searchedUser;
+            try {
+                searchedUser = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+    
+                if (txtName.getText() == "" || txtPassword.getText() == "")
+                    throw new NullPointerException();
+    
+            } catch (Exception e) {
+                new CustomAlert("Error", "Faltan campos");
+                return;
+            }
+
+            if (searchedUser == null) {
+                user.setName(txtName.getText());
+                user.setPassword(txtPassword.getText());
+                user.dpi = Long.parseLong(txtDpi.getText());
+                new CustomAlert("Usuario editado exitosamente", "Se ha editado un usuario exitosamente");
+                clientFormTitle.setText("Registrar cliente");
+                btnEdit.setText("Registrar");
+                populateListView();
+                clearFields();
+                btnEdit.setOnMouseClicked(event -> createUser());
+            }
+            else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
+
+            
         });
 
     }
@@ -301,15 +319,19 @@ public class DashboardController {
     @FXML
     protected void structuresState(ActionEvent event) {
         String id = ((Button) event.getSource()).getId();
-
-        switch (id) {
-            case "btnClientsTree" -> new StructuresReport().buildBTree(mainPane, temporalInformation.getUsersTree());
-            case "btnLayer" -> new StructuresReport().buildLayer(mainPane, Integer.parseInt(txtNoLayer.getText()));
-            case "btnImagesTree" -> new StructuresReport().buildAvlImages(mainPane, temporalInformation.getLoguedUser().getImages());
-            case "btnLayersTree" -> new StructuresReport().buildBinaryLayers(mainPane, temporalInformation.getLoguedUser().getCapas());
-            case "btnAlbumsList" -> new StructuresReport().buildCircularAlbums(mainPane, temporalInformation.getLoguedUser().getAlbumes());
-            case "btnImageAndLayers" -> new StructuresReport().buildImageAndLayers(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboImages.getValue().toString())));
+        try {
+            switch (id) {
+                case "btnClientsTree" -> new StructuresReport().buildBTree(mainPane, temporalInformation.getUsersTree());
+                case "btnLayer" -> new StructuresReport().buildLayer(mainPane, Integer.parseInt(txtNoLayer.getText()));
+                case "btnImagesTree" -> new StructuresReport().buildAvlImages(mainPane, temporalInformation.getLoguedUser().getImages());
+                case "btnLayersTree" -> new StructuresReport().buildBinaryLayers(mainPane, temporalInformation.getLoguedUser().getCapas());
+                case "btnAlbumsList" -> new StructuresReport().buildCircularAlbums(mainPane, temporalInformation.getLoguedUser().getAlbumes());
+                case "btnImageAndLayers" -> new StructuresReport().buildImageAndLayers(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboImages.getValue().toString())));
+            }
+        } catch(Exception e) {
+            new CustomAlert("Error", "No se ha cargado información previa");
         }
+        
 
     }
 
@@ -317,13 +339,18 @@ public class DashboardController {
     protected void buildImageOrder(ActionEvent event) {
         String id = ((Button) event.getSource()).getId();
 
-        switch (id) {
-            case "btnPreorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "PREORDER");
-            case "btnInorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "INORDER");
-            case "btnPostorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "POSTORDER");
-            case "btnAmplitud" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "AMPLITUD");
-            case "btnCapas" -> new GraphImage().buildImage(mainPane, txtCapas.getText());
+        try {
+            switch (id) {
+                case "btnPreorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "PREORDER");
+                case "btnInorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "INORDER");
+                case "btnPostorder" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "POSTORDER");
+                case "btnAmplitud" -> new GraphImage().buildImage(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboGraphFullImage.getValue().toString())), "AMPLITUD");
+                case "btnCapas" -> new GraphImage().buildImage(mainPane, txtCapas.getText());
+            }
+        } catch (Exception e) {
+            new CustomAlert("Error", "No se ha cargado información previa");
         }
+        
     }
 
     @FXML
@@ -341,7 +368,19 @@ public class DashboardController {
 
     @FXML
     protected void createUser() {
-        User user = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+        User user;
+
+        try {
+            user = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+
+            if (txtName.getText() == "" || txtPassword.getText() == "")
+                throw new NullPointerException();
+
+        } catch (Exception e) {
+            new CustomAlert("Error", "Faltan campos");
+            return;
+        }
+
         if (user == null) new UserController().createClient(txtName.getText(), Long.parseLong(txtDpi.getText()), txtPassword.getText());
         else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
         clearFields();

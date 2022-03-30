@@ -54,7 +54,19 @@ public class ReportsController {
 
     @FXML
     protected void top5ImgsLayers() {
-        SinglyLinkedList<BinarySearchTree> images = temporalInformation.getLoguedUser().getImages().getImages();
+        SinglyLinkedList<BinarySearchTree> images;
+        try {
+            images = temporalInformation.getLoguedUser().getImages().getImages();
+        } catch (Exception e) {
+            new CustomAlert("Error", "No se ha cargado información previa");
+            return;
+        }
+         
+        if (images == null) {
+            new CustomAlert("Error", "No se ha cargado información previa");
+            return;
+        }
+
         SinglyLinkedList<HashMap<String, Integer>> toBeOrdered = new SinglyLinkedList<>();
 
         for (SinglyLinkedList.Node<BinarySearchTree> image = images.getHead(); image != null; image = image.next) {
@@ -115,6 +127,12 @@ public class ReportsController {
     @FXML
     protected void leafLayers() {
         BinarySearchTree searchTree = temporalInformation.getLoguedUser().getCapas();
+
+        if (searchTree == null) {
+            new CustomAlert("Error", "No se ha cargado información previa");
+            return;
+        }
+
         searchTree.orderLayers("PREORDER");
         new CustomAlert("Procesando...");
         SinglyLinkedList<SparceMatrix> layers = searchTree.getLeafLayers();
@@ -130,6 +148,12 @@ public class ReportsController {
     @FXML
     protected void heightLayersTree() {
         BinarySearchTree searchTree = temporalInformation.getLoguedUser().getCapas();
+
+        if (searchTree == null) {
+            new CustomAlert("Error", "No se ha cargado información previa");
+            return;
+        }
+
         new CustomAlert("Procesando...");
         String content = "La profundidad del árbol de capas es de: " + searchTree.getRoot().height;
 
@@ -139,6 +163,12 @@ public class ReportsController {
     @FXML
     protected void listLayers() {
         BinarySearchTree searchTree = temporalInformation.getLoguedUser().getCapas();
+
+        if (searchTree == null) {
+            new CustomAlert("Error", "No se ha cargado información previa");
+            return;
+        }
+
         StringBuilder content = new StringBuilder();
 
         SinglyLinkedList<String> orders = new SinglyLinkedList<>();
@@ -165,7 +195,13 @@ public class ReportsController {
     @FXML
     protected void searchUser() {
         String dpi = txtDpi.getText();
-        long dpiToSearch = Long.parseLong(dpi);
+        long dpiToSearch;
+        try {
+            dpiToSearch = Long.parseLong(dpi);
+        } catch (Exception e) {
+            new CustomAlert("Error", "El campo esta vacio");
+            return;
+        }
         User user = temporalInformation.getUsersTree().searchUserByDpi(dpiToSearch);
         if (user != null) {
             StringBuilder content = new StringBuilder("Nombre: " + user.getName() + "\n" +

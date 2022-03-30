@@ -33,7 +33,15 @@ public class LoginController  {
     @FXML
     protected void loginUser(ActionEvent event) {
         TemporalInformation temporalInformation = TemporalInformation.getInstance();
-        User user = temporalInformation.getUsersTree().loginByDpiAndPassword(Long.parseLong(txtDpi.getText()), txtPassword.getText());
+        User user;
+
+        try {
+            user = temporalInformation.getUsersTree().loginByDpiAndPassword(Long.parseLong(txtDpi.getText()), txtPassword.getText());
+        } catch (Exception e) {
+            new CustomAlert("Error", "Credenciales inválidas");
+            return;
+        }
+
         if (user != null) {
             clearFields();
             temporalInformation.setLoguedUser(user);
