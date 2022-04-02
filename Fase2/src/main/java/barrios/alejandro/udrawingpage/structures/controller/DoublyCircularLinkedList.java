@@ -36,7 +36,7 @@ public class DoublyCircularLinkedList {
 
     public Album searchAlbumByNombre(String nombre) {
         Node current = head;
-
+        if (current == null) return null;
         do {
             if (current.album.name == nombre) return current.album;
             current = current.next;

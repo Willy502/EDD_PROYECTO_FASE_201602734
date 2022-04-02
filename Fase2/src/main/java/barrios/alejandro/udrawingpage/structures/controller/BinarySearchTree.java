@@ -57,7 +57,8 @@ public class BinarySearchTree { // Image
     }
 
     public SparceMatrix searchLayer(int idCapa) {
-        return binarySearch(root, idCapa);
+        if (root != null) return binarySearch(root, idCapa);
+        else return null;
     }
 
     private SparceMatrix binarySearch(Node current, int idCapa) {

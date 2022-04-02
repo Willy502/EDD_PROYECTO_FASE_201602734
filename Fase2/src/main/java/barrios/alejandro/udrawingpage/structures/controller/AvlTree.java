@@ -115,7 +115,8 @@ public class AvlTree { // Images tree
     }
 
     public BinarySearchTree search(int idImage) {
-        return binarySearch(root, idImage);
+        if (root != null) return binarySearch(root, idImage);
+        else return null;
     }
 
     private BinarySearchTree binarySearch(Node current, int idImage) {
