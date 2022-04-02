@@ -68,15 +68,17 @@ public class SparceMatrix { // layer
         return current;
     }
 
-    public void graphMatrix() {
+    public void graphMatrix(boolean showNodes) {
 
         int fila = 1;
         int columna = 1;
 
         String result = "digraph G {\n";
-        result += "graph[nodesep=0, ranksep=\"0\", pad=\"0.5\"];\n";
+        if (!showNodes)
+            result += "graph[nodesep=0, ranksep=\"0\", pad=\"0.5\"];\n";
         result += "node[shape=box];\n";
-        result += "edge[style=invis];\n";
+        if (!showNodes)
+            result += "edge[style=invis];\n";
         result+= "bgcolor=\"transparent\";\n";
 
         // Columna

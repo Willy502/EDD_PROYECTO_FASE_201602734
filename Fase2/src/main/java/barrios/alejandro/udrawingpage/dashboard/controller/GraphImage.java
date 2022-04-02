@@ -47,7 +47,7 @@ public class GraphImage {
 
     private void graphImage(StackPane pane, SinglyLinkedList<SparceMatrix> layers) {
         for (SinglyLinkedList.Node<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
-            layer.data.graphMatrix();
+            layer.data.graphMatrix(false);
             new CustomAlert("Construyendo capa...");
 
             File file = new File("out/capa_" + layer.data.id + ".png");

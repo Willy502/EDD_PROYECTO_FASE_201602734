@@ -23,7 +23,7 @@ public class StructuresReport {
         }
         // Build Matrix
         SparceMatrix matrixToBuild = temporalInformation.getLoguedUser().getCapas().searchLayer(noLayer);
-        matrixToBuild.graphMatrix();
+        matrixToBuild.graphMatrix(true);
 
         new CustomAlert("Construyendo capa...");
         // Get matrix path
