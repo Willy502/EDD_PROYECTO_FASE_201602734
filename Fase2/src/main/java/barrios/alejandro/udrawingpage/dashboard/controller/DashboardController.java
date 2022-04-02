@@ -217,7 +217,8 @@ public class DashboardController {
                 populateListView();
             }
             case "btnLoadCapas" -> {
-                temporalInformation.getLoguedUser().setCapas();
+                if (temporalInformation.getLoguedUser().getCapas() == null)
+                    temporalInformation.getLoguedUser().setCapas();
                 int maxX = 0;
                 int maxY = 0;
 
@@ -266,7 +267,8 @@ public class DashboardController {
                 fillChoicer();
             }
             case "btnLoadAlbums" -> {
-                temporalInformation.getLoguedUser().setAlbumes();
+                if (temporalInformation.getLoguedUser().getAlbumes() == null)
+                    temporalInformation.getLoguedUser().setAlbumes();
                 assert jsonArray != null;
                 jsonArray.forEach(album -> {
 
