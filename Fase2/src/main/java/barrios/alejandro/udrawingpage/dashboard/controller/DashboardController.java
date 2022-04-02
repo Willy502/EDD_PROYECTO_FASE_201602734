@@ -211,7 +211,9 @@ public class DashboardController {
                             item.get("password").getAsString(),
                             Rol.CLIENT
                     );
-                    temporalInformation.getUsersTree().insert(insideUser);
+
+                    if (temporalInformation.getUsersTree().searchUserByDpi(insideUser.dpi) == null)
+                        temporalInformation.getUsersTree().insert(insideUser);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de clientes finalizada exitosamente");
                 populateListView();
@@ -249,7 +251,8 @@ public class DashboardController {
                         String color = info.get("color").getAsString();
                         newCapa.saveCell(fila, columna, color);
                     });
-                    temporalInformation.getLoguedUser().getCapas().insert(newCapa);
+                    if (temporalInformation.getLoguedUser().getCapas().searchLayer(newCapa.id) == null)
+                        temporalInformation.getLoguedUser().getCapas().insert(newCapa);
                 }
 
 
@@ -274,18 +277,21 @@ public class DashboardController {
 
                     JsonObject albumInfo = (JsonObject) album;
                     String nombreAlbum = albumInfo.get("nombre_album").getAsString();
-                    temporalInformation.getLoguedUser().getAlbumes().createAlbum(nombreAlbum);
+                    if (temporalInformation.getLoguedUser().getAlbumes().searchAlbumByNombre(nombreAlbum) == null) {
+                        temporalInformation.getLoguedUser().getAlbumes().createAlbum(nombreAlbum);
 
-                    JsonArray imagesArray = albumInfo.get("imgs").getAsJsonArray();
-                    int i = 0;
-                    while (i < imagesArray.size()) {
-                        int idImage = imagesArray.get(i).getAsInt();
-                        BinarySearchTree image = temporalInformation.getLoguedUser().getImages().search(idImage);
-                        if (image != null) {
-                            temporalInformation.getLoguedUser().getAlbumes().getLastAlbum().addToList(image);
+                        JsonArray imagesArray = albumInfo.get("imgs").getAsJsonArray();
+                        int i = 0;
+                        while (i < imagesArray.size()) {
+                            int idImage = imagesArray.get(i).getAsInt();
+                            BinarySearchTree image = temporalInformation.getLoguedUser().getImages().search(idImage);
+                            if (image != null) {
+                                temporalInformation.getLoguedUser().getAlbumes().getLastAlbum().addToList(image);
+                            }
+                            i++;
                         }
-                        i++;
                     }
+                    
 
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de albumes finalizada exitosamente");
@@ -315,7 +321,8 @@ public class DashboardController {
             i++;
         }
 
-        temporalInformation.getLoguedUser().getImages().insert(bstImage);
+        if (temporalInformation.getLoguedUser().getImages().search(bstImage.id) == null)
+            temporalInformation.getLoguedUser().getImages().insert(bstImage);
     }
 
     @FXML

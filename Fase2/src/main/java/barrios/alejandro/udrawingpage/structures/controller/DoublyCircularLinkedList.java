@@ -34,6 +34,16 @@ public class DoublyCircularLinkedList {
         return current.album.images;
     }
 
+    public Album searchAlbumByNombre(String nombre) {
+        Node current = head;
+
+        do {
+            if (current.album.name == nombre) return current.album;
+            current = current.next;
+        } while (!current.imHead);
+        return null;
+    }
+
     public Node getHead() {
         return head;
     }
