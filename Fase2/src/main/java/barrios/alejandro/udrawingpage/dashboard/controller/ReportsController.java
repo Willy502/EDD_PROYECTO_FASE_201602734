@@ -205,7 +205,7 @@ public class ReportsController {
         User user = temporalInformation.getUsersTree().searchUserByDpi(dpiToSearch);
         if (user != null) {
             StringBuilder content = new StringBuilder("Nombre: " + user.getName() + "\n" +
-                    "DPI: " + user.dpi + "\n" +
+                    "DPI: " + user.getDpi() + "\n" +
                     "Contraseña: " + user.getPassword() + "\n");
 
             content.append("Cantidad de albumes: ").append(user.getAlbumes().size()).append("\n");
@@ -235,7 +235,7 @@ public class ReportsController {
         SinglyLinkedList<User> users = temporalInformation.getUsersTree().searchByLevels();
         StringBuilder content = new StringBuilder();
         for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next) {
-            content.append(user.data.dpi).append(" - ").append(user.data.getName()).append("\n");
+            content.append(user.data.getDpi()).append(" - ").append(user.data.getName()).append("\n");
         }
 
         new CustomAlert("Usuario recorriendo por niveles", content.toString());

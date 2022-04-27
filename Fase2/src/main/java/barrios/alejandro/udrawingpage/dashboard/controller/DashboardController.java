@@ -141,8 +141,8 @@ public class DashboardController {
     }
 
     private void editClient(User user) {
-        clientFormTitle.setText("Editar " + user.dpi);
-        txtDpi.setText(Long.toString(user.dpi));
+        clientFormTitle.setText("Editar " + user.getDpi());
+        txtDpi.setText(Long.toString(user.getDpi()));
         txtName.setText(user.getName());
         txtPassword.setText(user.getPassword());
         btnEdit.setText("Finalizar edición");
@@ -163,7 +163,7 @@ public class DashboardController {
             if (searchedUser == null) {
                 user.setName(txtName.getText());
                 user.setPassword(txtPassword.getText());
-                user.dpi = Long.parseLong(txtDpi.getText());
+                user.setDpi(Long.parseLong(txtDpi.getText()));
                 new CustomAlert("Usuario editado exitosamente", "Se ha editado un usuario exitosamente");
                 clientFormTitle.setText("Registrar cliente");
                 btnEdit.setText("Registrar");
@@ -212,7 +212,7 @@ public class DashboardController {
                             Rol.CLIENT
                     );
 
-                    if (temporalInformation.getUsersTree().searchUserByDpi(insideUser.dpi) == null)
+                    if (temporalInformation.getUsersTree().searchUserByDpi(insideUser.getDpi()) == null)
                         temporalInformation.getUsersTree().insert(insideUser);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de clientes finalizada exitosamente");

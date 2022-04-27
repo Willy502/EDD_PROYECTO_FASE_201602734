@@ -39,9 +39,9 @@ public class BTreeV2 {
         } else {
             Node temp = branch.first;
             do {
-                if (node.user.dpi == temp.user.dpi)
+                if (node.user.getDpi() == temp.user.getDpi())
                     return null;
-                if (node.user.dpi < temp.user.dpi) {
+                if (node.user.getDpi() < temp.user.getDpi()) {
                     Node obj = insertInBranch(node, temp.left);
                     if (obj instanceof Node) {
                         branch.insert((Node) obj);
@@ -90,7 +90,7 @@ public class BTreeV2 {
 
     private Node searchInNode(Node current, long dpi) {
 
-        if (current.user.dpi == dpi)
+        if (current.user.getDpi() == dpi)
             return current;
 
         if (current.left != null)
@@ -116,7 +116,7 @@ public class BTreeV2 {
         if (current == null) return;
         boolean add = true;
         for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next) {
-            if (user.data.dpi == current.user.dpi) add = false;
+            if (user.data.getDpi() == current.user.getDpi()) add = false;
         }
         if (add) users.addToList(current.user);
         searchInNodeByLevels(current.next, users);
@@ -131,7 +131,7 @@ public class BTreeV2 {
 
     private void recursiveGraph(Node current, int group) {
             if (current == null) return;
-            result += current.user.dpi + "[width=.5 height=.5, group="+group+"];\n";
+            result += current.user.getDpi() + "[width=.5 height=.5, group="+group+"];\n";
             recursiveGraph(current.next, group);
 
             if (current.left != null)
@@ -144,17 +144,17 @@ public class BTreeV2 {
         if (current == null) return;
 
         if (current.next != null) {
-            result += current.user.dpi + " -> " + current.next.user.dpi +";\n";
+            result += current.user.getDpi() + " -> " + current.next.user.getDpi() +";\n";
         }
         recursiveAssociate(current.next);
 
         if (current.left != null) {
-            result += current.user.dpi + " -> " + current.left.first.user.dpi +";\n";
+            result += current.user.getDpi() + " -> " + current.left.first.user.getDpi() +";\n";
             recursiveAssociate(current.left.first);
         }
 
         if (current.right != null) {
-            result += current.user.dpi + " -> " + current.right.first.user.dpi +";\n";
+            result += current.user.getDpi() + " -> " + current.right.first.user.getDpi() +";\n";
             recursiveAssociate(current.right.first);
         }
 
@@ -252,10 +252,10 @@ public class BTreeV2 {
 
                 Node aux = first;
                 while (aux != null) {
-                    if (aux.user.dpi == node.user.dpi)
+                    if (aux.user.getDpi() == node.user.getDpi())
                         break;
 
-                    if (aux.user.dpi > node.user.dpi) {
+                    if (aux.user.getDpi() > node.user.getDpi()) {
                         if (aux == first) {
                             aux.prev = node;
                             node.next = aux;

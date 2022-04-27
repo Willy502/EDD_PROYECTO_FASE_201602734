@@ -1,42 +1,22 @@
 package barrios.alejandro.udrawingpage.users.model;
 
+import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.controller.*;
 
-public class User {
+public class User extends Person {
 
-    public long dpi;
-    private String name;
-    private String password;
+    private String email;
+    private Town town;
     private Rol rol;
     private DoublyCircularLinkedList albumes;
     private BinarySearchTree capas;
     private AvlTree images;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(long dpi, String name, String password, Rol rol) {
-        this.name = name;
-        this.dpi = dpi;
-        this.password = password;
+        super(dpi, name, password);
         this.rol = rol;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public DoublyCircularLinkedList getAlbumes() {
