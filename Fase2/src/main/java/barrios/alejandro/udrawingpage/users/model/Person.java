@@ -10,15 +10,19 @@ public class Person {
 
     public Person() {}
 
-    public Person(long dpi, String name, String password) {
-        this.dpi = dpi;
-        this.name = name;
-        this.password = password;
-    }
-
     public Person(long dpi, String name, String phone, String address) {
         this.dpi = dpi;
         this.name = name;
+        this.phone = phone;
+        this.address = address;
+    }
+
+    public Person(long dpi, String name, String password, String phone, String address) {
+        this.dpi = dpi;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.address = address;
     }
 
     public long getDpi() {

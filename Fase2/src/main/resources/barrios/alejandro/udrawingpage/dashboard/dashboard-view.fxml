@@ -12,11 +12,14 @@
             <Label fx:id="lblName" text="Nombre" />
             <MenuButton mnemonicParsing="false" text="Archivo">
               <items>
-                <MenuItem fx:id="btnLoadClients" mnemonicParsing="false" onAction="#loadFile" text="Cargar clientes..." />
-                <MenuItem fx:id="btnLoadCapas" mnemonicParsing="false" onAction="#loadFile" text="Cargar capas..." />
-                  <MenuItem fx:id="btnLoadImages" mnemonicParsing="false" onAction="#loadFile" text="Cargar Imágenes..." />
-                  <MenuItem fx:id="btnLoadAlbums" mnemonicParsing="false" onAction="#loadFile" text="Cargar álbumes..." />
-                  <MenuItem fx:id="btnLoadImage" mnemonicParsing="false" onAction="#loadFile" text="Registrar Imágen" />
+                 <MenuItem fx:id="btnLoadClients" mnemonicParsing="false" onAction="#loadFile" text="Cargar clientes..." />
+                 <MenuItem fx:id="btnLoadCouriers" mnemonicParsing="false" onAction="#loadFile" text="Cargar mensajeros..." />
+                 <MenuItem fx:id="btnLoadTowns" mnemonicParsing="false" onAction="#loadFile" text="Cargar municipios..." />
+                 <MenuItem fx:id="btnLoadRoutes" mnemonicParsing="false" onAction="#loadFile" text="Cargar rutas..." />
+                 <MenuItem fx:id="btnLoadCapas" mnemonicParsing="false" onAction="#loadFile" text="Cargar capas..." />
+                 <MenuItem fx:id="btnLoadImages" mnemonicParsing="false" onAction="#loadFile" text="Cargar Imágenes..." />
+                 <MenuItem fx:id="btnLoadAlbums" mnemonicParsing="false" onAction="#loadFile" text="Cargar álbumes..." />
+                 <MenuItem fx:id="btnLoadImage" mnemonicParsing="false" onAction="#loadFile" text="Registrar Imágen" />
               </items>
             </MenuButton>
             <Button mnemonicParsing="false" onAction="#goToReports" text="Reportes" />
@@ -145,11 +148,36 @@
                            <Insets bottom="10.0" />
                         </VBox.margin>
                      </TextField>
+                     <TextField fx:id="txtUsername" promptText="Nombre de usuario">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </TextField>
+                     <TextField fx:id="txtEmail" promptText="Correo electrónico">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </TextField>
+                     <TextField fx:id="txtPhone" promptText="Teléfono">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </TextField>
+                     <TextField fx:id="txtAddress" promptText="Dirección">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </TextField>
                      <TextField fx:id="txtDpi" promptText="DPI">
                         <VBox.margin>
                            <Insets bottom="10.0" />
                         </VBox.margin>
                      </TextField>
+                     <ComboBox fx:id="comboCity" prefWidth="150.0" promptText="Municipio">
+                        <VBox.margin>
+                           <Insets bottom="10.0" />
+                        </VBox.margin>
+                     </ComboBox>
                      <PasswordField fx:id="txtPassword" promptText="Contraseña">
                         <VBox.margin>
                            <Insets bottom="10.0" />

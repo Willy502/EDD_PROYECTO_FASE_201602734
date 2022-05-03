@@ -1,5 +1,6 @@
 package barrios.alejandro.udrawingpage.users.controller;
 
+import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import barrios.alejandro.udrawingpage.users.model.User;
@@ -17,7 +18,7 @@ import java.io.IOException;
 public class RegisterController {
 
     @FXML
-    protected TextField txtName;
+    protected TextField txtName, txtUsername, txtEmail, txtPhone, txtAddress;
     @FXML
     protected TextField txtDpi;
     @FXML
@@ -46,7 +47,7 @@ public class RegisterController {
             User user;
 
             try {
-                user = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+                user = temporalInformation.getUsersTree().searchUserBy(Long.parseLong(txtDpi.getText()), txtEmail.getText(), txtUsername.getText());
 
                 if (txtName.getText() == "" || txtPassword.getText() == "" || txtConfirmPassword.getText() == "")
                     throw new NullPointerException();
@@ -56,7 +57,16 @@ public class RegisterController {
                 return;
             }
 
-            if (user == null) new UserController().createClient(txtName.getText(), Long.parseLong(txtDpi.getText()), txtPassword.getText());
+            if (user == null) new UserController().createClient(
+                    txtName.getText(),
+                    Long.parseLong(txtDpi.getText()),
+                    txtPassword.getText(),
+                    txtUsername.getText(),
+                    txtEmail.getText(),
+                    txtPhone.getText(),
+                    txtAddress.getText(),
+                    new Town(1, "Default", "Default", false) // TODO: AGREGAR BUSQUEDA DE MUNICIPIO
+            );
             else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
             clearFields();
         } else {

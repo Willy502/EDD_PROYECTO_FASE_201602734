@@ -1,5 +1,6 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
 import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
@@ -38,15 +39,17 @@ public class DashboardController {
     @FXML
     protected Label lblName, clientFormTitle;
     @FXML
-    protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums, btnLoadImage;
+    protected MenuItem btnLoadClients, btnLoadCapas, btnLoadImages, btnLoadAlbums, btnLoadImage, btnLoadTowns, btnLoadRoutes, btnLoadCouriers;
     @FXML
     protected StackPane mainPane;
     @FXML
     protected ComboBox<BinarySearchTree> comboImages, comboGraphFullImage;
     @FXML
+    protected ComboBox<Town> comboCity;
+    @FXML
     protected VBox vboxClient, mainBox, registerBox;
     @FXML
-    protected TextField txtCapas, txtNoLayer, txtName, txtDpi;
+    protected TextField txtCapas, txtNoLayer, txtName, txtDpi, txtUsername, txtEmail, txtPhone, txtAddress;
     @FXML
     protected Button btnClientsTree, btnEdit;
     @FXML
@@ -84,6 +87,9 @@ public class DashboardController {
 
     private void hideClient() {
         btnLoadClients.setVisible(false);
+        btnLoadTowns.setVisible(false);
+        btnLoadRoutes.setVisible(false);
+        btnLoadCouriers.setVisible(false);
         mainBox.getChildren().remove(btnClientsTree);
         mainBox.getChildren().remove(registerBox);
     }
@@ -150,7 +156,7 @@ public class DashboardController {
 
             final User searchedUser;
             try {
-                searchedUser = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+                searchedUser = temporalInformation.getUsersTree().searchUserBy(Long.parseLong(txtDpi.getText()), txtEmail.getText(), txtUsername.getText());
     
                 if (txtName.getText() == "" || txtPassword.getText() == "")
                     throw new NullPointerException();
@@ -209,10 +215,15 @@ public class DashboardController {
                             Long.parseLong(item.get("dpi").getAsString()),
                             item.get("nombre_cliente").getAsString(),
                             item.get("password").getAsString(),
-                            Rol.CLIENT
+                            Rol.CLIENT,
+                            item.get("email").getAsString(),
+                            item.get("username").getAsString(),
+                            new Town(1, "Default", "Default", false), // TODO: AGREGAR BUSQUEDA DE MUNICIPIO
+                            item.get("phone").getAsString(),
+                            item.get("address").getAsString()
                     );
 
-                    if (temporalInformation.getUsersTree().searchUserByDpi(insideUser.getDpi()) == null)
+                    if (temporalInformation.getUsersTree().searchUserBy(insideUser.getDpi(), insideUser.getEmail(), insideUser.getUsername()) == null)
                         temporalInformation.getUsersTree().insert(insideUser);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de clientes finalizada exitosamente");
@@ -380,7 +391,7 @@ public class DashboardController {
         User user;
 
         try {
-            user = temporalInformation.getUsersTree().searchUserByDpi(Long.parseLong(txtDpi.getText()));
+            user = temporalInformation.getUsersTree().searchUserBy(Long.parseLong(txtDpi.getText()), txtEmail.getText(), txtUsername.getText());
 
             if (txtName.getText() == "" || txtPassword.getText() == "")
                 throw new NullPointerException();
@@ -390,7 +401,16 @@ public class DashboardController {
             return;
         }
 
-        if (user == null) new UserController().createClient(txtName.getText(), Long.parseLong(txtDpi.getText()), txtPassword.getText());
+        if (user == null) new UserController().createClient(
+                txtName.getText(),
+                Long.parseLong(txtDpi.getText()),
+                txtPassword.getText(),
+                txtUsername.getText(),
+                txtEmail.getText(),
+                txtPhone.getText(),
+                txtAddress.getText(),
+                new Town(1, "Default", "Default", false) // TODO: AGREGAR BUSQUEDA DE MUNICIPIO
+        );
         else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
         clearFields();
         populateListView();

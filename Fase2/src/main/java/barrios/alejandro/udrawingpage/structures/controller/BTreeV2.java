@@ -77,8 +77,8 @@ public class BTreeV2 {
         return null;
     }
 
-    public User searchUserByDpi(long dpi) {
-        Node find = searchInNode(root.first, dpi);
+    public User searchUserBy(long dpi, String email, String username) {
+        Node find = searchInNode(root.first, dpi, email, username);
 
         if (find != null) {
             if (find.user != null) {
@@ -88,19 +88,32 @@ public class BTreeV2 {
         return null;
     }
 
-    private Node searchInNode(Node current, long dpi) {
+    public User searchUserByDpi(long dpi) {
+        Node find = searchInNode(root.first, dpi, "", "");
 
-        if (current.user.getDpi() == dpi)
+        if (find != null) {
+            if (find.user != null) {
+                return find.user;
+            }
+        }
+        return null;
+    }
+
+    private Node searchInNode(Node current, long dpi, String email, String username) {
+
+        if (current.user.getDpi() == dpi ||
+                current.user.getEmail().equals(email) ||
+                current.user.getUsername().equals(username))
             return current;
 
         if (current.left != null)
-            return searchInNode(current.left.first, dpi);
+            return searchInNode(current.left.first, dpi, email, username);
 
         if (current.right != null)
-            return searchInNode(current.right.first, dpi);
+            return searchInNode(current.right.first, dpi, email, username);
 
         if (current.next != null)
-            return searchInNode(current.next, dpi);
+            return searchInNode(current.next, dpi, email, username);
 
         return null;
     }

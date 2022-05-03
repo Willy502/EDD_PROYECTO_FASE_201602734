@@ -15,9 +15,12 @@ public class User extends Person {
 
     public User() {}
 
-    public User(long dpi, String name, String password, Rol rol) {
-        super(dpi, name, password);
+    public User(long dpi, String name, String password, Rol rol, String email, String username, Town town, String phone, String address) {
+        super(dpi, name, password, phone, address);
         this.rol = rol;
+        this.email = email;
+        this.username = username;
+        this.town = town;
     }
 
     public DoublyCircularLinkedList getAlbumes() {
@@ -52,8 +55,8 @@ public class User extends Person {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getEmail() {
+        return email;
     }
 
     @Override
