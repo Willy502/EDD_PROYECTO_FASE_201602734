@@ -326,6 +326,9 @@ public class DashboardController {
                 new CustomAlert("Carga finalizada", "Imagen cargada exitosamente");
                 fillChoicer();
             }
+            case "btnLoadCouriers" -> {}
+            case "btnLoadTowns" -> {}
+            case "btnLoadRoutes" -> {}
         }
     }
 
