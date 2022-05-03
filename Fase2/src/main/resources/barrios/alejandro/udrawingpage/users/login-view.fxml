@@ -7,7 +7,7 @@
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="barrios.alejandro.udrawingpage.users.controller.LoginController">
    <children>
       <Label text="Iniciar sesion" />
-      <TextField fx:id="txtDpi" promptText="DPI">
+      <TextField fx:id="txtUsername" promptText="Nombre de usuario">
          <VBox.margin>
             <Insets left="50.0" right="50.0" top="10.0" />
          </VBox.margin>

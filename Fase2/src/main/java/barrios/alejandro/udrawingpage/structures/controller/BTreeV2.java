@@ -66,8 +66,8 @@ public class BTreeV2 {
         return null;
     }
 
-    public User loginByDpiAndPassword(long dpi, String password) {
-        Node find = searchInNode(root.first, dpi);
+    public User loginByUsernameAndPassword(String username, String password) {
+        Node find = searchInNodeByUsername(root.first, username);
 
         if (find != null) {
             if (find.user != null && find.user.getPassword().equals(password)) {
@@ -101,6 +101,23 @@ public class BTreeV2 {
 
         if (current.next != null)
             return searchInNode(current.next, dpi);
+
+        return null;
+    }
+
+    private Node searchInNodeByUsername(Node current, String username) {
+
+        if (current.user.getUsername() == username)
+            return current;
+
+        if (current.left != null)
+            return searchInNodeByUsername(current.left.first, username);
+
+        if (current.right != null)
+            return searchInNodeByUsername(current.right.first, username);
+
+        if (current.next != null)
+            return searchInNodeByUsername(current.next, username);
 
         return null;
     }

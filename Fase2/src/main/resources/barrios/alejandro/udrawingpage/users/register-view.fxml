@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="barrios.alejandro.udrawingpage.users.controller.RegisterController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="barrios.alejandro.udrawingpage.users.controller.RegisterController">
    <children>
       <Label text="Registro" />
       <TextField fx:id="txtName" promptText="Nombre">
@@ -17,6 +17,31 @@
             <Insets left="50.0" right="50.0" top="10.0" />
          </VBox.margin>
       </TextField>
+      <TextField fx:id="txtUsername" promptText="Nombre de usuario">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" top="10.0" />
+         </VBox.margin>
+      </TextField>
+      <TextField fx:id="txtEmail" promptText="Correo electrónico">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" top="10.0" />
+         </VBox.margin>
+      </TextField>
+      <TextField fx:id="txtPhone" promptText="Teléfono">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" top="10.0" />
+         </VBox.margin>
+      </TextField>
+      <TextField fx:id="txtAddress" promptText="Dirección">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" top="10.0" />
+         </VBox.margin>
+      </TextField>
+      <ComboBox fx:id="comboCity" promptText="Municipio">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" top="10.0" />
+         </VBox.margin>
+      </ComboBox>
       <PasswordField fx:id="txtPassword" promptText="Contraseña">
          <VBox.margin>
             <Insets left="50.0" right="50.0" top="10.0" />

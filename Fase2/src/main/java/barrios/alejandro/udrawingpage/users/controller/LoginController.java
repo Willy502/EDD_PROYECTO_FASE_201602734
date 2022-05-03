@@ -17,7 +17,7 @@ import java.io.IOException;
 public class LoginController  {
 
     @FXML
-    protected TextField txtDpi;
+    protected TextField txtUsername;
     @FXML
     protected PasswordField txtPassword;
 
@@ -36,7 +36,7 @@ public class LoginController  {
         User user;
 
         try {
-            user = temporalInformation.getUsersTree().loginByDpiAndPassword(Long.parseLong(txtDpi.getText()), txtPassword.getText());
+            user = temporalInformation.getUsersTree().loginByUsernameAndPassword(txtUsername.getText(), txtPassword.getText());
         } catch (Exception e) {
             new CustomAlert("Error", "Credenciales inválidas");
             return;
@@ -66,6 +66,6 @@ public class LoginController  {
 
     private void clearFields() {
         txtPassword.clear();
-        txtDpi.clear();
+        txtUsername.clear();
     }
 }

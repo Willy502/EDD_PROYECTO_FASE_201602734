@@ -8,6 +8,7 @@ public class User extends Person {
     private String email;
     private Town town;
     private Rol rol;
+    private String username;
     private DoublyCircularLinkedList albumes;
     private BinarySearchTree capas;
     private AvlTree images;
@@ -45,6 +46,14 @@ public class User extends Person {
 
     public Rol getRol() {
         return rol;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
