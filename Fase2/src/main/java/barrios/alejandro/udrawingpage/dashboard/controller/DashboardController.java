@@ -151,6 +151,10 @@ public class DashboardController {
         txtDpi.setText(Long.toString(user.getDpi()));
         txtName.setText(user.getName());
         txtPassword.setText(user.getPassword());
+        txtUsername.setText(user.getUsername());
+        txtPhone.setText(user.getPhone());
+        txtAddress.setText(user.getAddress());
+        txtEmail.setText(user.getEmail());
         btnEdit.setText("Finalizar edición");
         btnEdit.setOnMouseClicked(mouseEvent -> {
 
@@ -158,7 +162,10 @@ public class DashboardController {
             try {
                 searchedUser = temporalInformation.getUsersTree().searchUserBy(Long.parseLong(txtDpi.getText()), txtEmail.getText(), txtUsername.getText());
     
-                if (txtName.getText() == "" || txtPassword.getText() == "")
+                if (txtName.getText() == "" ||
+                        txtPassword.getText() == "" ||
+                        txtPhone.getText() == "" ||
+                        txtAddress.getText() == "")
                     throw new NullPointerException();
     
             } catch (Exception e) {
@@ -170,6 +177,10 @@ public class DashboardController {
                 user.setName(txtName.getText());
                 user.setPassword(txtPassword.getText());
                 user.setDpi(Long.parseLong(txtDpi.getText()));
+                user.setUsername(txtUsername.getText());
+                user.setEmail(txtEmail.getText());
+                user.setPhone(txtPhone.getText());
+                user.setAddress(txtAddress.getText());
                 new CustomAlert("Usuario editado exitosamente", "Se ha editado un usuario exitosamente");
                 clientFormTitle.setText("Registrar cliente");
                 btnEdit.setText("Registrar");
@@ -420,6 +431,10 @@ public class DashboardController {
         txtPassword.clear();
         txtName.clear();
         txtDpi.clear();
+        txtEmail.clear();
+        txtPhone.clear();
+        txtAddress.clear();
+        txtUsername.clear();
     }
 
 }
