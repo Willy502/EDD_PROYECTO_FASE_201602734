@@ -345,9 +345,24 @@ public class DashboardController {
                     temporalInformation.getCourierHashTable().put(dpi, insideCourier);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de mensajeros finalizada exitosamente");
-                populateListView();
             }
-            case "btnLoadTowns" -> {}
+            case "btnLoadTowns" -> {
+                assert jsonArray != null;
+                jsonArray.forEach(town -> {
+                    JsonObject item = (JsonObject) town;
+                    Town insideTown = new Town(
+                            Long.parseLong(item.get("id").getAsString()),
+                            item.get("departamento").getAsString(),
+                            item.get("nombre").getAsString(),
+                            !Objects.equals(item.get("sn_sucursal").getAsString(), "no")
+                    );
+
+                    temporalInformation.getTownSinglyLinkedList().addToList(insideTown);
+                });
+                new CustomAlert("Carga finalizada", "Carga masiva de lugares finalizada exitosamente");
+                populateListView();
+
+            }
             case "btnLoadRoutes" -> {}
         }
     }
