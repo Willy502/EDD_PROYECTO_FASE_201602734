@@ -330,12 +330,11 @@ public class DashboardController {
             }
             case "btnLoadCouriers" -> {
                 assert jsonArray != null;
-                int key = 0;
-                for (JsonElement courier : jsonArray) {
-                    key++;
+                jsonArray.forEach(courier -> {
                     JsonObject item = (JsonObject) courier;
+                    long dpi = Long.parseLong(item.get("dpi").getAsString());
                     Courier insideCourier = new Courier(
-                            Long.parseLong(item.get("dpi").getAsString()),
+                            dpi,
                             item.get("nombres").getAsString(),
                             item.get("apellidos").getAsString(),
                             item.get("direccion").getAsString(),
@@ -343,8 +342,8 @@ public class DashboardController {
                             item.get("direccion").getAsString().equals("Male") ? Gender.MASCULINE : Gender.FEMENINE
                     );
 
-                    temporalInformation.getCourierHashTable().put(key, insideCourier);
-                }
+                    temporalInformation.getCourierHashTable().put(dpi, insideCourier);
+                });
                 new CustomAlert("Carga finalizada", "Carga masiva de mensajeros finalizada exitosamente");
                 populateListView();
             }

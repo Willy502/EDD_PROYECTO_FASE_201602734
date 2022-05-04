@@ -27,6 +27,12 @@ public class SinglyLinkedList<T> {
         return current.data;
     }
 
+    public T getPos(long position) {
+        Node<T> current = this.head;
+        for (int i = 0; i < position; i++) current = current.next;
+        return current.data;
+    }
+
     public void setFirstNode(Node<T> head) {
         this.head = head;
     }

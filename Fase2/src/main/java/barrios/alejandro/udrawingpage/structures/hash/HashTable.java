@@ -15,12 +15,12 @@ public class HashTable<T> {
         }
     }
 
-    int getHash(int key) {
+    long getHash(long key) {
         return key%size;
     }
 
-    public void put(int key, Object value) {
-        int hashIndex = getHash(key);
+    public void put(long key, Object value) {
+        long hashIndex = getHash(key);
         Entry arrayValue = arrayHash.getPos(hashIndex);
         Entry newItem = new Entry(key, value);
         newItem.next = arrayValue.next;
@@ -29,7 +29,7 @@ public class HashTable<T> {
 
     public T get(int key) {
         T value = null;
-        int hashIndex = getHash(key);
+        long hashIndex = getHash(key);
         Entry arrayValue = arrayHash.getPos(hashIndex);
         while (arrayValue != null) {
             if (arrayValue.getKey() == key) {

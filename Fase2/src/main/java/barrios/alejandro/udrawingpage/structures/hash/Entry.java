@@ -2,11 +2,11 @@ package barrios.alejandro.udrawingpage.structures.hash;
 
 public class Entry {
 
-    int key;
+    long key;
     Object value;
     Entry next;
 
-    public Entry(int key, Object value) {
+    public Entry(long key, Object value) {
         this.key = key;
         this.value = value;
         next = null;
@@ -16,7 +16,7 @@ public class Entry {
         next = null;
     }
 
-    public int getKey() {
+    public long getKey() {
         return key;
     }
 
