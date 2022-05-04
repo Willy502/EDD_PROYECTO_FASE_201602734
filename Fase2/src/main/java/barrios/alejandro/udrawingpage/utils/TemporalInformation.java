@@ -1,12 +1,15 @@
 package barrios.alejandro.udrawingpage.utils;
 
 import barrios.alejandro.udrawingpage.structures.controller.BTreeV2;
+import barrios.alejandro.udrawingpage.structures.hash.HashTable;
+import barrios.alejandro.udrawingpage.users.model.Courier;
 import barrios.alejandro.udrawingpage.users.model.User;
 
 public class TemporalInformation {
 
     private static TemporalInformation temporalInformation = null;
     private BTreeV2 usersTree;
+    private HashTable<Courier> courierHashTable;
     private User loguedUser;
 
     public static TemporalInformation getInstance() {
@@ -29,5 +32,13 @@ public class TemporalInformation {
 
     public void setLoguedUser(User loguedUser) {
         this.loguedUser = loguedUser;
+    }
+
+    public HashTable<Courier> getCourierHashTable() {
+        return courierHashTable;
+    }
+
+    public void setCourierHashTable(HashTable<Courier> courierHashTable) {
+        this.courierHashTable = courierHashTable;
     }
 }

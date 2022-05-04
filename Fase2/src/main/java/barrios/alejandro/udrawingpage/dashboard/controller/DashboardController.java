@@ -6,6 +6,8 @@ import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
 import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.users.controller.UserController;
+import barrios.alejandro.udrawingpage.users.model.Courier;
+import barrios.alejandro.udrawingpage.users.model.Gender;
 import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.users.model.User;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
@@ -326,7 +328,26 @@ public class DashboardController {
                 new CustomAlert("Carga finalizada", "Imagen cargada exitosamente");
                 fillChoicer();
             }
-            case "btnLoadCouriers" -> {}
+            case "btnLoadCouriers" -> {
+                assert jsonArray != null;
+                int key = 0;
+                for (JsonElement courier : jsonArray) {
+                    key++;
+                    JsonObject item = (JsonObject) courier;
+                    Courier insideCourier = new Courier(
+                            Long.parseLong(item.get("dpi").getAsString()),
+                            item.get("nombres").getAsString(),
+                            item.get("apellidos").getAsString(),
+                            item.get("direccion").getAsString(),
+                            item.get("tipo_licencia").getAsString(),
+                            item.get("direccion").getAsString().equals("Male") ? Gender.MASCULINE : Gender.FEMENINE
+                    );
+
+                    temporalInformation.getCourierHashTable().put(key, insideCourier);
+                }
+                new CustomAlert("Carga finalizada", "Carga masiva de mensajeros finalizada exitosamente");
+                populateListView();
+            }
             case "btnLoadTowns" -> {}
             case "btnLoadRoutes" -> {}
         }

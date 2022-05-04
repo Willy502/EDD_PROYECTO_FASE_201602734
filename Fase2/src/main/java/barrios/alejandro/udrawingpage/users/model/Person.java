@@ -10,10 +10,9 @@ public class Person {
 
     public Person() {}
 
-    public Person(long dpi, String name, String phone, String address) {
+    public Person(long dpi, String name, String address) {
         this.dpi = dpi;
         this.name = name;
-        this.phone = phone;
         this.address = address;
     }
 

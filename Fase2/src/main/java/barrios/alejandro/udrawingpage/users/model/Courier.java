@@ -3,12 +3,12 @@ package barrios.alejandro.udrawingpage.users.model;
 public class Courier extends Person {
 
     private String lastname;
-    private License license;
+    private String license;
     private Gender gender;
 
 
-    public Courier(long dpi, String name, String lastname, String phone, String address, License license, Gender gender) {
-        super(dpi, name, phone, address);
+    public Courier(long dpi, String name, String lastname, String address, String license, Gender gender) {
+        super(dpi, name, address);
         this.lastname = lastname;
         this.license = license;
         this.gender = gender;
@@ -22,11 +22,11 @@ public class Courier extends Person {
         this.lastname = lastname;
     }
 
-    public License getLicense() {
+    public String getLicense() {
         return license;
     }
 
-    public void setLicense(License license) {
+    public void setLicense(String license) {
         this.license = license;
     }
 

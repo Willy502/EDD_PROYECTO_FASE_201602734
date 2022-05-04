@@ -2,6 +2,7 @@ package barrios.alejandro.udrawingpage.utils;
 
 import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.controller.BTreeV2;
+import barrios.alejandro.udrawingpage.structures.hash.HashTable;
 import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.users.model.User;
 
@@ -25,6 +26,7 @@ public class InitApp {
                         "Ciudad"
                 )
         );
+        temporalInformation.setCourierHashTable(new HashTable<>(37));
     }
 
 }
