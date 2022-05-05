@@ -218,7 +218,7 @@ public class DashboardController {
     private void massiveCharge(String id, String path) throws FileNotFoundException, NullPointerException {
         JsonReader reader = new JsonReader(new FileReader(path));
         JsonArray jsonArray = null;
-        if (!Objects.equals(id, "btnLoadImage"))
+        if (!Objects.equals(id, "btnLoadImage") && !Objects.equals(id, "btnLoadTowns") && !Objects.equals(id, "btnLoadRoutes"))
             jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
 
         switch (id) {
@@ -350,7 +350,8 @@ public class DashboardController {
                 new CustomAlert("Carga finalizada", "Carga masiva de mensajeros finalizada exitosamente");
             }
             case "btnLoadTowns" -> {
-                assert jsonArray != null;
+                JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
+                jsonArray = object.getAsJsonArray("Lugares");
                 jsonArray.forEach(town -> {
                     JsonObject item = (JsonObject) town;
                     Town insideTown = new Town(
@@ -363,11 +364,34 @@ public class DashboardController {
                     temporalInformation.getTownSinglyLinkedList().addToList(insideTown);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de lugares finalizada exitosamente");
-                populateListView();
 
             }
             case "btnLoadRoutes" -> {
+                JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
+                jsonArray = object.getAsJsonArray("Grafo");
+                jsonArray.forEach(route -> {
+                    JsonObject item = (JsonObject) route;
 
+                    Town source = null;
+                    Town destination = null;
+                    for (SinglyNode<Town> current = temporalInformation.getTownSinglyLinkedList().getHead(); current != null; current = current.next) {
+                        if (current.data.getId() == item.get("inicio").getAsInt()) {
+                            source = current.data;
+                        }
+                        if (current.data.getId() == item.get("final").getAsInt()) {
+                            destination = current.data;
+                        }
+                    }
+
+                    temporalInformation.getRoutes().addEdge(
+                            source,
+                            destination,
+                            item.get("peso").getAsInt()
+                    );
+
+
+                });
+                new CustomAlert("Carga finalizada", "Carga masiva de rutas finalizada exitosamente");
             }
         }
     }

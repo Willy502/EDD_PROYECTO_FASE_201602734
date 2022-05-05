@@ -6,6 +6,8 @@ import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.users.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.Objects;
+
 public class BTreeV2 {
 
     int orden = 5;
@@ -123,7 +125,7 @@ public class BTreeV2 {
 
     private Node searchInNodeByUsername(Node current, String username) {
 
-        if (current.user.getUsername() == username)
+        if (Objects.equals(current.user.getUsername(), username))
             return current;
 
         if (current.left != null)

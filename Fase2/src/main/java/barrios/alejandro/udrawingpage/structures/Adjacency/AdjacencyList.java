@@ -6,11 +6,9 @@ import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 
 public class AdjacencyList {
 
-    int vertex;
     SinglyLinkedList<AdjacencyNode> towns;
 
-    public AdjacencyList(int vertex) {
-        this.vertex = vertex;
+    public AdjacencyList() {
         towns = new SinglyLinkedList<>();
     }
 

@@ -1,6 +1,7 @@
 package barrios.alejandro.udrawingpage.utils;
 
 import barrios.alejandro.udrawingpage.place.model.Town;
+import barrios.alejandro.udrawingpage.structures.Adjacency.AdjacencyList;
 import barrios.alejandro.udrawingpage.structures.controller.BTreeV2;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.hash.HashTable;
@@ -13,6 +14,7 @@ public class TemporalInformation {
     private BTreeV2 usersTree;
     private HashTable<Courier> courierHashTable;
     private SinglyLinkedList<Town> townSinglyLinkedList;
+    private AdjacencyList routes;
     private User loguedUser;
 
     public static TemporalInformation getInstance() {
@@ -51,5 +53,13 @@ public class TemporalInformation {
 
     public void setTownSinglyLinkedList(SinglyLinkedList<Town> townSinglyLinkedList) {
         this.townSinglyLinkedList = townSinglyLinkedList;
+    }
+
+    public AdjacencyList getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(AdjacencyList routes) {
+        this.routes = routes;
     }
 }

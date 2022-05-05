@@ -1,6 +1,7 @@
 package barrios.alejandro.udrawingpage.utils;
 
 import barrios.alejandro.udrawingpage.place.model.Town;
+import barrios.alejandro.udrawingpage.structures.Adjacency.AdjacencyList;
 import barrios.alejandro.udrawingpage.structures.controller.BTreeV2;
 import barrios.alejandro.udrawingpage.structures.hash.HashTable;
 import barrios.alejandro.udrawingpage.users.model.Rol;
@@ -29,6 +30,7 @@ public class InitApp {
                 )
         );
         temporalInformation.setCourierHashTable(new HashTable<>(37));
+        temporalInformation.setRoutes(new AdjacencyList());
     }
 
 }
