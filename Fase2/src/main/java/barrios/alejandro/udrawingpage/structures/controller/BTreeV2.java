@@ -4,6 +4,7 @@ import barrios.alejandro.udrawingpage.graph.Graph;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.users.model.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class BTreeV2 {
 
@@ -72,7 +73,7 @@ public class BTreeV2 {
         Node find = searchInNodeByUsername(root.first, username);
 
         if (find != null) {
-            if (find.user != null && find.user.getPassword().equals(password)) {
+            if (find.user != null && BCrypt.checkpw(password, find.user.getPassword())) {
                 return find.user;
             }
         }

@@ -30,6 +30,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -225,10 +226,11 @@ public class DashboardController {
                 assert jsonArray != null;
                 jsonArray.forEach(user -> {
                     JsonObject item = (JsonObject) user;
+                    String hashed = BCrypt.hashpw(item.get("password").getAsString(), BCrypt.gensalt(12));
                     User insideUser = new User(
                             Long.parseLong(item.get("dpi").getAsString()),
                             item.get("nombre_cliente").getAsString(),
-                            item.get("password").getAsString(),
+                            hashed,
                             Rol.CLIENT,
                             item.get("email").getAsString(),
                             item.get("username").getAsString(),
@@ -453,10 +455,11 @@ public class DashboardController {
             return;
         }
 
+        String hashed = BCrypt.hashpw(txtPassword.getText(), BCrypt.gensalt(12));
         if (user == null) new UserController().createClient(
                 txtName.getText(),
                 Long.parseLong(txtDpi.getText()),
-                txtPassword.getText(),
+                hashed,
                 txtUsername.getText(),
                 txtEmail.getText(),
                 txtPhone.getText(),

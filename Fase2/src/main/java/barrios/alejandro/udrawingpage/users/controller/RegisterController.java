@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -57,10 +58,11 @@ public class RegisterController {
                 return;
             }
 
+            String hashed = BCrypt.hashpw(txtPassword.getText(), BCrypt.gensalt(12));
             if (user == null) new UserController().createClient(
                     txtName.getText(),
                     Long.parseLong(txtDpi.getText()),
-                    txtPassword.getText(),
+                    hashed,
                     txtUsername.getText(),
                     txtEmail.getText(),
                     txtPhone.getText(),

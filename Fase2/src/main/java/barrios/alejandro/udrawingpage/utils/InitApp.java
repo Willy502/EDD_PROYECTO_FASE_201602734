@@ -5,6 +5,7 @@ import barrios.alejandro.udrawingpage.structures.controller.BTreeV2;
 import barrios.alejandro.udrawingpage.structures.hash.HashTable;
 import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.users.model.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class InitApp {
 
@@ -13,11 +14,12 @@ public class InitApp {
     public InitApp() {
         temporalInformation = TemporalInformation.getInstance();
         temporalInformation.setUsersTree(new BTreeV2());
+        String hashed = BCrypt.hashpw("123", BCrypt.gensalt(12));
         temporalInformation.getUsersTree().insert(
                 new User(
                         3001161010101L,
                         "Alejandro",
-                        "123",
+                        hashed,
                         Rol.ADMIN,
                         "w.alejandro.barrios@gmail.com",
                         "alejandro",

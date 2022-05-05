@@ -9,6 +9,7 @@ module barrios.alejandro.udrawingpage  {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.google.gson;
+    requires jbcrypt;
 
     opens barrios.alejandro.udrawingpage to javafx.fxml;
     opens barrios.alejandro.udrawingpage.users.controller to javafx.fxml;
