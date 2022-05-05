@@ -17,8 +17,6 @@ public class PopupSendController {
     protected ComboBox<Courier> comboCourier;
     @FXML
     protected ComboBox<Town> comboFranchise;
-    @FXML
-    protected Button btnSend;
 
     public PopupSendController() {
         temporalInformation = TemporalInformation.getInstance();
@@ -52,6 +50,10 @@ public class PopupSendController {
             }
         }
 
+    }
+
+    @FXML
+    protected void sendImage() {
 
     }
 

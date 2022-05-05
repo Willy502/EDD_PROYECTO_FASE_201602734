@@ -12,10 +12,10 @@
             <Label fx:id="lblName" text="Nombre" />
             <MenuButton mnemonicParsing="false" text="Archivo">
               <items>
-                 <MenuItem fx:id="btnLoadClients" mnemonicParsing="false" onAction="#loadFile" text="Cargar clientes..." />
-                 <MenuItem fx:id="btnLoadCouriers" mnemonicParsing="false" onAction="#loadFile" text="Cargar mensajeros..." />
                  <MenuItem fx:id="btnLoadTowns" mnemonicParsing="false" onAction="#loadFile" text="Cargar municipios..." />
+                 <MenuItem fx:id="btnLoadCouriers" mnemonicParsing="false" onAction="#loadFile" text="Cargar mensajeros..." />
                  <MenuItem fx:id="btnLoadRoutes" mnemonicParsing="false" onAction="#loadFile" text="Cargar rutas..." />
+                 <MenuItem fx:id="btnLoadClients" mnemonicParsing="false" onAction="#loadFile" text="Cargar clientes..." />
                  <MenuItem fx:id="btnLoadCapas" mnemonicParsing="false" onAction="#loadFile" text="Cargar capas..." />
                  <MenuItem fx:id="btnLoadImages" mnemonicParsing="false" onAction="#loadFile" text="Cargar Imágenes..." />
                  <MenuItem fx:id="btnLoadAlbums" mnemonicParsing="false" onAction="#loadFile" text="Cargar álbumes..." />

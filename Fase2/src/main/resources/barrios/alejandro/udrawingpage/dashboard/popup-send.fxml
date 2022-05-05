@@ -17,7 +17,7 @@
             <Insets top="10.0" />
          </VBox.margin>
       </ComboBox>
-      <Button fx:id="btnSend" mnemonicParsing="false" text="Enviar">
+      <Button mnemonicParsing="false" onAction="#sendImage" text="Enviar">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
