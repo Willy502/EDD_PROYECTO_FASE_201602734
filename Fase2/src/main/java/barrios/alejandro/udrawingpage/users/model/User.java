@@ -63,6 +63,14 @@ public class User extends Person {
         this.username = username;
     }
 
+    public Town getTown() {
+        return town;
+    }
+
+    public void setTown(Town town) {
+        this.town = town;
+    }
+
     public String getEmail() {
         return email;
     }

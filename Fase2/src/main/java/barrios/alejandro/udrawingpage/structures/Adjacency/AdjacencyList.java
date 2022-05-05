@@ -10,6 +10,19 @@ public class AdjacencyList {
     AdjacencyNode head;
     private int size = 0;
 
+    public SinglyLinkedList<Route> getEdge(Town source) {
+
+        AdjacencyNode current = head;
+
+        while (current != null) {
+            if (current.vertix == source)
+                return current.connection;
+            current = current.next;
+        }
+
+        return null;
+    }
+
     public void addEdge(Town source, Town destination, int weight) {
 
         if (head == null) {

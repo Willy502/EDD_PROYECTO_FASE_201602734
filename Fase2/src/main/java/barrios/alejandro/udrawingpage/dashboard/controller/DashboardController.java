@@ -170,6 +170,7 @@ public class DashboardController {
         txtUsername.setText(user.getUsername());
         txtPhone.setText(user.getPhone());
         txtAddress.setText(user.getAddress());
+        comboCity.setValue(user.getTown());
         txtEmail.setText(user.getEmail());
         btnEdit.setText("Finalizar edición");
         btnEdit.setOnMouseClicked(mouseEvent -> {
@@ -197,6 +198,7 @@ public class DashboardController {
                 user.setEmail(txtEmail.getText());
                 user.setPhone(txtPhone.getText());
                 user.setAddress(txtAddress.getText());
+                user.setTown(comboCity.getValue());
                 new CustomAlert("Usuario editado exitosamente", "Se ha editado un usuario exitosamente");
                 clientFormTitle.setText("Registrar cliente");
                 btnEdit.setText("Registrar");

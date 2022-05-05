@@ -17,6 +17,23 @@ public class SinglyLinkedList<T> {
         size++;
     }
 
+    public void copyList(SinglyLinkedList<T> data) {
+        head = null;
+        size = 0;
+
+        for (SinglyNode<T> node = data.getHead(); node != null; node = node.next) {
+            if (head == null) {
+                head = new SinglyNode<T>(node.data);
+                size++;
+                continue;
+            }
+            SinglyNode<T> current = this.head;
+            while (current.next != null) current = current.next;
+            current.next = new SinglyNode<T>(node.data);
+            size++;
+        }
+    }
+
     public SinglyNode<T> getHead() {
         return head;
     }

@@ -48,6 +48,6 @@ public class Town {
 
     @Override
     public String toString() {
-        return department + " - " + name;
+        return id + ". " + department + " - " + name;
     }
 }

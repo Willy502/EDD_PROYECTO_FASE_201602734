@@ -67,6 +67,7 @@ public class GraphImage {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource(pack + "popup-send.fxml")));
         Scene settingsScene = new Scene(parent);
         Stage popUp = new Stage();
+        popUp.setTitle("Envío");
         popUp.setScene(settingsScene);
         popUp.initModality(Modality.WINDOW_MODAL);
         popUp.initOwner(pane.getScene().getWindow());
