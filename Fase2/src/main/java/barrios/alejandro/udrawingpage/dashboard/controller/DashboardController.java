@@ -153,7 +153,6 @@ public class DashboardController {
 
     private void populateTowns() {
         if (temporalInformation.getTownSinglyLinkedList() != null) {
-            temporalInformation.getLoguedUser().getImages().fillImages();
             comboCity.getItems().clear();
             SinglyLinkedList<Town> towns = temporalInformation.getTownSinglyLinkedList();
 
@@ -390,6 +389,7 @@ public class DashboardController {
             case "btnLoadRoutes" -> {
                 JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
                 jsonArray = object.getAsJsonArray("Grafo");
+
                 jsonArray.forEach(route -> {
                     JsonObject item = (JsonObject) route;
 
@@ -410,9 +410,9 @@ public class DashboardController {
                             item.get("peso").getAsInt()
                     );
 
-
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de rutas finalizada exitosamente");
+                temporalInformation.getRoutes().printGraph();
             }
         }
     }

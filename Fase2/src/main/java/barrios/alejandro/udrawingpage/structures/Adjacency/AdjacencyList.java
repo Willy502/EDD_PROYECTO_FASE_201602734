@@ -1,65 +1,93 @@
 package barrios.alejandro.udrawingpage.structures.Adjacency;
 
+import barrios.alejandro.udrawingpage.place.model.Route;
 import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 
 public class AdjacencyList {
 
-    SinglyLinkedList<AdjacencyNode> towns;
-
-    public AdjacencyList() {
-        towns = new SinglyLinkedList<>();
-    }
+    AdjacencyNode head;
+    private int size = 0;
 
     public void addEdge(Town source, Town destination, int weight) {
 
-        // add edge
-        SinglyNode<AdjacencyNode> current;
-        for (current = towns.getHead(); current != null; current = current.next) {
-            if (current.data.data.getId() == source.getId()) break;
+        if (head == null) {
+            head = new AdjacencyNode(source);
+            head.connection.addToList(new Route(destination, weight));
+            size++;
+            if (source.getId() != destination.getId()) {
+                AdjacencyNode nextAdj = new AdjacencyNode(destination);
+                nextAdj.connection.addToList(new Route(source, weight));
+                head.next = nextAdj;
+                size++;
+            }
+            return;
         }
 
-        if (current != null) {
-            AdjacencyNode currentAdj = current.data;
-            while (currentAdj.next != null) currentAdj = currentAdj.next;
-            currentAdj.next = new AdjacencyNode(destination, weight);
+        AdjacencyNode current = head;
+        boolean vertixFound = false;
+        while (current != null) {
+
+            if (current.vertix.getId() == source.getId()) {
+                vertixFound = true;
+                break;
+            }
+
+            if (current.next == null)
+                break;
+            current = current.next;
+        }
+
+        if (vertixFound) {
+            current.connection.addToList(new Route(destination, weight));
         } else {
-            current = towns.getHead();
-            while (current.next != null) current = current.next;
             AdjacencyNode newNode = new AdjacencyNode(source);
-            newNode.next = new AdjacencyNode(destination, weight);
-            current.next = new SinglyNode<>(newNode);
+            newNode.connection.addToList(new Route(destination, weight));
+            current.next = newNode;
+            size++;
         }
 
-        // add back edge
-        for (current = towns.getHead(); current != null; current = current.next) {
-            if (current.data.data.getId() == destination.getId()) break;
+
+        // add edge back
+        current = head;
+        vertixFound = false;
+        while (current != null) {
+
+            if (current.vertix.getId() == destination.getId()) {
+                vertixFound = true;
+                break;
+            }
+
+            if (current.next == null)
+                break;
+            current = current.next;
         }
 
-        if (current != null) {
-            AdjacencyNode currentAdj = current.data;
-            while (currentAdj.next != null) currentAdj = currentAdj.next;
-            currentAdj.next = new AdjacencyNode(source, weight);
+        if (vertixFound) {
+            current.connection.addToList(new Route(source, weight));
         } else {
-            current = towns.getHead();
-            while (current.next != null) current = current.next;
             AdjacencyNode newNode = new AdjacencyNode(destination);
-            newNode.next = new AdjacencyNode(source, weight);
-            current.next = new SinglyNode<>(newNode);
+            newNode.connection.addToList(new Route(source, weight));
+            current.next = newNode;
+            size++;
         }
 
     }
 
     public void printGraph() {
-        for (int i = 0; i < towns.size(); i++) {
-            System.out.println("Vertex " + towns.getPos(i).data.getId() + " is connected to: ");
-            AdjacencyNode node = towns.getPos(i);
-            node = node.next;
-            while (node != null) {
-                System.out.print(node.data.getId() + " ");
-                node = node.next;
+        System.out.println(size);
+        AdjacencyNode current = head;
+        while (current != null) {
+            System.out.print("Vertex " + current.vertix.getId() + " is connected to: ");
+            SinglyLinkedList<Route> node = current.connection;
+            SinglyNode<Route> sn = node.getHead();
+            while (sn != null) {
+                System.out.print(sn.data.getTown().getId() + " ");
+                sn = sn.next;
             }
+            System.out.println("");
+            current = current.next;
         }
     }
 

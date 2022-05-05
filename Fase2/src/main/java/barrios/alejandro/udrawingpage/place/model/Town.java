@@ -45,4 +45,9 @@ public class Town {
     public void setSnSucursal(boolean snSucursal) {
         this.snSucursal = snSucursal;
     }
+
+    @Override
+    public String toString() {
+        return department + " - " + name;
+    }
 }

@@ -6,11 +6,15 @@ import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedLi
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Popup;
 
 import java.io.File;
+import java.io.IOException;
 
 public class GraphImage {
 
@@ -28,7 +32,11 @@ public class GraphImage {
         image.orderLayers(order);
         SinglyLinkedList<SparceMatrix> layers = image.getOrderedLayers();
         graphImage(pane, layers);
-
+        try {
+            launchPopUp();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void buildImage(StackPane pane, String layers) {
@@ -43,8 +51,20 @@ public class GraphImage {
             sLayers.addToList(matrix);
         }
         graphImage(pane, sLayers);
-
+        try {
+            launchPopUp();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void launchPopUp() throws IOException {
+        Popup popup = new Popup();
+        String pack = "/barrios/alejandro/udrawingpage/dashboard/";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(pack + "popup-send.fxml"));
+        popup.getContent().add((Parent) loader.load());
+    }
+
 
     private void graphImage(StackPane pane, SinglyLinkedList<SparceMatrix> layers) {
         for (SinglyNode<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
