@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="barrios.alejandro.udrawingpage.dashboard.controller.PopupSendController">
     <children>
         <Label text="Información de envío" />
+      <ComboBox fx:id="comboCourier" prefWidth="150.0" promptText="Mensajero">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </ComboBox>
+      <ComboBox fx:id="comboFranchise" prefWidth="150.0" promptText="Sucursal">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </ComboBox>
+      <Button fx:id="btnSend" mnemonicParsing="false" text="Enviar">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
 
     </children>
 </VBox>

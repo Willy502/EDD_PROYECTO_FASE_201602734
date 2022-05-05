@@ -27,7 +27,7 @@ public class HashTable<T> {
         arrayValue.next = newItem;
     }
 
-    public T get(int key) {
+    public T get(long key) {
         T value = null;
         long hashIndex = getHash(key);
         Entry arrayValue = arrayHash.getPos(hashIndex);
@@ -38,7 +38,6 @@ public class HashTable<T> {
             }
             arrayValue = arrayValue.next;
         }
-
 
         return value;
     }

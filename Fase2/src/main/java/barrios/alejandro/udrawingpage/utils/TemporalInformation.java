@@ -13,6 +13,7 @@ public class TemporalInformation {
     private static TemporalInformation temporalInformation = null;
     private BTreeV2 usersTree;
     private HashTable<Courier> courierHashTable;
+    private SinglyLinkedList<Long> courierIds;
     private SinglyLinkedList<Town> townSinglyLinkedList;
     private AdjacencyList routes;
     private User loguedUser;
@@ -61,5 +62,13 @@ public class TemporalInformation {
 
     public void setRoutes(AdjacencyList routes) {
         this.routes = routes;
+    }
+
+    public SinglyLinkedList<Long> getCourierIds() {
+        return courierIds;
+    }
+
+    public void setCourierIds(SinglyLinkedList<Long> courierIds) {
+        this.courierIds = courierIds;
     }
 }

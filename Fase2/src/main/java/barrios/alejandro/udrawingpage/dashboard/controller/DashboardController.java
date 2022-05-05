@@ -365,6 +365,7 @@ public class DashboardController {
                             item.get("direccion").getAsString().equals("Male") ? Gender.MASCULINE : Gender.FEMENINE
                     );
 
+                    temporalInformation.getCourierIds().addToList(dpi);
                     temporalInformation.getCourierHashTable().put(dpi, insideCourier);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de mensajeros finalizada exitosamente");

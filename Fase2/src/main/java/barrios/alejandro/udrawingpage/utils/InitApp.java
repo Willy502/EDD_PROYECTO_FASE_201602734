@@ -31,6 +31,7 @@ public class InitApp {
                         "Ciudad"
                 )
         );
+        temporalInformation.setCourierIds(new SinglyLinkedList<>());
         temporalInformation.setCourierHashTable(new HashTable<>(37));
         temporalInformation.setRoutes(new AdjacencyList());
     }
