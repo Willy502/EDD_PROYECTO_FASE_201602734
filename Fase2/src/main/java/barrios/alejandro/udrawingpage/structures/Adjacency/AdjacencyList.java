@@ -14,7 +14,7 @@ public class AdjacencyList {
         towns = new SinglyLinkedList<>();
     }
 
-    public void addEdge(Town source, Town destination) {
+    public void addEdge(Town source, Town destination, int weight) {
 
         // add edge
         SinglyNode<AdjacencyNode> current;
@@ -25,12 +25,12 @@ public class AdjacencyList {
         if (current != null) {
             AdjacencyNode currentAdj = current.data;
             while (currentAdj.next != null) currentAdj = currentAdj.next;
-            currentAdj.next = new AdjacencyNode(destination);
+            currentAdj.next = new AdjacencyNode(destination, weight);
         } else {
             current = towns.getHead();
             while (current.next != null) current = current.next;
             AdjacencyNode newNode = new AdjacencyNode(source);
-            newNode.next = new AdjacencyNode(destination);
+            newNode.next = new AdjacencyNode(destination, weight);
             current.next = new SinglyNode<>(newNode);
         }
 
@@ -42,12 +42,12 @@ public class AdjacencyList {
         if (current != null) {
             AdjacencyNode currentAdj = current.data;
             while (currentAdj.next != null) currentAdj = currentAdj.next;
-            currentAdj.next = new AdjacencyNode(source);
+            currentAdj.next = new AdjacencyNode(source, weight);
         } else {
             current = towns.getHead();
             while (current.next != null) current = current.next;
             AdjacencyNode newNode = new AdjacencyNode(destination);
-            newNode.next = new AdjacencyNode(source);
+            newNode.next = new AdjacencyNode(source, weight);
             current.next = new SinglyNode<>(newNode);
         }
 
