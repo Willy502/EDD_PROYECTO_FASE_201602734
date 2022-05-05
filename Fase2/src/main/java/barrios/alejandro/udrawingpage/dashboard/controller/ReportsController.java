@@ -1,5 +1,7 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.controller.*;
 import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.users.model.User;
@@ -69,8 +71,8 @@ public class ReportsController {
 
         SinglyLinkedList<HashMap<String, Integer>> toBeOrdered = new SinglyLinkedList<>();
 
-        for (SinglyLinkedList.Node<BinarySearchTree> image = images.getHead(); image != null; image = image.next) {
-            SinglyLinkedList.Node<BinarySearchTree> finalImage = image;
+        for (SinglyNode<BinarySearchTree> image = images.getHead(); image != null; image = image.next) {
+            SinglyNode<BinarySearchTree> finalImage = image;
             image.data.orderLayers("PREORDER");
             SinglyLinkedList<SparceMatrix> layer = finalImage.data.getOrderedLayers();
             HashMap<String, Integer> info = new HashMap<>(){{
@@ -84,7 +86,7 @@ public class ReportsController {
         StringBuilder content = new StringBuilder();
 
         int j = 0;
-        for (SinglyLinkedList.Node<HashMap<String, Integer>> i = ordered.getHead(); i != null; i = i.next) {
+        for (SinglyNode<HashMap<String, Integer>> i = ordered.getHead(); i != null; i = i.next) {
             content.append("Image No. ").append(i.data.get("id")).append(" -> ").append(i.data.get("layers")).append(" capas\n");
             j++;
             if (j == 5) break;
@@ -98,11 +100,11 @@ public class ReportsController {
             boolean swapped = true;
             while (swapped) {
 
-                SinglyLinkedList.Node<HashMap<String, Integer>> previous = null;
-                SinglyLinkedList.Node<HashMap<String, Integer>> current = toOrdered.getHead();
+                SinglyNode<HashMap<String, Integer>> previous = null;
+                SinglyNode<HashMap<String, Integer>> current = toOrdered.getHead();
                 swapped = false;
 
-                for (SinglyLinkedList.Node<HashMap<String, Integer>> next = current.next; next != null; next = current.next) {
+                for (SinglyNode<HashMap<String, Integer>> next = current.next; next != null; next = current.next) {
 
                     if (current.data.get("layers") < next.data.get("layers")) {
                         if (previous != null) {
@@ -138,7 +140,7 @@ public class ReportsController {
         SinglyLinkedList<SparceMatrix> layers = searchTree.getLeafLayers();
         StringBuilder content = new StringBuilder();
 
-        for (SinglyLinkedList.Node<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
+        for (SinglyNode<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
             content.append("Capa No. ").append(layer.data.id).append("\n");
         }
 
@@ -176,13 +178,13 @@ public class ReportsController {
         orders.addToList("INORDER");
         orders.addToList("POSTORDER");
 
-        for (SinglyLinkedList.Node<String> order = orders.getHead(); order != null; order = order.next) {
+        for (SinglyNode<String> order = orders.getHead(); order != null; order = order.next) {
             searchTree.orderLayers(order.data);
             new CustomAlert("Procesando...");
             SinglyLinkedList<SparceMatrix> layers = searchTree.getOrderedLayers();
 
             content.append(order.data).append(": ");
-            for (SinglyLinkedList.Node<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
+            for (SinglyNode<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
                 content.append(layer.data.id).append(", ");
             }
             content.deleteCharAt(content.length() - 1);
@@ -234,7 +236,7 @@ public class ReportsController {
     protected void searchByLevels() {
         SinglyLinkedList<User> users = temporalInformation.getUsersTree().searchByLevels();
         StringBuilder content = new StringBuilder();
-        for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next) {
+        for (SinglyNode<User> user = users.getHead(); user != null; user = user.next) {
             content.append(user.data.getDpi()).append(" - ").append(user.data.getName()).append("\n");
         }
 

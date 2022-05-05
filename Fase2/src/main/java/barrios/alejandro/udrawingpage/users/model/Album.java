@@ -1,7 +1,7 @@
 package barrios.alejandro.udrawingpage.users.model;
 
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
-import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 
 public class Album {
     public int id;

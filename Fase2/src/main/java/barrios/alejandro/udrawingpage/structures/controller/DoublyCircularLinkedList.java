@@ -1,6 +1,8 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
 import barrios.alejandro.udrawingpage.graph.Graph;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.users.model.Album;
 
 public class DoublyCircularLinkedList {
@@ -86,7 +88,7 @@ public class DoublyCircularLinkedList {
         current = head;
         do {
             int altura = 2;
-            SinglyLinkedList.Node<BinarySearchTree> image = current.album.images.getHead();
+            SinglyNode<BinarySearchTree> image = current.album.images.getHead();
             while (image != null) {
                 result += current.album.name.replaceAll("\\s","") + "_" + image.data.id + "[group= " + altura + "];\n";
 

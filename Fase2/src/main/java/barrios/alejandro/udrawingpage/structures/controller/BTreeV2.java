@@ -1,6 +1,8 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
 import barrios.alejandro.udrawingpage.graph.Graph;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.users.model.User;
 
 public class BTreeV2 {
@@ -145,7 +147,7 @@ public class BTreeV2 {
 
         if (current == null) return;
         boolean add = true;
-        for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next) {
+        for (SinglyNode<User> user = users.getHead(); user != null; user = user.next) {
             if (user.data.getDpi() == current.user.getDpi()) add = false;
         }
         if (add) users.addToList(current.user);

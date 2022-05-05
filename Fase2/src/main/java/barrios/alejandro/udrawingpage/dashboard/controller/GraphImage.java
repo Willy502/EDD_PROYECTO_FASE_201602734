@@ -1,7 +1,8 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
-import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
@@ -46,7 +47,7 @@ public class GraphImage {
     }
 
     private void graphImage(StackPane pane, SinglyLinkedList<SparceMatrix> layers) {
-        for (SinglyLinkedList.Node<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
+        for (SinglyNode<SparceMatrix> layer = layers.getHead(); layer != null; layer = layer.next) {
             layer.data.graphMatrix(false);
             new CustomAlert("Construyendo capa...");
 

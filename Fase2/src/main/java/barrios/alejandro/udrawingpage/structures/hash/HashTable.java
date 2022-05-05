@@ -1,6 +1,6 @@
 package barrios.alejandro.udrawingpage.structures.hash;
 
-import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 
 public class HashTable<T> {
 

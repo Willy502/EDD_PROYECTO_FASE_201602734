@@ -1,6 +1,7 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
 import barrios.alejandro.udrawingpage.graph.Graph;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 
 public class AvlTree { // Images tree
     // Delete missing

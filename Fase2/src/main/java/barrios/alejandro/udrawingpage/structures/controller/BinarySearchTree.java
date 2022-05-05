@@ -1,6 +1,7 @@
 package barrios.alejandro.udrawingpage.structures.controller;
 
 import barrios.alejandro.udrawingpage.graph.Graph;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 
 public class BinarySearchTree { // Image

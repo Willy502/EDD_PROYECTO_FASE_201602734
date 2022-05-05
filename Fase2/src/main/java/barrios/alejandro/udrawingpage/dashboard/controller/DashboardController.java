@@ -1,9 +1,10 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
 import barrios.alejandro.udrawingpage.place.model.Town;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
 import barrios.alejandro.udrawingpage.structures.controller.BinarySearchTree;
-import barrios.alejandro.udrawingpage.structures.controller.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.SparceMatrix;
 import barrios.alejandro.udrawingpage.users.controller.UserController;
 import barrios.alejandro.udrawingpage.users.model.Courier;
@@ -136,7 +137,7 @@ public class DashboardController {
         ObservableList<User> usersList = FXCollections.observableArrayList();
         SinglyLinkedList<User> users = temporalInformation.getUsersTree().searchByLevels();
 
-        for (SinglyLinkedList.Node<User> user = users.getHead(); user != null; user = user.next)
+        for (SinglyNode<User> user = users.getHead(); user != null; user = user.next)
             usersList.add(user.data);
         listViewClients.setItems(usersList);
 
@@ -205,7 +206,7 @@ public class DashboardController {
             AvlTree images = temporalInformation.getLoguedUser().getImages();
 
             SinglyLinkedList<BinarySearchTree> imagesList = images.getImages();
-            for (SinglyLinkedList.Node<BinarySearchTree> image = imagesList.getHead(); image != null; image = image.next) {
+            for (SinglyNode<BinarySearchTree> image = imagesList.getHead(); image != null; image = image.next) {
                 comboImages.getItems().add(image.data);
                 comboGraphFullImage.getItems().add(image.data);
             }
