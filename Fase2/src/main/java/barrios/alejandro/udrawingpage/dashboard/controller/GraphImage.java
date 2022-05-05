@@ -8,13 +8,17 @@ import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class GraphImage {
 
@@ -33,7 +37,7 @@ public class GraphImage {
         SinglyLinkedList<SparceMatrix> layers = image.getOrderedLayers();
         graphImage(pane, layers);
         try {
-            launchPopUp();
+            launchPopUp(pane);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,17 +56,21 @@ public class GraphImage {
         }
         graphImage(pane, sLayers);
         try {
-            launchPopUp();
+            launchPopUp(pane);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void launchPopUp() throws IOException {
-        Popup popup = new Popup();
+    private void launchPopUp(StackPane pane) throws IOException {
         String pack = "/barrios/alejandro/udrawingpage/dashboard/";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(pack + "popup-send.fxml"));
-        popup.getContent().add((Parent) loader.load());
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource(pack + "popup-send.fxml")));
+        Scene settingsScene = new Scene(parent);
+        Stage popUp = new Stage();
+        popUp.setScene(settingsScene);
+        popUp.initModality(Modality.WINDOW_MODAL);
+        popUp.initOwner(pane.getScene().getWindow());
+        popUp.show();
     }
 
 
