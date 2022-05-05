@@ -72,6 +72,7 @@ public class DashboardController {
         lblName.setText(temporalInformation.getLoguedUser().getName());
         fillChoicer();
         populateListView();
+        populateTowns();
         btnEdit.setOnMouseClicked(event -> createUser());
 
         if (temporalInformation.getLoguedUser().getRol() == Rol.ADMIN) {
@@ -148,6 +149,18 @@ public class DashboardController {
                 editClient(userSelected);
             }
         });
+    }
+
+    private void populateTowns() {
+        if (temporalInformation.getTownSinglyLinkedList() != null) {
+            temporalInformation.getLoguedUser().getImages().fillImages();
+            comboCity.getItems().clear();
+            SinglyLinkedList<Town> towns = temporalInformation.getTownSinglyLinkedList();
+
+            for (SinglyNode<Town> current = towns.getHead(); current != null; current = current.next) {
+                comboCity.getItems().add(current.data);
+            }
+        }
     }
 
     private void editClient(User user) {
@@ -227,6 +240,14 @@ public class DashboardController {
                 jsonArray.forEach(user -> {
                     JsonObject item = (JsonObject) user;
                     String hashed = BCrypt.hashpw(item.get("password").getAsString(), BCrypt.gensalt(12));
+
+                    Town searchedTown = null;
+                    for (SinglyNode<Town> current = temporalInformation.getTownSinglyLinkedList().getHead(); current != null; current = current.next) {
+                        if (current.data.getId() == item.get("Id_Municipio").getAsInt()) {
+                            searchedTown = current.data;
+                        }
+                    }
+
                     User insideUser = new User(
                             Long.parseLong(item.get("dpi").getAsString()),
                             item.get("nombre_cliente").getAsString(),
@@ -234,7 +255,7 @@ public class DashboardController {
                             Rol.CLIENT,
                             item.get("email").getAsString(),
                             item.get("username").getAsString(),
-                            new Town(1, "Default", "Default", false), // TODO: AGREGAR BUSQUEDA DE MUNICIPIO
+                            searchedTown,
                             item.get("phone").getAsString(),
                             item.get("address").getAsString()
                     );
@@ -355,7 +376,7 @@ public class DashboardController {
                 jsonArray.forEach(town -> {
                     JsonObject item = (JsonObject) town;
                     Town insideTown = new Town(
-                            Long.parseLong(item.get("id").getAsString()),
+                            item.get("id").getAsInt(),
                             item.get("departamento").getAsString(),
                             item.get("nombre").getAsString(),
                             !Objects.equals(item.get("sn_sucursal").getAsString(), "no")
@@ -364,7 +385,7 @@ public class DashboardController {
                     temporalInformation.getTownSinglyLinkedList().addToList(insideTown);
                 });
                 new CustomAlert("Carga finalizada", "Carga masiva de lugares finalizada exitosamente");
-
+                populateTowns();
             }
             case "btnLoadRoutes" -> {
                 JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
@@ -488,7 +509,7 @@ public class DashboardController {
                 txtEmail.getText(),
                 txtPhone.getText(),
                 txtAddress.getText(),
-                new Town(1, "Default", "Default", false) // TODO: AGREGAR BUSQUEDA DE MUNICIPIO
+                comboCity.getValue()
         );
         else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
         clearFields();
