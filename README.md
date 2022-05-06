@@ -1,5 +1,5 @@
 # Proyecto de Estructuras de Datos
-## Fase 2
+## Fase 3
 
 Este proyecto fue realizado utilizando Maven.
 
