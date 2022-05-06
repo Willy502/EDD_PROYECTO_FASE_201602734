@@ -1,6 +1,8 @@
 package barrios.alejandro.udrawingpage.users.controller;
 
 import barrios.alejandro.udrawingpage.place.model.Town;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import barrios.alejandro.udrawingpage.users.model.User;
@@ -9,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -26,6 +29,8 @@ public class RegisterController {
     protected PasswordField txtPassword;
     @FXML
     protected PasswordField txtConfirmPassword;
+    @FXML
+    protected ComboBox<Town> comboCity;
 
     TemporalInformation temporalInformation;
 
@@ -40,6 +45,22 @@ public class RegisterController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+    }
+
+    @FXML
+    public void initialize() {
+        populateTowns();
+    }
+
+    private void populateTowns() {
+        if (temporalInformation.getTownSinglyLinkedList() != null) {
+            comboCity.getItems().clear();
+            SinglyLinkedList<Town> towns = temporalInformation.getTownSinglyLinkedList();
+
+            for (SinglyNode<Town> current = towns.getHead(); current != null; current = current.next) {
+                comboCity.getItems().add(current.data);
+            }
+        }
     }
 
     @FXML
@@ -67,9 +88,9 @@ public class RegisterController {
                     txtEmail.getText(),
                     txtPhone.getText(),
                     txtAddress.getText(),
-                    new Town(1, "Default", "Default", false) // TODO: AGREGAR BUSQUEDA DE MUNICIPIO
+                    comboCity.getValue()
             );
-            else new CustomAlert("Usuario existente", "Este DPI ya ha sido tomado por otro usuario");
+            else new CustomAlert("Usuario existente", "Estos datos ya han sido tomados por otro usuario");
             clearFields();
         } else {
             new CustomAlert("Error", "Las contraseñas no son iguales");
@@ -81,6 +102,10 @@ public class RegisterController {
         txtConfirmPassword.clear();
         txtName.clear();
         txtDpi.clear();
+        txtUsername.clear();
+        txtEmail.clear();
+        txtPhone.clear();
+        txtAddress.clear();
     }
 
 }
