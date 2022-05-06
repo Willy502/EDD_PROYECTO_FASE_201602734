@@ -5,6 +5,7 @@ import barrios.alejandro.udrawingpage.place.model.Route;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.controller.*;
+import barrios.alejandro.udrawingpage.users.model.Courier;
 import barrios.alejandro.udrawingpage.users.model.Rol;
 import barrios.alejandro.udrawingpage.users.model.User;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
@@ -334,12 +335,61 @@ public class ReportsController {
             i++;
             if (i >= 10) break;
 
-
             content.append(i).append(". ").append(user.data).append(" | Ordenes: ").append(user.data.getMyOrders().size()).append("\n\n");
-
         }
 
         new CustomAlert("Top 10 clientes con más órdenes", content.toString());
+
+    }
+
+    @FXML
+    protected void top10CouriersWithMoreOrders() {
+        SinglyLinkedList<Long> courierIds = temporalInformation.getCourierIds();
+        SinglyLinkedList<Courier> couriers = new SinglyLinkedList<>();
+
+        for (SinglyNode<Long> courierId = courierIds.getHead(); courierId != null; courierId = courierId.next) {
+            Courier courier = temporalInformation.getCourierHashTable().get(courierId.data);
+            couriers.addToList(courier);
+        }
+
+        if (couriers.size() > 1) {
+            boolean swapped = true;
+            while (swapped) {
+
+                SinglyNode<Courier> previous = null;
+                SinglyNode<Courier> current = couriers.getHead();
+                swapped = false;
+
+                for (SinglyNode<Courier> next = current.next; next != null; next = current.next) {
+
+                    if (current.data.getOrders().size() < next.data.getOrders().size()) {
+                        if (previous != null) {
+                            previous.next = next;
+                        } else {
+                            couriers.setFirstNode(next);
+                        }
+                        current.next = next.next;
+                        next.next = current;
+                        previous = next;
+                        swapped = true;
+                    } else {
+                        previous = current;
+                        current = next;
+                    }
+                }
+            }
+        }
+
+        int i = 0;
+        StringBuilder content = new StringBuilder();
+        for (SinglyNode<Courier> courier = couriers.getHead(); courier != null; courier = courier.next) {
+            i++;
+            if (i >= 10) break;
+
+            content.append(i).append(". ").append(courier.data).append(" | Ordenes: ").append(courier.data.getOrders().size()).append("\n\n");
+        }
+
+        new CustomAlert("Top 10 mensajeros con más órdenes", content.toString());
 
     }
 }

@@ -166,7 +166,6 @@ public class DashboardController {
         clientFormTitle.setText("Editar " + user.getDpi());
         txtDpi.setText(Long.toString(user.getDpi()));
         txtName.setText(user.getName());
-        txtPassword.setText(user.getPassword());
         txtUsername.setText(user.getUsername());
         txtPhone.setText(user.getPhone());
         txtAddress.setText(user.getAddress());

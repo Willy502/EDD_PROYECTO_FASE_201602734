@@ -20,6 +20,7 @@ public class TemporalInformation {
     private User loguedUser;
     private SinglyLinkedList<Order> orders;
 
+
     public static TemporalInformation getInstance() {
         if (temporalInformation == null)
             temporalInformation = new TemporalInformation();

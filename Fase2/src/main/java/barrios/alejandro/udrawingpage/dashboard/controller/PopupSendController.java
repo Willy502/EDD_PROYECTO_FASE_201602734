@@ -162,6 +162,16 @@ public class PopupSendController {
                 comboFranchise.getValue()
         ));
 
+        temporalInformation.getCourierHashTable().get(comboCourier.getValue().getDpi()).getOrders().addToList(
+                new Order(
+                        temporalInformation.getLoguedUser(),
+                        routeInOrder,
+                        weight,
+                        null,
+                        comboFranchise.getValue()
+                )
+        );
+
         new CustomAlert("Envío almacenado", route.toString());
         lblUbicacion.getScene().getWindow().hide();
     }

@@ -1,10 +1,14 @@
 package barrios.alejandro.udrawingpage.users.model;
 
+import barrios.alejandro.udrawingpage.place.model.Order;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
+
 public class Courier extends Person {
 
     private String lastname;
     private String license;
     private Gender gender;
+    private SinglyLinkedList<Order> orders;
 
 
     public Courier(long dpi, String name, String lastname, String address, String license, Gender gender) {
@@ -12,6 +16,7 @@ public class Courier extends Person {
         this.lastname = lastname;
         this.license = license;
         this.gender = gender;
+        orders = new SinglyLinkedList<>();
     }
 
     public String getLastname() {
@@ -36,6 +41,10 @@ public class Courier extends Person {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public SinglyLinkedList<Order> getOrders() {
+        return orders;
     }
 
     @Override
