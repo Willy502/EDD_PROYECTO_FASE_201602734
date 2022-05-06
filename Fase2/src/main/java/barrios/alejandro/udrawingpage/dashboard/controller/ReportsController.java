@@ -1,5 +1,7 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.place.model.Order;
+import barrios.alejandro.udrawingpage.place.model.Route;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.controller.*;
@@ -241,5 +243,103 @@ public class ReportsController {
         }
 
         new CustomAlert("Usuario recorriendo por niveles", content.toString());
+    }
+
+    @FXML
+    protected void top10Long() {
+        SinglyLinkedList<Order> orders = temporalInformation.getOrders();
+
+        if (orders.size() > 1) {
+            boolean swapped = true;
+            while (swapped) {
+
+                SinglyNode<Order> previous = null;
+                SinglyNode<Order> current = orders.getHead();
+                swapped = false;
+
+                for (SinglyNode<Order> next = current.next; next != null; next = current.next) {
+
+                    if (current.data.getTotalWeight() < next.data.getTotalWeight()) {
+                        if (previous != null) {
+                            previous.next = next;
+                        } else {
+                            orders.setFirstNode(next);
+                        }
+                        current.next = next.next;
+                        next.next = current;
+                        previous = next;
+                        swapped = true;
+                    } else {
+                        previous = current;
+                        current = next;
+                    }
+                }
+            }
+        }
+
+        int i = 0;
+        StringBuilder route = new StringBuilder();
+        for (SinglyNode<Order> order = orders.getHead(); order != null; order = order.next) {
+            i++;
+            if (i >= 10) break;
+
+
+            route.append(i).append(". ");
+            for (SinglyNode<Route> temp = order.data.getRoute().getHead(); temp != null; temp = temp.next) {
+                route.append(" -> ").append(temp.data.getTown());
+            }
+            route.append("\n").append("Tiempo de espera: ").append(order.data.getTotalWeight()).append(" minutos.").append("\n\n");
+
+        }
+
+        new CustomAlert("Top 10 entregas con más distancia", route.toString());
+
+    }
+
+    @FXML
+    protected void top10ClientsWithMoreOrders() {
+        SinglyLinkedList<User> users = temporalInformation.getUsersTree().searchByLevels();
+
+        if (users.size() > 1) {
+            boolean swapped = true;
+            while (swapped) {
+
+                SinglyNode<User> previous = null;
+                SinglyNode<User> current = users.getHead();
+                swapped = false;
+
+                for (SinglyNode<User> next = current.next; next != null; next = current.next) {
+
+                    if (current.data.getMyOrders().size() < next.data.getMyOrders().size()) {
+                        if (previous != null) {
+                            previous.next = next;
+                        } else {
+                            users.setFirstNode(next);
+                        }
+                        current.next = next.next;
+                        next.next = current;
+                        previous = next;
+                        swapped = true;
+                    } else {
+                        previous = current;
+                        current = next;
+                    }
+                }
+            }
+        }
+
+        int i = 0;
+        StringBuilder content = new StringBuilder();
+        for (SinglyNode<User> user = users.getHead(); user != null; user = user.next) {
+            i++;
+            if (i >= 10) break;
+
+
+            content.append(i).append(". ").append(user.data).append(" | Ordenes: ").append(user.data.getMyOrders().size()).append("\n\n");
+
+        }
+
+        new CustomAlert("Top 10 clientes con más órdenes", content.toString());
+
     }
 }
