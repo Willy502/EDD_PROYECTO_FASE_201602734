@@ -35,10 +35,28 @@
                </padding>
                <children>
                   <Label text="Estado de las estructuras" />
+                  <VBox fx:id="vboxAdmin" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFF;">
                   <Button fx:id="btnClientsTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Clientes">
                      <VBox.margin>
                         <Insets top="10.0" />
-                     </VBox.margin></Button>
+                     </VBox.margin>
+                  </Button>
+                     <Button fx:id="btnHashCourier" mnemonicParsing="false" onAction="#structuresState" text="HashTable mensajeros">
+                        <VBox.margin>
+                           <Insets top="10.0" />
+                        </VBox.margin>
+                     </Button>
+                     <Button fx:id="btnGraphRoutes" mnemonicParsing="false" onAction="#structuresState" text="Grafo de rutas">
+                        <VBox.margin>
+                           <Insets top="10.0" />
+                        </VBox.margin>
+                     </Button>
+                     <Button fx:id="btnAdjacencyRoutes" mnemonicParsing="false" onAction="#structuresState" text="Lista de adyacencia de rutas">
+                        <VBox.margin>
+                           <Insets top="10.0" />
+                        </VBox.margin>
+                     </Button>
+                  </VBox>
                   <VBox fx:id="vboxClient" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFF;">
                      <children>
                         <Button fx:id="btnImagesTree" mnemonicParsing="false" onAction="#structuresState" text="Árbol de Imágenes">

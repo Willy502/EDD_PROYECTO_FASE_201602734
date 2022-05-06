@@ -51,7 +51,7 @@ public class DashboardController {
     @FXML
     protected ComboBox<Town> comboCity;
     @FXML
-    protected VBox vboxClient, mainBox, registerBox;
+    protected VBox vboxClient, mainBox, registerBox, vboxAdmin;
     @FXML
     protected TextField txtCapas, txtNoLayer, txtName, txtDpi, txtUsername, txtEmail, txtPhone, txtAddress;
     @FXML
@@ -95,7 +95,7 @@ public class DashboardController {
         btnLoadTowns.setVisible(false);
         btnLoadRoutes.setVisible(false);
         btnLoadCouriers.setVisible(false);
-        mainBox.getChildren().remove(btnClientsTree);
+        mainBox.getChildren().remove(vboxAdmin);
         mainBox.getChildren().remove(registerBox);
     }
 
@@ -189,7 +189,7 @@ public class DashboardController {
                 return;
             }
 
-            if (searchedUser == null) {
+            if (searchedUser == null || searchedUser == user) {
                 user.setName(txtName.getText());
                 user.setPassword(txtPassword.getText());
                 user.setDpi(Long.parseLong(txtDpi.getText()));
@@ -448,6 +448,7 @@ public class DashboardController {
                 case "btnLayersTree" -> new StructuresReport().buildBinaryLayers(mainPane, temporalInformation.getLoguedUser().getCapas());
                 case "btnAlbumsList" -> new StructuresReport().buildCircularAlbums(mainPane, temporalInformation.getLoguedUser().getAlbumes());
                 case "btnImageAndLayers" -> new StructuresReport().buildImageAndLayers(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboImages.getValue().toString())));
+                case "btnHashCourier" -> new StructuresReport().buildHashTable(mainPane, temporalInformation.getCourierHashTable());
             }
         } catch(Exception e) {
             new CustomAlert("Error", "No se ha cargado información previa");

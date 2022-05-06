@@ -1,12 +1,14 @@
 package barrios.alejandro.udrawingpage.structures.hash;
 
+import barrios.alejandro.udrawingpage.users.model.Courier;
+
 public class Entry {
 
     long key;
-    Object value;
+    Courier value;
     Entry next;
 
-    public Entry(long key, Object value) {
+    public Entry(long key, Courier value) {
         this.key = key;
         this.value = value;
         next = null;
@@ -20,7 +22,7 @@ public class Entry {
         return key;
     }
 
-    public Object getValue() {
+    public Courier getValue() {
         return value;
     }
 }

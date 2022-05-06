@@ -1,6 +1,8 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
 import barrios.alejandro.udrawingpage.structures.controller.*;
+import barrios.alejandro.udrawingpage.structures.hash.HashTable;
+import barrios.alejandro.udrawingpage.users.model.Courier;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import javafx.scene.image.Image;
@@ -118,6 +120,20 @@ public class StructuresReport {
 
         imageView.setImage(image);
         imageView.setFitHeight(500);
+        imageView.setPreserveRatio(true);
+        pane.getChildren().add(imageView);
+    }
+
+    public void buildHashTable(StackPane pane, HashTable<Courier> courierHashTable) {
+        if (pane.getChildren().size() > 0)  pane.getChildren().clear();
+
+        courierHashTable.graphHashTable();
+        new CustomAlert("Construyendo HashTable de mensajeros...");
+        ImageView imageView = new ImageView();
+        Image image = new Image("file:out/COURIER_HASH.png");
+
+        imageView.setImage(image);
+        imageView.setFitHeight(900);
         imageView.setPreserveRatio(true);
         pane.getChildren().add(imageView);
     }
