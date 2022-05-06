@@ -34,6 +34,7 @@ public class InitApp {
         temporalInformation.setCourierIds(new SinglyLinkedList<>());
         temporalInformation.setCourierHashTable(new HashTable<>(37));
         temporalInformation.setRoutes(new AdjacencyList());
+        temporalInformation.setRoutingSinglyLinkedList(new SinglyLinkedList<>());
         temporalInformation.setOrders(new SinglyLinkedList<>());
     }
 

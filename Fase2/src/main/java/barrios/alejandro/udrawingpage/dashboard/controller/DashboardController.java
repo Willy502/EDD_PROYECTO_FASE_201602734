@@ -1,5 +1,6 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.place.model.Routing;
 import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.controller.AvlTree;
@@ -406,6 +407,12 @@ public class DashboardController {
                         }
                     }
 
+                    temporalInformation.getRoutingSinglyLinkedList().addToList(new Routing(
+                            source,
+                            destination,
+                            item.get("peso").getAsInt()
+                    ));
+
                     temporalInformation.getRoutes().addEdge(
                             source,
                             destination,
@@ -449,6 +456,7 @@ public class DashboardController {
                 case "btnAlbumsList" -> new StructuresReport().buildCircularAlbums(mainPane, temporalInformation.getLoguedUser().getAlbumes());
                 case "btnImageAndLayers" -> new StructuresReport().buildImageAndLayers(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboImages.getValue().toString())));
                 case "btnHashCourier" -> new StructuresReport().buildHashTable(mainPane, temporalInformation.getCourierHashTable());
+                case "btnGraphRoutes" -> new StructuresReport().buildRoutesGraph(mainPane, temporalInformation.getRoutingSinglyLinkedList());
             }
         } catch(Exception e) {
             new CustomAlert("Error", "No se ha cargado información previa");

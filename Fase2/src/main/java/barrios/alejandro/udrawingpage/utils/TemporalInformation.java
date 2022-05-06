@@ -1,6 +1,7 @@
 package barrios.alejandro.udrawingpage.utils;
 
 import barrios.alejandro.udrawingpage.place.model.Order;
+import barrios.alejandro.udrawingpage.place.model.Routing;
 import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.Adjacency.AdjacencyList;
 import barrios.alejandro.udrawingpage.structures.controller.BTreeV2;
@@ -17,6 +18,7 @@ public class TemporalInformation {
     private SinglyLinkedList<Long> courierIds;
     private SinglyLinkedList<Town> townSinglyLinkedList;
     private AdjacencyList routes;
+    private SinglyLinkedList<Routing> routingSinglyLinkedList;
     private User loguedUser;
     private SinglyLinkedList<Order> orders;
 
@@ -81,5 +83,13 @@ public class TemporalInformation {
 
     public void setOrders(SinglyLinkedList<Order> orders) {
         this.orders = orders;
+    }
+
+    public SinglyLinkedList<Routing> getRoutingSinglyLinkedList() {
+        return routingSinglyLinkedList;
+    }
+
+    public void setRoutingSinglyLinkedList(SinglyLinkedList<Routing> routingSinglyLinkedList) {
+        this.routingSinglyLinkedList = routingSinglyLinkedList;
     }
 }

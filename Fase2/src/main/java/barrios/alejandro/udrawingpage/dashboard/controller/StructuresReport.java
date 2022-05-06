@@ -1,6 +1,11 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.graph.Graph;
+import barrios.alejandro.udrawingpage.place.model.Routing;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.controller.*;
+import barrios.alejandro.udrawingpage.structures.hash.Entry;
 import barrios.alejandro.udrawingpage.structures.hash.HashTable;
 import barrios.alejandro.udrawingpage.users.model.Courier;
 import barrios.alejandro.udrawingpage.utils.CustomAlert;
@@ -125,7 +130,7 @@ public class StructuresReport {
     }
 
     public void buildHashTable(StackPane pane, HashTable<Courier> courierHashTable) {
-        if (pane.getChildren().size() > 0)  pane.getChildren().clear();
+        if (pane.getChildren().size() > 0) pane.getChildren().clear();
 
         courierHashTable.graphHashTable();
         new CustomAlert("Construyendo HashTable de mensajeros...");
@@ -136,6 +141,36 @@ public class StructuresReport {
         imageView.setFitHeight(900);
         imageView.setPreserveRatio(true);
         pane.getChildren().add(imageView);
+    }
+
+    public void buildRoutesGraph(StackPane pane, SinglyLinkedList<Routing> routingSinglyLinkedList) {
+        if (pane.getChildren().size() > 0) pane.getChildren().clear();
+
+        String result = "";
+
+        result = "digraph G {\n";
+        result += "node[shape=circle];\n";
+
+        for (SinglyNode<Routing> node = routingSinglyLinkedList.getHead(); node != null; node = node.next) {
+
+            result += "a" + node.data.getInicio().getId() + "[label=\"" + node.data.getInicio() + "\"];\n";
+            result += "a" + node.data.getFinale().getId() + "[label=\"" + node.data.getFinale() + "\"];\n";
+            result += "a" + node.data.getInicio().getId() + " -> " + "a" + node.data.getFinale().getId() + "[label=" + node.data.getWeight() + "arrowhead=none];\n";
+
+        }
+
+        result += "}\n";
+        Graph.GenerarImagen("ROUTES_GRAPH", result);
+
+        new CustomAlert("Construyendo grafo de rutas...");
+        ImageView imageView = new ImageView();
+        Image image = new Image("file:out/ROUTES_GRAPH.png");
+
+        imageView.setImage(image);
+        imageView.setFitHeight(500);
+        imageView.setPreserveRatio(true);
+        pane.getChildren().add(imageView);
+
     }
 
 }
