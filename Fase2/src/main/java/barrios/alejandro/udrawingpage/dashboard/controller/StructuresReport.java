@@ -2,6 +2,7 @@ package barrios.alejandro.udrawingpage.dashboard.controller;
 
 import barrios.alejandro.udrawingpage.graph.Graph;
 import barrios.alejandro.udrawingpage.place.model.Routing;
+import barrios.alejandro.udrawingpage.structures.Adjacency.AdjacencyList;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.controller.*;
@@ -171,6 +172,20 @@ public class StructuresReport {
         imageView.setPreserveRatio(true);
         pane.getChildren().add(imageView);
 
+    }
+
+    public void buildAdjacencyList(StackPane pane, AdjacencyList adjacencyList) {
+        if (pane.getChildren().size() > 0) pane.getChildren().clear();
+
+        adjacencyList.buildGraph();
+        new CustomAlert("Construyendo lista de adyacencia de mensajeros...");
+        ImageView imageView = new ImageView();
+        Image image = new Image("file:out/ADJACENCY_LIST.png");
+
+        imageView.setImage(image);
+        imageView.setFitHeight(600);
+        imageView.setPreserveRatio(true);
+        pane.getChildren().add(imageView);
     }
 
 }

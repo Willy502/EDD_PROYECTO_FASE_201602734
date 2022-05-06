@@ -1,5 +1,6 @@
 package barrios.alejandro.udrawingpage.structures.Adjacency;
 
+import barrios.alejandro.udrawingpage.graph.Graph;
 import barrios.alejandro.udrawingpage.place.model.Route;
 import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
@@ -9,6 +10,7 @@ public class AdjacencyList {
 
     AdjacencyNode head;
     private int size = 0;
+    private String result;
 
     public SinglyLinkedList<Route> getEdge(Town source) {
 
@@ -89,7 +91,6 @@ public class AdjacencyList {
     }
 
     public void printGraph() {
-        System.out.println(size);
         AdjacencyNode current = head;
         while (current != null) {
             System.out.print("Vertex " + current.vertix.getId() + " is connected to: ");
@@ -102,6 +103,80 @@ public class AdjacencyList {
             System.out.println("");
             current = current.next;
         }
+    }
+
+    public void buildGraph() {
+
+        result = "digraph G {\n";
+        result += "node[shape=square];\n";
+
+        AdjacencyNode current = head;
+        int i = 1;
+        while (current != null) {
+
+            result += "a" + current.vertix.getId() + "[label=" + current.vertix.getId() + " group=" + i + "];\n";
+            i++;
+            current = current.next;
+        }
+
+        // Basic connections
+        current = head;
+        while (current != null) {
+
+            if (current.next != null) {
+                result += "a" + current.vertix.getId() + " -> " + "a" + current.next.vertix.getId() + ";\n";
+            }
+            current = current.next;
+        }
+
+        // Subgraph
+        i = 1;
+        current = head;
+        while (current != null) {
+
+            SinglyLinkedList<Route> node = current.connection;
+            SinglyNode<Route> sn = node.getHead();
+
+            while (sn != null) {
+                result += "a" + current.vertix.getId() + "a" + sn.data.getTown().getId() + "[label=" + sn.data.getTown().getId() + " group=" + i + "];\n";
+                sn = sn.next;
+            }
+
+            i++;
+            current = current.next;
+        }
+
+        // Sub connections
+        current = head;
+        while (current != null) {
+
+            SinglyLinkedList<Route> node = current.connection;
+            SinglyNode<Route> sn = node.getHead();
+
+            if (sn != null)
+                result += "a" + current.vertix.getId() + " -> " + "a" + current.vertix.getId() + "a" + sn.data.getTown().getId() + "[label=\"conecta con: \"];\n";
+            while (sn != null) {
+
+                if (sn.next != null) {
+                    result += "a" + current.vertix.getId() + "a" + sn.data.getTown().getId() + " -> " + "a" + current.vertix.getId() + "a" + sn.next.data.getTown().getId() + "[arrowhead=none];\n";
+                }
+                sn = sn.next;
+            }
+
+            result += "{ rank=same;\n";
+            result += "a" + current.vertix.getId() + ";\n";
+            sn = node.getHead();
+            while (sn != null) {
+                result += "a" + current.vertix.getId() + "a" + sn.data.getTown().getId() + ";\n";
+                sn = sn.next;
+            }
+            result += "}\n";
+
+            current = current.next;
+        }
+
+        result += "}";
+        Graph.GenerarImagen("ADJACENCY_LIST", result);
     }
 
 }

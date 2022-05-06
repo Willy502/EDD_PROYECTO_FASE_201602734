@@ -457,6 +457,7 @@ public class DashboardController {
                 case "btnImageAndLayers" -> new StructuresReport().buildImageAndLayers(mainPane, temporalInformation.getLoguedUser().getImages().search(Integer.parseInt(comboImages.getValue().toString())));
                 case "btnHashCourier" -> new StructuresReport().buildHashTable(mainPane, temporalInformation.getCourierHashTable());
                 case "btnGraphRoutes" -> new StructuresReport().buildRoutesGraph(mainPane, temporalInformation.getRoutingSinglyLinkedList());
+                case "btnAdjacencyRoutes" -> new StructuresReport().buildAdjacencyList(mainPane, temporalInformation.getRoutes());
             }
         } catch(Exception e) {
             new CustomAlert("Error", "No se ha cargado información previa");
