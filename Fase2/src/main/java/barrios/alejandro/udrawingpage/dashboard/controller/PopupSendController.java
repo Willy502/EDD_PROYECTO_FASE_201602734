@@ -1,13 +1,15 @@
 package barrios.alejandro.udrawingpage.dashboard.controller;
 
+import barrios.alejandro.udrawingpage.place.model.Order;
 import barrios.alejandro.udrawingpage.place.model.Route;
 import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.Adjacency.AdjacencyList;
-import barrios.alejandro.udrawingpage.structures.Adjacency.AdjencyConnections;
+import barrios.alejandro.udrawingpage.structures.Adjacency.AdjacencyConnections;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyNode;
 import barrios.alejandro.udrawingpage.structures.hash.HashTable;
 import barrios.alejandro.udrawingpage.users.model.Courier;
+import barrios.alejandro.udrawingpage.utils.CustomAlert;
 import barrios.alejandro.udrawingpage.utils.TemporalInformation;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -22,6 +24,7 @@ public class PopupSendController {
     protected ComboBox<Town> comboFranchise;
     @FXML
     protected Label lblUbicacion;
+    private SinglyLinkedList<Route> selected = new SinglyLinkedList<>();
 
     public PopupSendController() {
         temporalInformation = TemporalInformation.getInstance();
@@ -65,52 +68,49 @@ public class PopupSendController {
     protected void sendImage() {
         AdjacencyList adjacencyList = temporalInformation.getRoutes();
 
-        AdjencyConnections route = new AdjencyConnections(comboFranchise.getValue());
-        //route.connections.copyList(saveConnections( adjacencyList.getEdge(comboFranchise.getValue()) ));
-        saveConnections(adjacencyList.getEdge(comboFranchise.getValue()), comboFranchise.getValue(), route);
-
+        AdjacencyConnections route = new AdjacencyConnections(comboFranchise.getValue());
+        route.connections.copyList(saveConnections(adjacencyList.getEdge(comboFranchise.getValue()), comboFranchise.getValue(), route));
+        checkBetterRoute(route);
     }
 
-    private void saveConnections(SinglyLinkedList<Route> connectionRoutes, Town mainVertix, AdjencyConnections padre) {
+    private SinglyLinkedList<AdjacencyConnections> saveConnections(SinglyLinkedList<Route> connectionRoutes, Town mainVertix, AdjacencyConnections padre) {
 
-        AdjacencyList adjacencyList = temporalInformation.getRoutes();
-        SinglyLinkedList<AdjencyConnections> adjency = new SinglyLinkedList<>();
-
+        SinglyLinkedList<AdjacencyConnections> adjacency = new SinglyLinkedList<>();
         SinglyNode<Route> current = connectionRoutes.getHead();
 
-        SinglyLinkedList<AdjencyConnections> research = runThroug(mainVertix, current, adjency, padre);
-        System.out.print("VERTIX: " + mainVertix.getId());
+        return runThroug(mainVertix, current, adjacency, padre);
+        /*System.out.print("VERTIX: " + mainVertix.getId());
         for (SinglyNode<AdjencyConnections> adj = research.getHead(); adj != null; adj = adj.next) {
             System.out.print(" -> " + adj.data.vertix.getId());
-        }
+        }*/
 
     }
 
-    private SinglyLinkedList<AdjencyConnections> runThroug(Town mainVertix, SinglyNode<Route> current, SinglyLinkedList<AdjencyConnections> adjency, AdjencyConnections padre) {
+    private SinglyLinkedList<AdjacencyConnections> runThroug(Town mainVertix, SinglyNode<Route> current, SinglyLinkedList<AdjacencyConnections> adjacency, AdjacencyConnections padre) {
 
         if (current == null)
-            return adjency;
+            return adjacency;
 
         if (current.data.getTown().getId() != mainVertix.getId() && searchExistInFather(current.data.getTown(), padre) == null) {
-            System.out.println("PRIMARY: " + current.data.getTown().getId());
+
             AdjacencyList subAdjacencyList = temporalInformation.getRoutes();
-            AdjencyConnections subAdjencyConnection = new AdjencyConnections(current.data.getTown(), current.data.getWeight(), padre);
+            AdjacencyConnections subAdjacencyConnection = new AdjacencyConnections(current.data.getTown(), current.data.getWeight(), padre);
 
             if (current.data.getTown().getId() != temporalInformation.getLoguedUser().getTown().getId()) {
 
-                SinglyLinkedList<AdjencyConnections> subAdjency = new SinglyLinkedList<>();
-                SinglyNode<Route> subCurrent = subAdjacencyList.getEdge(subAdjencyConnection.vertix).getHead();
-                subAdjencyConnection.connections.copyList(runThroug(mainVertix, subCurrent, subAdjency, subAdjencyConnection));
+                SinglyLinkedList<AdjacencyConnections> subAdjacency = new SinglyLinkedList<>();
+                SinglyNode<Route> subCurrent = subAdjacencyList.getEdge(subAdjacencyConnection.vertix).getHead();
+                subAdjacencyConnection.connections.copyList(runThroug(mainVertix, subCurrent, subAdjacency, subAdjacencyConnection));
             }
 
-            adjency.addToList(subAdjencyConnection);
+            adjacency.addToList(subAdjacencyConnection);
         }
 
         current = current.next;
-        return runThroug(mainVertix, current, adjency, padre);
+        return runThroug(mainVertix, current, adjacency, padre);
     }
 
-    private Town searchExistInFather(Town toSearch, AdjencyConnections padre) {
+    private Town searchExistInFather(Town toSearch, AdjacencyConnections padre) {
 
         if (padre == null)
             return null;
@@ -119,6 +119,104 @@ public class PopupSendController {
             return padre.vertix;
 
         return searchExistInFather(toSearch, padre.padre);
+
+    }
+
+    private void checkBetterRoute(AdjacencyConnections adjacencyConnections) {
+
+        SinglyLinkedList<AdjacencyConnections> adjacencies = adjacencyConnections.connections;
+        SinglyNode<AdjacencyConnections> current = adjacencies.getHead();
+        researchRoute(current);
+        SinglyLinkedList<Route> routeInOrder = new SinglyLinkedList<>();
+
+        int weight = 0;
+
+        for (int i = selected.size() - 1; i >= 0; i--) {
+            routeInOrder.addToList(selected.getPos(i));
+        }
+
+        StringBuilder route = new StringBuilder();
+        for (SinglyNode<Route> temp = routeInOrder.getHead(); temp != null; temp = temp.next) {
+            weight += temp.data.getWeight();
+            route.append(" -> ").append(temp.data.getTown());
+        }
+        route.append("\n").append("Tiempo de espera: ").append(weight).append(" minutos");
+        route.append("\n").append("Sede: ").append(comboFranchise.getValue());
+        route.append("\n").append("Destino: ").append(temporalInformation.getLoguedUser().getTown()).append(", ").append(temporalInformation.getLoguedUser().getAddress());
+        route.append("\n").append("Cliente: ").append(temporalInformation.getLoguedUser().getName());
+        route.append("\n").append("Mensajero: ").append(comboCourier.getValue());
+
+        temporalInformation.getOrders().addToList(new Order(
+                temporalInformation.getLoguedUser(),
+                routeInOrder,
+                weight,
+                comboCourier.getValue(),
+                comboFranchise.getValue()
+        ));
+
+        temporalInformation.getLoguedUser().getMyOrders().addToList(new Order(
+                null,
+                routeInOrder,
+                weight,
+                comboCourier.getValue(),
+                comboFranchise.getValue()
+        ));
+
+        new CustomAlert("Envío almacenado", route.toString());
+        lblUbicacion.getScene().getWindow().hide();
+    }
+
+    private SinglyLinkedList<Route> researchRoute(SinglyNode<AdjacencyConnections> current) {
+
+        if (current == null) {
+            return selected;
+        }
+
+        if (current.data.vertix.getId() != temporalInformation.getLoguedUser().getTown().getId()) {
+            SinglyNode<AdjacencyConnections> subCurrent = current.data.connections.getHead();
+            researchRoute(subCurrent);
+        } else {
+
+            if (selected.size() > 0) {
+                SinglyLinkedList<Route> temporal = new SinglyLinkedList<>();
+                addWithFather(current.data, temporal);
+
+                int weightTemp = 0;
+                int weightSelected = 0;
+
+                for (SinglyNode<Route> temp = temporal.getHead(); temp != null; temp = temp.next) {
+                    weightTemp += temp.data.getWeight();
+                }
+
+                for (SinglyNode<Route> temp = selected.getHead(); temp != null; temp = temp.next) {
+                    weightSelected += temp.data.getWeight();
+                }
+
+                if (weightTemp < weightSelected) {
+                    selected = temporal;
+                }
+
+            } else {
+                selected = addWithFather(current.data, selected);
+            }
+
+        }
+
+        current = current.next;
+        return researchRoute(current);
+    }
+
+    private SinglyLinkedList<Route> addWithFather(AdjacencyConnections padre, SinglyLinkedList<Route> selectedRoute) {
+
+        if(padre == null)
+            return selectedRoute;
+
+        selectedRoute.addToList(new Route(
+                padre.vertix,
+                padre.weight
+        ));
+
+        return addWithFather(padre.padre, selectedRoute);
 
     }
 

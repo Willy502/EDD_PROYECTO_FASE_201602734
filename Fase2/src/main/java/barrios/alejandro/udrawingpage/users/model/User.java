@@ -1,6 +1,8 @@
 package barrios.alejandro.udrawingpage.users.model;
 
+import barrios.alejandro.udrawingpage.place.model.Order;
 import barrios.alejandro.udrawingpage.place.model.Town;
+import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 import barrios.alejandro.udrawingpage.structures.controller.*;
 
 public class User extends Person {
@@ -12,6 +14,7 @@ public class User extends Person {
     private DoublyCircularLinkedList albumes;
     private BinarySearchTree capas;
     private AvlTree images;
+    private SinglyLinkedList<Order> myOrders;
 
     public User() {}
 
@@ -21,6 +24,7 @@ public class User extends Person {
         this.email = email;
         this.username = username;
         this.town = town;
+        myOrders = new SinglyLinkedList<>();
     }
 
     public DoublyCircularLinkedList getAlbumes() {
@@ -69,6 +73,10 @@ public class User extends Person {
 
     public void setTown(Town town) {
         this.town = town;
+    }
+
+    public SinglyLinkedList<Order> getMyOrders() {
+        return myOrders;
     }
 
     public String getEmail() {

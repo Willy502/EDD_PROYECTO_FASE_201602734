@@ -1,22 +1,21 @@
 package barrios.alejandro.udrawingpage.structures.Adjacency;
 
-import barrios.alejandro.udrawingpage.place.model.Route;
 import barrios.alejandro.udrawingpage.place.model.Town;
 import barrios.alejandro.udrawingpage.structures.SinglyLinkedList.SinglyLinkedList;
 
-public class AdjencyConnections {
+public class AdjacencyConnections {
 
     public Town vertix;
     public int weight;
-    public SinglyLinkedList<AdjencyConnections> connections;
-    public AdjencyConnections padre;
+    public SinglyLinkedList<AdjacencyConnections> connections;
+    public AdjacencyConnections padre;
 
-    public AdjencyConnections(Town vertix) {
+    public AdjacencyConnections(Town vertix) {
         this.vertix = vertix;
         connections = new SinglyLinkedList<>();
     }
 
-    public AdjencyConnections(Town vertix, int weight, AdjencyConnections padre) {
+    public AdjacencyConnections(Town vertix, int weight, AdjacencyConnections padre) {
         this.vertix = vertix;
         this.weight = weight;
         this.padre = padre;
